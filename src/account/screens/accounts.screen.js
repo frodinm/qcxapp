@@ -133,6 +133,21 @@ class AccountsWallets extends Component {
           available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.eth_available: "0.000000",
           balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.eth_balance: "0.0000000"
         }
+      }else if(acronym === 'bch'){
+        return {
+          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.bch_available: "0.000000",
+          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.bch_balance: "0.0000000"
+        }
+      }else if(acronym === 'btg'){
+        return {
+          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.btg_available: "0.000000",
+          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.btg_balance: "0.0000000"
+        }
+      }else if(acronym === 'ltc'){
+        return {
+          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.ltc_available: "0.000000",
+          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.ltc_balance: "0.0000000"
+        }
       }
     }
 

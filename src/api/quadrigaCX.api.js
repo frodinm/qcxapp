@@ -222,3 +222,87 @@ export const postEthereumWalletWithdrawQuadriga = (key,signature,nonce,amount,ad
     }
   })
 }
+
+export const postBitcoinCashWalletAddressQuadriga = (key,signature,nonce) => {
+  return axios.request({
+    baseURL: `${rootEndpoint}`,
+    url:'/bitcoincash_deposit_address',
+    method:'post',
+    data:{
+      key: `${key}`,
+      signature: `${signature}`,
+      nonce: `${nonce}`
+    }
+  })
+}
+
+export const postBitcoinCashWalletWithdrawQuadriga = (key,signature,nonce,amount,address) => {
+  return axios.request({
+    baseURL: `${rootEndpoint}`,
+    url:'/bitcoincash_withdrawal',
+    method:'post',
+    data:{
+      key: `${key}`,
+      signature: `${signature}`,
+      nonce: `${nonce}`,
+      amount:`${amount}`,
+      address:`${address}`
+    }
+  })
+}
+
+export const postBitcoinGoldWalletAddressQuadriga = (key,signature,nonce) => {
+  return axios.request({
+    baseURL: `${rootEndpoint}`,
+    url:'/bitcoingold_deposit_address',
+    method:'post',
+    data:{
+      key: `${key}`,
+      signature: `${signature}`,
+      nonce: `${nonce}`
+    }
+  })
+}
+
+export const postBitcoinGoldWalletWithdrawQuadriga = (key,signature,nonce,amount,address) => {
+  return axios.request({
+    baseURL: `${rootEndpoint}`,
+    url:'/bitcoingold_withdrawal',
+    method:'post',
+    data:{
+      key: `${key}`,
+      signature: `${signature}`,
+      nonce: `${nonce}`,
+      amount:`${amount}`,
+      address:`${address}`
+    }
+  })
+}
+
+export const postLitecoinWalletAddressQuadriga = (key,signature,nonce) => {
+  return axios.request({
+    baseURL: `${rootEndpoint}`,
+    url:'/litecoin_deposit_address',
+    method:'post',
+    data:{
+      key: `${key}`,
+      signature: `${signature}`,
+      nonce: `${nonce}`
+    }
+  })
+}
+
+export const postLitecoinWalletWithdrawQuadriga = (key,signature,nonce,amount,address) => {
+  return axios.request({
+    baseURL: `${rootEndpoint}`,
+    url:'/litecoin_withdrawal',
+    method:'post',
+    data:{
+      key: `${key}`,
+      signature: `${signature}`,
+      nonce: `${nonce}`,
+      amount:`${amount}`,
+      address:`${address}`
+    }
+  })
+}

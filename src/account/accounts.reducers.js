@@ -16,9 +16,15 @@ import {
   POST_USER_QUADRIGA_SELL_LIMIT,
   POST_USER_QUADRIGA_SELL_MARKET,
   POST_USER_QUADRIGA_BITCOIN_WALLET,
-  POST_USER_QUADRIGA_BITCOIN_WITHDRAW,
   POST_USER_QUADRIGA_ETHER_WALLET,
-  POST_USER_QUADRIGA_ETHER_WITHDRAW
+  POST_USER_QUADRIGA_BITCOIN_CASH_WALLET,
+  POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET,
+  POST_USER_QUADRIGA_LITECOIN_WALLET,
+  POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW,
 } from 'account'
 
 const initialState = {
@@ -37,6 +43,12 @@ const initialState = {
   isGettingUserQuadrigaBitcoinWithdraw:false,
   isGettingUserQuadrigaEtherWallet:false,
   isGettingUserQuadrigaEtherWalletWithdraw:false,
+  isGettingUserQuadrigaBitcoinCashWallet:false,
+  isGettingUserQuadrigaBitcoinCashWalletWithdraw:false,
+  isGettingUserQuadrigaBitcoinGoldWallet:false,
+  isGettingUserQuadrigaBitcoinGoldWalletWithdraw:false,
+  isGettingUserQuadrigaLitecoinWallet:false,
+  isGettingUserQuadrigaLitecoinWalletWithdraw:false,
   isCancellingOrder:false,
   quadrigaUserBalance:null,
   quadrigaUserTransactions:null,
@@ -53,6 +65,12 @@ const initialState = {
   quadrigaUserBitcoinWalletWithdraw:null,
   quadrigaUserEtherWallet:null,
   quadrigaUserEtherWalletWithdraw:null,
+  quadrigaUserBitcoinCashWallet:null,
+  quadrigaUserBitcoinCashWalletWithdraw:null,
+  quadrigaUserBitcoinGoldWallet:null,
+  quadrigaUserBitcoinGoldWalletWithdraw:null,
+  quadrigaUserLitecoinWallet:null,
+  quadrigaUserLitecoinWalletWithdraw:null,
   userWallets:[],
   quadrigaTickerBTC: null,
   quadrigaTickerLTC:null,
@@ -355,18 +373,18 @@ export const AccountReducer = (state = initialState, action) => {
         isGettingUserQuadrigaBitcoinWallet: false,
         error: action.payload,
       }
-    case POST_USER_QUADRIGA_BITCOIN_WITHDRAW.PENDING:
+    case POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW.PENDING:
       return {
         ...state,
         isGettingUserQuadrigaBitcoinWithdraw: true,
       }
-    case POST_USER_QUADRIGA_BITCOIN_WITHDRAW.SUCCESS:
+    case POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW.SUCCESS:
       return {
         ...state,
         isGettingUserQuadrigaBitcoinWithdraw: false,
         quadrigaUserBitcoinWalletWithdraw: action.payload,
       }
-    case POST_USER_QUADRIGA_BITCOIN_WITHDRAW.ERROR:
+    case POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW.ERROR:
       return {
         ...state,
         isGettingUserQuadrigaBitcoinWithdraw: false,
@@ -390,21 +408,126 @@ export const AccountReducer = (state = initialState, action) => {
         isGettingUserQuadrigaEtherWallet: false,
         error: action.payload,
       }
-    case POST_USER_QUADRIGA_ETHER_WITHDRAW.PENDING:
+    case POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW.PENDING:
       return {
         ...state,
         isGettingUserQuadrigaEtherWalletWithdraw: true,
       }
-    case POST_USER_QUADRIGA_ETHER_WITHDRAW.SUCCESS:
+    case POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW.SUCCESS:
       return {
         ...state,
         isGettingUserQuadrigaEtherWalletWithdraw: false,
         quadrigaUserEtherWalletWithdraw: action.payload,
       }
-    case POST_USER_QUADRIGA_ETHER_WITHDRAW.ERROR:
+    case POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW.ERROR:
       return {
         ...state,
         isGettingUserQuadrigaEtherWalletWithdraw: false,
+        error: action.payload,
+      }
+      case POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.PENDING:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinCashWallet: true,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.SUCCESS:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinCashWallet: false,
+        quadrigaUserBitcoinCashWallet: action.payload.res,
+        userWallets: [...state.userWallets,action.payload.address]
+      }
+    case POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.ERROR:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinCashWallet: false,
+        error: action.payload,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW.PENDING:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinCashWalletWithdraw: true,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW.SUCCESS:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinCashWalletWithdraw: false,
+        quadrigaUserBitcoinCashWalletWithdraw: action.payload,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW.ERROR:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinCashWalletWithdraw: false,
+        error: action.payload,
+      }
+      case POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.PENDING:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinGoldWallet: true,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.SUCCESS:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinGoldWallet: false,
+        quadrigaUserBitcoinGoldWallet: action.payload.res,
+        userWallets: [...state.userWallets,action.payload.address]
+      }
+    case POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.ERROR:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinGoldWallet: false,
+        error: action.payload,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW.PENDING:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinGoldWalletWithdraw: true,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW.SUCCESS:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinGoldWalletWithdraw: false,
+        quadrigaUserBitcoinGoldWalletWithdraw: action.payload,
+      }
+    case POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW.ERROR:
+      return {
+        ...state,
+        isGettingUserQuadrigaBitcoinGoldWalletWithdraw: false,
+        error: action.payload,
+      }
+      case POST_USER_QUADRIGA_LITECOIN_WALLET.PENDING:
+      return {
+        ...state,
+        isGettingUserQuadrigaLitecoinWallet: true,
+      }
+    case POST_USER_QUADRIGA_LITECOIN_WALLET.SUCCESS:
+      return {
+        ...state,
+        isGettingUserQuadrigaLitecoinWallet: false,
+        quadrigaUserLitecoinWallet: action.payload.res,
+        userWallets: [...state.userWallets,action.payload.address]
+      }
+    case POST_USER_QUADRIGA_LITECOIN_WALLET.ERROR:
+      return {
+        ...state,
+        isGettingUserQuadrigaLitecoinWallet: false,
+        error: action.payload,
+      }
+    case POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.PENDING:
+      return {
+        ...state,
+        isGettingUserQuadrigaLitecoinWalletWithdraw: true,
+      }
+    case POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.SUCCESS:
+      return {
+        ...state,
+        isGettingUserQuadrigaLitecoinWalletWithdraw: false,
+        quadrigaUserLitecoinWalletWithdraw: action.payload,
+      }
+    case POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.ERROR:
+      return {
+        ...state,
+        isGettingUserQuadrigaLitecoinWalletWithdraw: false,
         error: action.payload,
       }
     default:

@@ -44,6 +44,9 @@ const textStyle = {
 const mapStateToProps = (state) => ({
     quadrigaTickerBTC: state.account.quadrigaTickerBTC,
     quadrigaTickerETH: state.account.quadrigaTickerETH,
+    quadrigaTickerBCH: state.account.quadrigaTickerBCH,
+    quadrigaTickerBTG: state.account.quadrigaTickerBTG,
+    quadrigaTickerLTC: state.account.quadrigaTickerLTC,
     quadrigaUserBalance: state.account.quadrigaUserBalance,
 })
 const mapDispatchToProps = (dispatch) => ({
@@ -124,7 +127,7 @@ class Wallet extends Component {
         
     }
     handleData(acronym){
-        const {quadrigaTickerBTC,quadrigaTickerETH,quadrigaUserBalance} = this.props;
+        const {quadrigaTickerBTC,quadrigaTickerETH,quadrigaTickerBCH,quadrigaTickerBTG,quadrigaTickerLTC,quadrigaUserBalance} = this.props;
         const textStyle = iOSUIKit.body;
         
         if(acronym === 'btc'){
@@ -139,6 +142,27 @@ class Wallet extends Component {
                 <View>
                     <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.eth_balance === "0.00000000" ? "0": quadrigaUserBalance.data.eth_balance} ETH</Text>
                     <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerETH.data.last*quadrigaUserBalance.data.eth_balance).toFixed(2)}</Text>
+                </View>
+            )
+        }else if(acronym === 'bch'){
+            return (
+                <View>
+                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.bch_balance === "0.00000000" ? "0": quadrigaUserBalance.data.bch_balance} BCH</Text>
+                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBCH.data.last*quadrigaUserBalance.data.bch_balance).toFixed(2)}</Text>
+                </View>
+            )
+        }else if(acronym === 'btg'){
+            return (
+                <View>
+                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.btg_balance === "0.00000000" ? "0": quadrigaUserBalance.data.btg_balance} BTG</Text>
+                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBTG.data.last*quadrigaUserBalance.data.btg_balance).toFixed(2)}</Text>
+                </View>
+            )
+        }else if(acronym === 'ltc'){
+            return (
+                <View>
+                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.ltc_balance === "0.00000000" ? "0": quadrigaUserBalance.data.ltc_balance} LTC</Text>
+                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerLTC.data.last*quadrigaUserBalance.data.ltc_balance).toFixed(2)}</Text>
                 </View>
             )
         }

@@ -14,6 +14,14 @@ import {
   POST_USER_QUADRIGA_BUY_AT_PRICE,
   POST_USER_QUADRIGA_BITCOIN_WALLET,
   POST_USER_QUADRIGA_ETHER_WALLET,
+  POST_USER_QUADRIGA_BITCOIN_CASH_WALLET,
+  POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET,
+  POST_USER_QUADRIGA_LITECOIN_WALLET,
+  POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW,
+  POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_ACCOUNT_DATA
 
 } from 'account'
@@ -34,6 +42,12 @@ import {
   postBitcoinWalletWithdrawQuadriga,
   postEthereumWalletAddressQuadriga,
   postEthereumWalletWithdrawQuadriga,
+  postBitcoinCashWalletAddressQuadriga,
+  postBitcoinCashWalletWithdrawQuadriga,
+  postBitcoinGoldWalletAddressQuadriga,
+  postBitcoinGoldWalletWithdrawQuadriga,
+  postLitecoinWalletAddressQuadriga,
+  postLitecoinWalletWithdrawQuadriga,
 } from 'api'
 import {encryptAuthenticationQuadriga} from 'util'
 
@@ -260,6 +274,39 @@ export const postUserEthereumWalletWithdrawQuadriga = (key,sign,nonce,amount,add
   }
 }
 
+export const postUserBitcoinCashWalletWithdrawQuadriga = (key,sign,nonce,amount,address) => {
+  return dispatch => {
+    dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW.PENDING})
+    postBitcoinCashWalletWithdrawQuadriga(key,sign,nonce,amount,address).then((response) => {
+      dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW.SUCCESS, payload: response})
+    }).catch((error) => {
+      dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW.ERROR, payload: error})
+    })
+  }
+}
+
+export const postUserBitcoinGoldWalletWithdrawQuadriga = (key,sign,nonce,amount,address) => {
+  return dispatch => {
+    dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW.PENDING})
+    postBitcoinGoldWalletWithdrawQuadriga(key,sign,nonce,amount,address).then((response) => {
+      dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW.SUCCESS, payload: response})
+    }).catch((error) => {
+      dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW.ERROR, payload: error})
+    })
+  }
+}
+
+export const postUserLitecoinEthereumWalletWithdrawQuadriga = (key,sign,nonce,amount,address) => {
+  return dispatch => {
+    dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.PENDING})
+    postLitecoinWalletWithdrawQuadriga(key,sign,nonce,amount,address).then((response) => {
+      dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.SUCCESS, payload: response})
+    }).catch((error) => {
+      dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.ERROR, payload: error})
+    })
+  }
+}
+
 export const postAccounScreenMainCall = (clientId,apiKey,secret) =>{ //need to guarantee that the api call doesnt return an error that the nonce cant be smaller than ... Making a combined async function
   let nonce;
   return dispatch =>{
@@ -271,12 +318,33 @@ export const postAccounScreenMainCall = (clientId,apiKey,secret) =>{ //need to g
       nonce = Date.now();
       postEthereumWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
         dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'eth',name:'Ethereum',receiveAddress:response.data}}});
-        dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
+        dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.PENDING})
         nonce = Date.now();
-        postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
-          dispatch({type: POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response});
+        postBitcoinCashWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+          dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'bch',name:'Bitcoin Cash',receiveAddress:response.data}}});
+          dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.PENDING})
+          nonce = Date.now();
+          postBitcoinGoldWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+            dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'btg',name:'Bitcoin Gold',receiveAddress:response.data}}});
+            dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET.PENDING})
+            nonce = Date.now();
+            postLitecoinWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+              dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'ltc',name:'Litecoin',receiveAddress:response.data}}});
+              dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
+              nonce = Date.now();
+              postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+                dispatch({type: POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response});
+              }).catch((error)=>{
+                dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+              })
+            }).catch((error)=>{
+            dispatch({type:POST_USER_QUADRIGA_LITECOIN_WALLET.ERROR,payload:error})
+            })
+          }).catch((error)=>{
+          dispatch({type:POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.ERROR,payload:error})
+          })
         }).catch((error)=>{
-          dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+          dispatch({type:POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.ERROR,payload:error})
         })
       }).catch((error)=>{
         dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET.ERROR, payload: error})
