@@ -13,12 +13,10 @@ import {
   AppState
 } from 'react-native';
 import './ReactotronConfig';
-import codePush from "react-native-code-push";
 import {InitialRouting} from 'navigation';
 import {persistStore} from 'redux-persist'
 import {configuredStore} from 'AppRedux';
 import {Provider} from 'react-redux';
-import firebase from 'react-native-firebase'
 import {OfflineScreen,resetNavigation} from 'util';
 import DeviceInfo from 'react-native-device-info'
 import md5 from 'md5'
@@ -33,8 +31,6 @@ class App extends Component {
       isRehydrated: false,
     }
     this.handleConnectivityChange = this.handleConnectivityChange.bind(this)
-    firebase.analytics().setAnalyticsCollectionEnabled(true);
-    firebase.analytics().logEvent('mainScreen');
 
   }
   componentDidMount(){
@@ -120,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default  MyApp = codePush(App);
+export default  MyApp = App;

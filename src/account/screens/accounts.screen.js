@@ -72,7 +72,9 @@ class AccountsWallets extends Component {
   }
 
   componentDidMount(){
-    this.props.navigation.setParams({add:this.handleAddNewAddress})
+    setTimeout(() => {
+      this.props.navigation.setParams({add:()=>this.handleAddNewAddress()})
+    }, 1000);
   }
 
 

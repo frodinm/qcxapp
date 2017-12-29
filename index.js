@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import MyApp from './App';
+import App from './App';
 
-AppRegistry.registerComponent('quadriga', () => MyApp);
+AppRegistry.registerComponent('quadrigacx', () => App);
