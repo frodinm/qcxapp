@@ -1,0 +1,4 @@
+<resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">81341094-18df-4cd8-8f7e-8c646f44585c</string>
+    <string name="app_name">quadriga</string>
+</resources>

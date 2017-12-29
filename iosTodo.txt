@@ -1,0 +1,3 @@
+setup pushNotifications
+react-native-permissions
+setup 
