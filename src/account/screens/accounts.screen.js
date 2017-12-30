@@ -20,6 +20,7 @@ import {connect} from 'react-redux'
 import {Logos,encryptAuthenticationQuadriga} from 'util';
 import Modal from 'react-native-modalbox';
 import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons'
+import i18n from 'i18n'
 import {
   setUserFirstTime
 } from 'users'
@@ -202,18 +203,22 @@ class AccountsWallets extends Component {
           {this.handlePlatform()}
 
           <Modal 
-                 style={[styles.modal]}
-                 position={"center"}
-                 swipeToClose={true}
-               
-                 ref={"modal"} 
-                 >
-                    <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',height: 350,width: 300}}>
-                      <TouchableHighlight>
-                        <Text onPress={()=>this.refs.modal.close()}>Close</Text>
-                      </TouchableHighlight>
-                    </View>
-                </Modal>
+            style={[styles.modal]}
+            position={"center"}
+
+
+            ref={"modal"} 
+          >
+            <View>
+                <Text style={iOSUIKit.title3}>Add a custom wallet</Text>
+                <Text>{i18n.t('bitcoin')}</Text>
+            </View>
+            <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',height: 350,width: 300}}>
+              <TouchableHighlight>
+                <Text onPress={()=>this.refs.modal.close()}>Close</Text>
+              </TouchableHighlight>
+            </View>
+          </Modal>
     </ScrollView>
     );
   }
@@ -228,7 +233,6 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius:5,
     ...Platform.select({
         ios:{
             marginTop:0

@@ -16,6 +16,7 @@
 		079F1A741FF65747008C850A /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; };
 		079F1A751FF65747008C850A /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		07ED04871FF720E900A9D959 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07ED04541FF720CC00A9D959 /* libCodePush.a */; };
+		07ED04E11FF7544900A9D959 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07ED04D91FF7543400A9D959 /* libRNI18n.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -317,6 +318,20 @@
 			remoteGlobalIDString = F886647B1F4ADB500036D01B;
 			remoteInfo = "CodePush-tvOS";
 		};
+		07ED04D81FF7543400A9D959 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNI18n;
+		};
+		07ED04DA1FF7543400A9D959 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6476C4051EEAA69700B10F51;
+			remoteInfo = "RNI18n-tvOS";
+		};
 		139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
@@ -502,6 +517,7 @@
 		05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		079F1A2B1FF6573C008C850A /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
 		07ED044B1FF720CC00A9D959 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
+		07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
 		0AD0F8CC1A794024889E0E64 /* AppCenter-Config.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "quadrigacx/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		0C01DB47BEC34412B4507831 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -582,6 +598,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07ED04E11FF7544900A9D959 /* libRNI18n.a in Frameworks */,
 				07ED04871FF720E900A9D959 /* libCodePush.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -845,6 +862,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		07ED04A41FF7543400A9D959 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				07ED04D91FF7543400A9D959 /* libRNI18n.a */,
+				07ED04DB1FF7543400A9D959 /* libRNI18n-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		139105B71AF99BAD00B5F7CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1017,6 +1043,7 @@
 		F3567FD9401C545F8300BC19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */,
 				8D7A944B50F8BC84A83B1F71 /* libPods-quadrigacx.a */,
 				72D268E4C2CDE1493D076B3E /* libPods-quadrigacx-tvOS.a */,
 				8D389ECDF3917A6874AD7F04 /* libPods-quadrigacx-tvOSTests.a */,
@@ -1258,6 +1285,10 @@
 				{
 					ProductGroup = 079F193C1FF6501E008C850A /* Products */;
 					ProjectRef = 38BB6E80E5544617B2F7D45E /* RNDeviceInfo.xcodeproj */;
+				},
+				{
+					ProductGroup = 07ED04A41FF7543400A9D959 /* Products */;
+					ProjectRef = 07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */;
 				},
 				{
 					ProductGroup = 079F195E1FF6501F008C850A /* Products */;
@@ -1520,6 +1551,20 @@
 			fileType = archive.ar;
 			path = libCodePush.a;
 			remoteRef = 07ED04551FF720CC00A9D959 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		07ED04D91FF7543400A9D959 /* libRNI18n.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNI18n.a;
+			remoteRef = 07ED04D81FF7543400A9D959 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		07ED04DB1FF7543400A9D959 /* libRNI18n-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNI18n-tvOS.a";
+			remoteRef = 07ED04DA1FF7543400A9D959 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		139105C11AF99BAD00B5F7CC /* libRCTSettings.a */ = {

@@ -148,7 +148,8 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-code-push')
+    implementation project(':react-native-i18n')
+    implementation project(':react-native-code-push')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-udp')
     implementation project(':react-native-tcp')

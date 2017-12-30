@@ -8,6 +8,7 @@
         "api": "./src/api",
         "components" : "./src/components",
         "account": "./src/account",
+        "i18n":"./src/i18n",
         "exchange": "./src/exchange",
         "assets" : "./src/assets",
         "orders" : "./src/orders",

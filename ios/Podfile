@@ -20,6 +20,8 @@ target 'quadrigacx' do
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
   target 'quadrigacxTests' do
     inherit! :search_paths
     # Pods for testing
