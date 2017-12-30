@@ -15,6 +15,7 @@
 		00E356F31AD99517003FC87E /* quadrigacxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* quadrigacxTests.m */; };
 		079F1A741FF65747008C850A /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; };
 		079F1A751FF65747008C850A /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		07ED04871FF720E900A9D959 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07ED04541FF720CC00A9D959 /* libCodePush.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -302,6 +303,20 @@
 			remoteGlobalIDString = 62CA59B71E3C173B002D7188;
 			remoteInfo = Lottie_iOS;
 		};
+		07ED04531FF720CC00A9D959 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07ED044B1FF720CC00A9D959 /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = CodePush;
+		};
+		07ED04551FF720CC00A9D959 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07ED044B1FF720CC00A9D959 /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F886647B1F4ADB500036D01B;
+			remoteInfo = "CodePush-tvOS";
+		};
 		139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
@@ -486,6 +501,7 @@
 		0522146164FD8B86D674D55B /* libPods-quadrigacxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quadrigacxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		079F1A2B1FF6573C008C850A /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
+		07ED044B1FF720CC00A9D959 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		0AD0F8CC1A794024889E0E64 /* AppCenter-Config.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "quadrigacx/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		0C01DB47BEC34412B4507831 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -566,6 +582,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07ED04871FF720E900A9D959 /* libCodePush.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -819,6 +836,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		07ED044C1FF720CC00A9D959 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				07ED04541FF720CC00A9D959 /* libCodePush.a */,
+				07ED04561FF720CC00A9D959 /* libCodePush.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		139105B71AF99BAD00B5F7CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -951,6 +977,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				07ED044B1FF720CC00A9D959 /* CodePush.xcodeproj */,
 				079F1A2B1FF6573C008C850A /* Lottie.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* quadrigacx */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1155,6 +1182,10 @@
 				{
 					ProductGroup = 079F19681FF6501F008C850A /* Products */;
 					ProjectRef = D6EA0EC004E5475D804C6BB3 /* AppCenterReactNativeCrashes.xcodeproj */;
+				},
+				{
+					ProductGroup = 07ED044C1FF720CC00A9D959 /* Products */;
+					ProjectRef = 07ED044B1FF720CC00A9D959 /* CodePush.xcodeproj */;
 				},
 				{
 					ProductGroup = 079F1A2C1FF6573C008C850A /* Products */;
@@ -1475,6 +1506,20 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = 079F1A6A1FF6573C008C850A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		07ED04541FF720CC00A9D959 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = 07ED04531FF720CC00A9D959 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		07ED04561FF720CC00A9D959 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = 07ED04551FF720CC00A9D959 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		139105C11AF99BAD00B5F7CC /* libRCTSettings.a */ = {

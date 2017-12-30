@@ -15,6 +15,7 @@ import {
 import './ReactotronConfig';
 import {InitialRouting} from 'navigation';
 import {persistStore} from 'redux-persist'
+import codePush from 'react-native-code-push'
 import {configuredStore} from 'AppRedux';
 import {Provider} from 'react-redux';
 import {OfflineScreen,resetNavigation} from 'util';
@@ -116,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default  MyApp = App;
+export default  MyApp = codePush(App);
