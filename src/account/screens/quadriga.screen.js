@@ -38,6 +38,9 @@ let colorChangeLTC = 'white';
 
 
 const mapStateToProps = (state) => ({
+    apiKey: state.user.apiKey,
+    clientId:state.user.clientId,
+    privateKey:state.user.privateKey,
     quadrigaTickerBTC: state.account.quadrigaTickerBTC,
     quadrigaTickerETH: state.account.quadrigaTickerETH,
     quadrigaTickerBCH: state.account.quadrigaTickerBCH,

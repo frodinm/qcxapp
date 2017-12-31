@@ -51,7 +51,7 @@ const initialState = {
   isGettingUserQuadrigaLitecoinWalletWithdraw:false,
   isCancellingOrder:false,
   quadrigaUserBalance:null,
-  quadrigaUserTransactions:null,
+  quadrigaUserTransactions:[],
   quadrigaOrders:null,
   quadrigaTransactions:null,
   quadrigaUserOrders:null,

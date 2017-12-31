@@ -68,6 +68,7 @@
 		D03A54A9D4F54D0B82E9E6D0 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A13961BB15546358FA74C89 /* libRCTCamera.a */; };
 		D6FC25576F97445580965A42 /* libAppCenterReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 564ECA19A4FB42D383F314DA /* libAppCenterReactNative.a */; };
 		E2A4F00794A8422EA8C1630E /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3196D2484C264C07AC9C2A00 /* FontAwesome.ttf */; };
+		EF1AEEB30CEF48FBBF7F2C31 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89696A429A746C5AE794C41 /* libRNAdMobManager.a */; };
 		F845C40419FD41AE90A3F2AA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */; };
 		FB09A6F26B679148020906AE /* libPods-quadrigacx-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D389ECDF3917A6874AD7F04 /* libPods-quadrigacx-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -303,6 +304,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 62CA59B71E3C173B002D7188;
 			remoteInfo = Lottie_iOS;
+		};
+		07E6FC0F1FF8C4BE007850AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB8E9E8B3C054F8E88D9E853 /* RNAdMobManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A96DA7741C146D7200FC639B;
+			remoteInfo = RNAdMobManager;
 		};
 		07ED04531FF720CC00A9D959 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -563,11 +571,13 @@
 		8D7A944B50F8BC84A83B1F71 /* libPods-quadrigacx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quadrigacx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3D475BDF76B487594017A21 /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LottieReactNative.xcodeproj; path = "../node_modules/lottie-react-native/src/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; };
 		A649C3744537497EA99EAADB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		A89696A429A746C5AE794C41 /* libRNAdMobManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNAdMobManager.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B56F016FFC074C39A74A05E0 /* libAppCenterReactNativeAnalytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNativeAnalytics.a; sourceTree = "<group>"; };
 		B7039FF576FF47BFACAD8DA7 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B86500E963AC4269B1DDCCB9 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		BA8EC196ACBD426EB83102BF /* libreact-native-sha256.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libreact-native-sha256.a"; sourceTree = "<group>"; };
+		BB8E9E8B3C054F8E88D9E853 /* RNAdMobManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNAdMobManager.xcodeproj; path = "../node_modules/react-native-admob/ios/RNAdMobManager.xcodeproj"; sourceTree = "<group>"; };
 		BFCE5D4C2B1A4E598726EA40 /* libUdpSockets.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libUdpSockets.a; sourceTree = "<group>"; };
 		C4836CEFC2814C6EA97B5FFD /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		C4F0A33F1141461B85C0A45E /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
@@ -628,6 +638,7 @@
 				8DE9751B5EA8495DB02DF740 /* libUdpSockets.a in Frameworks */,
 				5E855323C63B45FD996A2E0E /* libRNVectorIcons.a in Frameworks */,
 				B32A779A14E3248BD53EA388 /* libPods-quadrigacx.a in Frameworks */,
+				EF1AEEB30CEF48FBBF7F2C31 /* libRNAdMobManager.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,6 +745,7 @@
 				4473639C9FEB4C1A96428903 /* libTcpSockets.a */,
 				BFCE5D4C2B1A4E598726EA40 /* libUdpSockets.a */,
 				B86500E963AC4269B1DDCCB9 /* libRNVectorIcons.a */,
+				A89696A429A746C5AE794C41 /* libRNAdMobManager.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -849,6 +861,14 @@
 				079F1A351FF6573C008C850A /* Lottie.framework */,
 				079F1A371FF6573C008C850A /* Lottie.framework */,
 				079F1A391FF6573C008C850A /* libLottie.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		07E6FC0C1FF8C4BD007850AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				07E6FC101FF8C4BE007850AB /* libRNAdMobManager.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -987,6 +1007,7 @@
 				8BA4C62B9A8D4DA2A385247A /* TcpSockets.xcodeproj */,
 				000B96C9928A4DC5B87E14C8 /* UdpSockets.xcodeproj */,
 				EB48C135BBB54681A81B8582 /* RNVectorIcons.xcodeproj */,
+				BB8E9E8B3C054F8E88D9E853 /* RNAdMobManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1283,6 +1304,10 @@
 					ProjectRef = 0C01DB47BEC34412B4507831 /* ReactNativePermissions.xcodeproj */;
 				},
 				{
+					ProductGroup = 07E6FC0C1FF8C4BD007850AB /* Products */;
+					ProjectRef = BB8E9E8B3C054F8E88D9E853 /* RNAdMobManager.xcodeproj */;
+				},
+				{
 					ProductGroup = 079F193C1FF6501E008C850A /* Products */;
 					ProjectRef = 38BB6E80E5544617B2F7D45E /* RNDeviceInfo.xcodeproj */;
 				},
@@ -1537,6 +1562,13 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = 079F1A6A1FF6573C008C850A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		07E6FC101FF8C4BE007850AB /* libRNAdMobManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAdMobManager.a;
+			remoteRef = 07E6FC0F1FF8C4BE007850AB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		07ED04541FF720CC00A9D959 /* libCodePush.a */ = {
@@ -2077,11 +2109,15 @@
 					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = quadrigacxTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2112,11 +2148,15 @@
 					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = quadrigacxTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2149,6 +2189,7 @@
 					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = quadrigacx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -2185,6 +2226,7 @@
 					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = quadrigacx/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -2227,10 +2269,14 @@
 					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = "quadrigacx-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2271,10 +2317,14 @@
 					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = "quadrigacx-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2301,7 +2351,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "quadrigacx-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.quadrigacx-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2324,7 +2377,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "quadrigacx-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.quadrigacx-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;

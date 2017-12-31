@@ -30,6 +30,9 @@ import {
     postUserEthereumWalletAddressQuadriga,
     postAccounScreenMainCall
 } from 'account'
+import {
+  AdMobBanner,
+} from 'react-native-admob'
 import { iOSUIKit } from 'react-native-typography'
 import { isAbsolute } from 'path';
 
@@ -41,6 +44,9 @@ const {height,width} = Dimensions.get('window');
 
 
 const mapStateToProps = (state) => ({
+  apiKey: state.user.apiKey,
+  clientId:state.user.clientId,
+  privateKey:state.user.privateKey,
   isFirstTimeUser: state.user.isFirstTimeUser,
   userWallets:state.account.userWallets,
   quadrigaUserBalance: state.account.quadrigaUserBalance,
@@ -160,7 +166,7 @@ class AccountsWallets extends Component {
         return userWallets.map((item,index)=>{
           return( 
             <View key={index} style={{alignItems:'center'}}>
-              <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+              <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
                 <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                   <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
@@ -178,7 +184,7 @@ class AccountsWallets extends Component {
        return userWallets.map((item,index)=>{
           return (
             <View key={index} style={{alignItems:'center'}}>
-              <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress})}}>
+              <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book})}}>
                 <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                   <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
@@ -199,7 +205,8 @@ class AccountsWallets extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
+      <ScrollView >
           {this.handlePlatform()}
 
           <Modal 
@@ -220,6 +227,15 @@ class AccountsWallets extends Component {
             </View>
           </Modal>
     </ScrollView>
+    <View style={{position:'absolute',bottom:0,width:width}}>
+        <AdMobBanner
+      adSize="smartBannerLandscape"
+      adUnitID="ca-app-pub-8321262189259728/7581255596"
+      testDevices={[AdMobBanner.simulatorId]}
+      onAdFailedToLoad={error => console.error(error)} 
+      />
+   </View>
+    </View>
     );
   }
 }

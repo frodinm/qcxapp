@@ -9,6 +9,7 @@ target 'quadrigacx' do
   pod 'AppCenter/Crashes', '~> 1.1.0'
   pod 'AppCenter/Analytics', '~> 1.1.0'
   pod 'AppCenterReactNativeShared', '~> 1.1.0'
+  pod 'Google-Mobile-Ads-SDK'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
   pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
   pod 'React', :path => '../node_modules/react-native', :subspecs => [

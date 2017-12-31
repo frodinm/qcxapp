@@ -5,7 +5,8 @@ import {
   Text,
   View,
   ScrollView,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 import {Button} from 'react-native-elements'
 import {connect} from 'react-redux'
@@ -22,7 +23,11 @@ import {
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {LogoComponent,ExchangeModalComponent} from 'components'
 import {Logos} from 'util'
+import {
+  AdMobBanner,
+} from 'react-native-admob'
 
+const {height,width} = Dimensions.get('window');
 
 const mapStateToProps = (state) => ({
   selectedFromTokenLogo: state.exchange.selectedFromTokenLogo,
@@ -93,6 +98,14 @@ class ChangellyExchange extends Component {
     return (
       <View style={styles.container}>
           <ExchangeModalComponent navigation={this.props.navigation}/>
+          <View style={{position:'absolute',bottom:0,width:width}}>
+            <AdMobBanner
+          adSize="smartBannerLandscape"
+          adUnitID="ca-app-pub-8321262189259728/2193197542"
+          testDevices={[AdMobBanner.simulatorId]}
+          onAdFailedToLoad={error => console.error(error)} 
+          />
+         </View>
       </View>
     );
   }

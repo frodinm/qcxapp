@@ -38,6 +38,9 @@ const textStyle = {
 
 
 const mapStateToProps = (state) => ({
+    apiKey: state.user.apiKey,
+    clientId:state.user.clientId,
+    privateKey:state.user.privateKey,
     changellyCreateTransaction: state.exchange.changellyCreateTransaction,
     fromAmount: state.exchange.fromAmount,
 })

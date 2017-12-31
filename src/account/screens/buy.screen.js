@@ -21,7 +21,9 @@ import {
 const {height,width} = Dimensions.get('window');
 
 const mapStateToProps = (state) => ({
-  
+    apiKey: state.user.apiKey,
+    clientId:state.user.clientId,
+    privateKey:state.user.privateKey,
 })
 const mapDispatchToProps = (dispatch) => ({
  

@@ -10,6 +10,15 @@ export const encryptAuthenticationChangelly = (message,secret) =>{
   return crypto.createHmac('sha512',Buffer.from(`${secret}`)).update(message).digest('hex')
 }
 
-export const getUnixTime = () => {
-  return window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+export const convertunixTime = (unixTime) => {
+  let date = new Date(unixTime)
+
+  return {
+    hours: date.getHours(),
+    minutes: date.getMinutes(),
+    seconds:date.getSeconds(),
+    day: date.getDate(),
+    month: date.getMonth(),
+    fullYear: date.getFullYear(),
+  }
 }

@@ -6,6 +6,21 @@ PODS:
     - AppCenter/Core
   - AppCenterReactNativeShared (1.1.0):
     - AppCenter/Core (= 1.1.0)
+  - CodePush (5.2.1):
+    - CodePush/Base64 (= 5.2.1)
+    - CodePush/Core (= 5.2.1)
+    - CodePush/JWT (= 5.2.1)
+    - CodePush/SSZipArchive (= 5.2.1)
+    - React
+  - CodePush/Base64 (5.2.1):
+    - React
+  - CodePush/Core (5.2.1):
+    - React
+  - CodePush/JWT (5.2.1):
+    - React
+  - CodePush/SSZipArchive (5.2.1):
+    - React
+  - Google-Mobile-Ads-SDK (7.27.0)
   - React (0.51.0):
     - React/Core (= 0.51.0)
   - React/BatchedBridge (0.51.0):
@@ -28,33 +43,45 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.0.6):
     - React
+  - RNI18n (2.0.10):
+    - React
   - yoga (0.51.0.React)
 
 DEPENDENCIES:
   - AppCenter/Analytics (~> 1.1.0)
   - AppCenter/Crashes (~> 1.1.0)
   - AppCenterReactNativeShared (~> 1.1.0)
+  - CodePush (from `../node_modules/react-native-code-push`)
+  - Google-Mobile-Ads-SDK
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
+  - RNI18n (from `../node_modules/react-native-i18n`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 EXTERNAL SOURCES:
+  CodePush:
+    :path: ../node_modules/react-native-code-push
   React:
     :path: ../node_modules/react-native
   ReactNativePermissions:
     :path: ../node_modules/react-native-permissions
+  RNI18n:
+    :path: ../node_modules/react-native-i18n
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga
 
 SPEC CHECKSUMS:
   AppCenter: 97c88c10f83719de514aa7f186766f289012f074
   AppCenterReactNativeShared: 76f8034b52ce0a9edcdb67b98f85e9790c813318
+  CodePush: 9400969397b340ee26772b79fcadd1a48a0449dc
+  Google-Mobile-Ads-SDK: 83f7f890e638ce8f1debd440ea363338c9f6be3b
   React: 352f02f1db6e4744f9a758527e13e3fdefbbd6ba
   ReactNativePermissions: bf462424ca7823d1b8e6cb463184d6e7f151971b
+  RNI18n: cd4ddd958e326a2427b70f5474b3fb04aea793b2
   yoga: b5d96400ca8b2936965a7a6516da7c1177f432a3
 
-PODFILE CHECKSUM: 6ac95686cc018b1f5a07916be2036d9b1ead51e9
+PODFILE CHECKSUM: 1a27855c157df5ca9e541ef4bb29e3a84c181ebf
 
 COCOAPODS: 1.3.1

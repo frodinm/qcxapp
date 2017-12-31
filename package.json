@@ -33,6 +33,7 @@
     "querystring-es3": "^0.2.1",
     "react": "16.2.0",
     "react-native": "0.51.0",
+    "react-native-admob": "^2.0.0-beta.4",
     "react-native-animatable": "^1.2.4",
     "react-native-camera": "^0.12.0",
     "react-native-code-push": "^5.2.1",
