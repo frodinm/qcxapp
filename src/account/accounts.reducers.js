@@ -176,7 +176,7 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         isGettingQuadrigaOrders: false,
-        quadrigaOrders: action.payload,
+        quadrigaOrders: action.payload.data,
       }
     case GET_QUADRIGA_ORDERS.ERROR:
       return {

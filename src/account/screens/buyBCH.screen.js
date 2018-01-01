@@ -9,6 +9,7 @@ import {
   TextInput
 } from 'react-native';
 import {Button,Header} from 'react-native-elements'
+import {BuySellComponent} from 'components'
 import {connect} from 'react-redux'
 import {encryptAuthenticationQuadriga} from 'util'
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -16,7 +17,7 @@ import fontelloConfig from '../../assets/config';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 import {
-
+  getQuadrigaOrders
 } from 'account'
 import {iOSUIKit} from 'react-native-typography';
 
@@ -28,23 +29,19 @@ const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
     clientId:state.user.clientId,
     privateKey:state.user.privateKey,
+    quadrigaOrders: state.account.quadrigaOrders,
 })
 const mapDispatchToProps = (dispatch) => ({
- 
+  getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))}
 })
-
-
 
 class BuySellBCH extends Component {
   constructor(){
     super();
     this.state = {
       nonce: null,
+      interval: null,
     }
-    this.handleGetTicker = this.handleGetTicker.bind(this);
-    this.handleGetBalance = this.handleGetBalance.bind(this);
-    this.handleBalance = this.handleBalance.bind(this);
-    this.handleTransactions = this.handleTransactions.bind(this);
   }
 
   static navigationOptions = ({ navigation  }) => {
@@ -77,102 +74,41 @@ class BuySellBCH extends Component {
         }
     };
 
-  componentWillMount(){
     
-  }
-
-
-  handleGetBalance(){
-   
-  }
-  handleGetTicker(){
+    componentWillMount(){
+      const {getQuadrigaOrdersDispatch} = this.props;
+      getQuadrigaOrdersDispatch("bch_cad",0)
+    }
   
-  }
+    componentDidMount(){
+      const {getQuadrigaOrdersDispatch} = this.props;
+      const intervalInstance = setInterval(()=>{
+        getQuadrigaOrdersDispatch("bch_cad",0)
+      },20000)
+      this.setState({
+        interval:intervalInstance
+      })
+    }
+  
+    componentWillUnmount(){
+     clearInterval(this.state.interval)
+    }
 
-  handleBalance(){
-    
-  }
 
-  handleTransactions(){
-   
+    render() {
+      return (
+        <BuySellComponent acronym="BCH" quadrigaOrders={this.props.quadrigaOrders} />
+      );
+    }
   }
-
-  handleSelect(index){
-    console.log(index);
-  }
-
-
-  render() {
-    const {state} = this.props.navigation;
-    return (
-        <View style={styles.container}>
-        
-        <View style={{flexDirection:'row',margin:10}}>
-        <Text style={styles.amount}>Amount(cad) : </Text>
-        <TextInput underlineColorAndroid={'transparent'} style={{fontSize:20,width:width/2,borderWidth:1,borderColor:'black'}} keyboardType={'numeric'}/>
-        </View>
-        <View style={{flexDirection:'row',margin:10}}>
-        <Text style={styles.amount}>Amount(btc) : </Text>
-        <TextInput underlineColorAndroid={'transparent'} style={{fontSize:20,width:width/2,borderWidth:1,borderColor:'black'}} keyboardType={'numeric'}/>
-        </View>
-        <View style={{flexDirection:'row'}}>
-        <Button
-        buttonStyle={{backgroundColor:'#ffb732',elevation:3}}
-        large
-        title='     Sell     '
-        fontSize={22}
-        />    
-        <Button
-        large
-        backgroundColor={'#4ca64c'}
-        title='     Buy     '
-        fontSize={22}
-        buttonStyle={{elevation:3}}
-        />
-        </View>
-        </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    
-    backgroundColor: '#F5FCFF',
-  },
-  dropdownBtn:{
-    width:width,
-    backgroundColor:'green',
-    
-    height: height/12,
-    justifyContent: 'center'
-  },
-  dropdownBtnStyle:{
-    marginTop:10,
-    width:width,
-    alignSelf:'flex-start'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#fff',
-    marginBottom: 5,
-  },
-  title:{
-      fontSize:20,
-      color:'black'
-  },
-  amount:{
-      fontSize:25,
-      color:'black',
-      marginTop:6
-  }
-});
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      
+      backgroundColor: '#F5FCFF',
+    },
+  });
 
 export const BuySellBCHScreen = connect(mapStateToProps,mapDispatchToProps)(BuySellBCH);  

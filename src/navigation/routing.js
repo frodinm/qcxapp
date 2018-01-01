@@ -41,6 +41,9 @@ import getSlideFromRightTransition from 'react-navigation-slide-from-right-trans
 export const AuthenticatedRoute = TabNavigator({
     Quadriga: {
         screen: QuadrigaExchangeScreen,
+        navigationOptions: {
+            headerTintColor: 'red', //here I mean that the tintColor will be have that value on the CURRENT(!) screen
+            }
     },
     Accounts: {
         screen: AccountsWalletsScreen
@@ -66,39 +69,7 @@ export const AuthenticatedRoute = TabNavigator({
     },
 })
 
-const BuySellTabNav = TabNavigator({
-    XɃTCAD: {
-        screen: BuySellBTCScreen
-    },
-    ΞTH: {
-        screen: BuySellETHScreen
-    },
-    BCHCAD: {
-        screen: BuySellBCHScreen
-    },
-    BTGCAD:{
-        screen: BuySellBTGScreen
-    },
-    ŁTCCAD: {
-        screen: BuySellLTCScreen
-    },
-},
-{
-    swipeEnabled: false,
-    animationEnabled: false,
-    backBehavior: 'none',
-    tabBarOptions: {
-        labelStyle: {
-            fontSize: 12,
-        },
-        activeTintColor: '#fff',
-        inactiveTintColor:'#000',
-        style: {
-            backgroundColor: '#e9993b',
 
-        }
-    },
-})
 
 
 const PinCodeRouting = StackNavigator({
@@ -169,12 +140,34 @@ export const InitialRouting = StackNavigator({
     Auth: {
         screen: AuthenticatedRoute,
     },
-    BuySell: {
-        screen: BuySellTabNav,
+    XɃTCAD: {
+        screen: BuySellBTCScreen,
         navigationOptions: {
-            headerStyle: {
-                backgroundColor: 'orange'
-            }
+            headerTintColor: 'black', 
+        }
+    },
+    ΞTH: {
+        screen: BuySellETHScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
+    },
+    BCHCAD: {
+        screen: BuySellBCHScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
+    },
+    BTGCAD:{
+        screen: BuySellBTGScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
+    },
+    ŁTCCAD: {
+        screen: BuySellLTCScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
         }
     },
     ExchangeAddress:{
@@ -196,4 +189,5 @@ export const InitialRouting = StackNavigator({
 },
 {
     transitionConfig: getSlideFromRightTransition,
+    
 })

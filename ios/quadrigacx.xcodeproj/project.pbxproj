@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -69,6 +68,7 @@
 		E7E596B7C85EBB4A21CBDA85 /* libPods-quadrigacx-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B212F223277030DC4A8C89B /* libPods-quadrigacx-tvOSTests.a */; };
 		EF1AEEB30CEF48FBBF7F2C31 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89696A429A746C5AE794C41 /* libRNAdMobManager.a */; };
 		F845C40419FD41AE90A3F2AA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */; };
+		85720E0D18EE40E7A2BE292B /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66002468E12847C7A5002E05 /* fontello.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -575,6 +575,7 @@
 		EB48C135BBB54681A81B8582 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		F0BBFEFEBA6249A2833AD851 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		FB1EBACC2F0065D627D2DA6A /* libPods-quadrigacx-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quadrigacx-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66002468E12847C7A5002E05 /* fontello.ttf */ = {isa = PBXFileReference; name = "fontello.ttf"; path = "../src/assets/fonts/fontello.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1058,6 +1059,7 @@
 				3B2E271695A9430DB42184A8 /* Octicons.ttf */,
 				891EB28629504FA68EC5018E /* SimpleLineIcons.ttf */,
 				69150FA9AD4849DE9E990159 /* Zocial.ttf */,
+				66002468E12847C7A5002E05 /* fontello.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1727,6 +1729,7 @@
 				5DE696399A85479B98226556 /* Octicons.ttf in Resources */,
 				C870389D3CB645788C9A4D3E /* SimpleLineIcons.ttf in Resources */,
 				5A348B416141412ABCFB7E02 /* Zocial.ttf in Resources */,
+				85720E0D18EE40E7A2BE292B /* fontello.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import {Button,Header} from 'react-native-elements'
 import {connect} from 'react-redux'
+import {BuySellComponent} from 'components'
 import {encryptAuthenticationQuadriga} from 'util'
 import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons'
 import {
-
+  getQuadrigaOrders
 } from 'account'
 import {iOSUIKit} from 'react-native-typography';
 
@@ -25,9 +26,10 @@ const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
     clientId:state.user.clientId,
     privateKey:state.user.privateKey,
+    quadrigaOrders: state.account.quadrigaOrders,
 })
 const mapDispatchToProps = (dispatch) => ({
- 
+  getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))}
 })
 
 
@@ -37,11 +39,9 @@ class BuySellETH extends Component {
     super();
     this.state = {
       nonce: null,
+      interval: null,
     }
-    this.handleGetTicker = this.handleGetTicker.bind(this);
-    this.handleGetBalance = this.handleGetBalance.bind(this);
-    this.handleBalance = this.handleBalance.bind(this);
-    this.handleTransactions = this.handleTransactions.bind(this);
+
   }
 
   static navigationOptions = ({ navigation  }) => {
@@ -74,102 +74,40 @@ class BuySellETH extends Component {
         }
     };
 
-  componentWillMount(){
-    
-  }
-
-
-  handleGetBalance(){
-   
-  }
-  handleGetTicker(){
+    componentWillMount(){
+      const {getQuadrigaOrdersDispatch} = this.props;
+      getQuadrigaOrdersDispatch("eth_cad",0)
+    }
   
-  }
+    componentDidMount(){
+      const {getQuadrigaOrdersDispatch} = this.props;
+      const intervalInstance = setInterval(()=>{
+        getQuadrigaOrdersDispatch("eth_cad",0)
+      },20000)
+      this.setState({
+        interval:intervalInstance
+      })
+    }
+  
+    componentWillUnmount(){
+     clearInterval(this.state.interval)
+    }
 
-  handleBalance(){
-    
-  }
 
-  handleTransactions(){
-   
+    render() {
+      return (
+        <BuySellComponent acronym="ΞTH" quadrigaOrders={this.props.quadrigaOrders} />
+      );
+    }
   }
-
-  handleSelect(index){
-    console.log(index);
-  }
-
-
-  render() {
-    const {state} = this.props.navigation;
-    return (
-        <View style={styles.container}>
-        
-        <View style={{flexDirection:'row',margin:10}}>
-        <Text style={styles.amount}>Amount(cad) : </Text>
-        <TextInput underlineColorAndroid={'transparent'} style={{fontSize:20,width:width/2,borderWidth:1,borderColor:'black'}} keyboardType={'numeric'}/>
-        </View>
-        <View style={{flexDirection:'row',margin:10}}>
-        <Text style={styles.amount}>Amount(btc) : </Text>
-        <TextInput underlineColorAndroid={'transparent'} style={{fontSize:20,width:width/2,borderWidth:1,borderColor:'black'}} keyboardType={'numeric'}/>
-        </View>
-        <View style={{flexDirection:'row'}}>
-        <Button
-        buttonStyle={{backgroundColor:'#ffb732',elevation:3}}
-        large
-        title='     Sell     '
-        fontSize={22}
-        />    
-        <Button
-        large
-        backgroundColor={'#4ca64c'}
-        title='     Buy     '
-        fontSize={22}
-        buttonStyle={{elevation:3}}
-        />
-        </View>
-        </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    
-    backgroundColor: '#F5FCFF',
-  },
-  dropdownBtn:{
-    width:width,
-    backgroundColor:'green',
-    
-    height: height/12,
-    justifyContent: 'center'
-  },
-  dropdownBtnStyle:{
-    marginTop:10,
-    width:width,
-    alignSelf:'flex-start'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#fff',
-    marginBottom: 5,
-  },
-  title:{
-      fontSize:20,
-      color:'black'
-  },
-  amount:{
-      fontSize:25,
-      color:'black',
-      marginTop:6
-  }
-});
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      
+      backgroundColor: '#f1f1f1',
+    },
+  });
 
 export const BuySellETHScreen = connect(mapStateToProps,mapDispatchToProps)(BuySellETH);  

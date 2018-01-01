@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Platform
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import {Button} from 'react-native-elements'
 import {ButtonComponent} from 'components'
 import BTClogo from '../assets/logos/bitcoin.png'
@@ -51,11 +52,21 @@ const OTHERStyle = {
   
 }
 
-
-
 export class Modules extends Component {
   constructor(){
     super();
+  }
+
+  handleOnPress(navigation,name){ // great solution for tabnavigator
+    Promise.all([
+      navigation.dispatch(
+        NavigationActions.navigate({
+          index: 0,
+          // TabNav is a TabNavigator nested in a StackNavigator
+          actions: [NavigationActions.navigate({ routeName: 'BuySell' })]
+        })
+      )
+    ]).then(() => navigation.navigate(name))
   }
 
   render(){
@@ -63,13 +74,13 @@ export class Modules extends Component {
     return(
       <View style={styles.container}>
         <View style={{flexDirection:'row'}}>
-          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('BuySell',{coin:'BTC'})} tokenData={dataBTC} imageSource={BTClogo} color={colorBTC}/>
-          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('BuySell',{coin:'ETH'})} tokenData={dataETH} imageSource={ETHlogo} tokenName={'ETH'} color={colorETH}/>
+          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('XɃTCAD')} tokenData={dataBTC} imageSource={BTClogo} color={colorBTC}/>
+          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('ΞTH')} tokenData={dataETH} imageSource={ETHlogo} tokenName={'ETH'} color={colorETH}/>
         </View>
         <View style={{flex:1,flexDirection:'row'}}>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('BuySell',{coin:'BCH'})} tokenData={dataBCH} imageSource={BCHlogo} color={colorBCH}/>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('BuySell',{coin:'BTG'})} tokenData={dataBTG} imageSource={BTGlogo} color={colorBTG}/>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('BuySell',{coin:'LTC'})} tokenData={dataLTC} imageSource={LTClogo} color={colorLTC}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('BCHCAD')} tokenData={dataBCH} imageSource={BCHlogo} color={colorBCH}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('BTGCAD')} tokenData={dataBTG} imageSource={BTGlogo} color={colorBTG}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('ŁTCCAD')} tokenData={dataLTC} imageSource={LTClogo} color={colorLTC}/>
         </View>
       
       </View>
