@@ -11,7 +11,7 @@ import {
 import {Button,Header} from 'react-native-elements'
 import {connect} from 'react-redux'
 import {encryptAuthenticationQuadriga} from 'util'
-
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons'
 import {
 
 } from 'account'
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 
-class BuySell extends Component {
+class BuySellETH extends Component {
   constructor(){
     super();
     this.state = {
@@ -43,6 +43,36 @@ class BuySell extends Component {
     this.handleBalance = this.handleBalance.bind(this);
     this.handleTransactions = this.handleTransactions.bind(this);
   }
+
+  static navigationOptions = ({ navigation  }) => {
+    const headerStyle={
+      alignSelf: 'center',
+      color:'white',
+      position: 'relative',
+      ...Platform.select({
+        android:{
+          left: 30
+        }
+      })
+    }
+    return {
+         headerTitle: `ΞTH `,
+         headerTitleStyle:{
+              ...headerStyle
+        },
+        headerStyle:{
+              backgroundColor:'orange'
+            },
+        tabBarLabel: 'ΞTH',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+          name="currency-eth"
+          color={tintColor}
+          size={30}
+        />
+          )
+        }
+    };
 
   componentWillMount(){
     
@@ -142,4 +172,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export const BuySellScreen = connect(mapStateToProps,mapDispatchToProps)(BuySell);  
+export const BuySellETHScreen = connect(mapStateToProps,mapDispatchToProps)(BuySellETH);  

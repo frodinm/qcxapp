@@ -73,7 +73,14 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const testLookUp = {
-  
+//     id - the order id passed to that function
+//     book - which orderbook it belongs to
+//     price - price of the order
+//     amount - amount of the order
+//     type - buy or sell (0 - buy; 1 - sell)
+//     status - status of the order (-1 - canceled; 0 - active; 1 - partially filled; 2 - complete)
+//     created - date the order was created
+//     updated - date the order was last updated (not shown when status = 0)
 }
 
 const testObject = [
@@ -364,14 +371,14 @@ class Wallet extends Component {
                     <View key={index} style={{width:width,height:height/14,backgroundColor:'white'}}>
         
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                        <View style={{width:width*0.30,alignItems:'center'}}>
+                        <View style={{width:width*0.28,alignItems:'center'}}>
                         {this.handleIcon(item)}
                         </View>
-                        <View style={{flexDirection:'column',justifyContent:'center',width:width*0.40}}>
+                        <View style={{flexDirection:'column',justifyContent:'center',width:width*0.44}}>
                             <Text style={[iOSUIKit.body]}>{this.handleText(item).BuyOrSell} {this.props.navigation.state.params.name} </Text>
                             {this.handleText(item).textObject}
                         </View>
-                        <View style={{flexDirection:'column',width:width*0.30}}>
+                        <View style={{flexDirection:'column',width:width*0.28}}>
                             <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}} >
                             <Text style={iOSUIKit.caption} >{convertunixTime(item.datetime).hours}:{convertunixTime(item.datetime).minutes}:{convertunixTime(item.datetime).seconds}</Text>
                             </View>
@@ -417,7 +424,7 @@ class Wallet extends Component {
         return(
             <View style={styles.container}>
             <View style={{ flexDirection: 'column', alignItems: 'center'}}>
-                    <View style={{...Platform.select({ios:{height:height/2-100},android:{height:height/2-40}}),alignItems: 'center'}}>
+                    <View style={{...Platform.select({ios:{height:height/2-60},android:{height:height/2-40}}),alignItems: 'center'}}>
                         <View style={{alignItems: 'center',width:width,height:(height/2-30)*0.45}}>
                             <Text style={[iOSUIKit.title3,{marginBottom:10,marginTop:20}]}>Your {name} wallet</Text>
                             {this.handleData(acronym)}
@@ -467,8 +474,8 @@ class Wallet extends Component {
                         bgColor='black'
                         fgColor='white'
                         />
-                        {this.handleModalButton("close".toUpperCase(),{position:'absolute',bottom:10,right:150,margin:5},{fontSize:14,color:'black',textAlign:'center'},()=>this.refs.modal.close())}
-                        {this.handleModalButton("copy address".toUpperCase(),{position:'absolute',bottom:10,right:20,margin:5},{fontSize:14,color:'orange',textAlign:'center'},()=>this.handleCopyAddress())}
+                        {this.handleModalButton("close".toUpperCase(),{position:'absolute',bottom:30,right:150,margin:5},{fontSize:14,color:'black',textAlign:'center'},()=>this.refs.modal.close())}
+                        {this.handleModalButton("copy address".toUpperCase(),{position:'absolute',bottom:30,right:20,margin:5},{fontSize:14,color:'orange',textAlign:'center'},()=>this.handleCopyAddress())}
                     </View>
                 </Modal>
               </View>

@@ -10,6 +10,7 @@ target 'quadrigacx' do
   pod 'AppCenter/Analytics', '~> 1.1.0'
   pod 'AppCenterReactNativeShared', '~> 1.1.0'
   pod 'Google-Mobile-Ads-SDK'
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
   pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
@@ -20,8 +21,6 @@ target 'quadrigacx' do
 ]
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
-
-  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
 
   target 'quadrigacxTests' do
     inherit! :search_paths

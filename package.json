@@ -88,6 +88,11 @@
   "jest": {
     "preset": "react-native"
   },
+  "rnpm": {
+    "assets": [
+      "src/assets/fonts"
+    ]
+  }, 
   "react-native": {
     "zlib": "browserify-zlib",
     "console": "console-browserify",

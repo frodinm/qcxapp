@@ -11,6 +11,9 @@ import {
 import {Button,Header} from 'react-native-elements'
 import {connect} from 'react-redux'
 import {encryptAuthenticationQuadriga} from 'util'
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+import fontelloConfig from '../../assets/config';
+const Icon = createIconSetFromFontello(fontelloConfig);
 
 import {
 
@@ -32,7 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 
-class BuySell extends Component {
+class BuySellBTG extends Component {
   constructor(){
     super();
     this.state = {
@@ -43,6 +46,36 @@ class BuySell extends Component {
     this.handleBalance = this.handleBalance.bind(this);
     this.handleTransactions = this.handleTransactions.bind(this);
   }
+
+  static navigationOptions = ({ navigation  }) => {
+    const headerStyle={
+      alignSelf: 'center',
+      color:'white',
+      position: 'relative',
+      ...Platform.select({
+        android:{
+          left: 30
+        }
+      })
+    }
+    return {
+         headerTitle: ` BTG/CAD `,
+         headerTitleStyle:{
+              ...headerStyle
+        },
+        headerStyle:{
+              backgroundColor:'orange'
+            },
+        tabBarLabel: 'BTG/CAD',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+          name="btg"
+          color={tintColor}
+          size={30}
+        />
+          )
+        }
+    };
 
   componentWillMount(){
     
@@ -73,7 +106,6 @@ class BuySell extends Component {
     const {state} = this.props.navigation;
     return (
         <View style={styles.container}>
-        
         <View style={{flexDirection:'row',margin:10}}>
         <Text style={styles.amount}>Amount(cad) : </Text>
         <TextInput underlineColorAndroid={'transparent'} style={{fontSize:20,width:width/2,borderWidth:1,borderColor:'black'}} keyboardType={'numeric'}/>
@@ -142,4 +174,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export const BuySellScreen = connect(mapStateToProps,mapDispatchToProps)(BuySell);  
+export const BuySellBTGScreen = connect(mapStateToProps,mapDispatchToProps)(BuySellBTG);  

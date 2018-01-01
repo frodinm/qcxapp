@@ -6,11 +6,13 @@ import {
   View,
   ScrollView,
   Dimensions,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native';
+import Icon from 'react-native-vector-icons/dist/Foundation'
 import {Button,Header} from 'react-native-elements'
 import {connect} from 'react-redux'
-import {encryptAuthenticationQuadriga} from 'util'
+import {encryptAuthenticationQuadriga,Logos} from 'util'
 
 import {
 
@@ -32,7 +34,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 
-class BuySell extends Component {
+class BuySellBTC extends Component {
   constructor(){
     super();
     this.state = {
@@ -44,6 +46,35 @@ class BuySell extends Component {
     this.handleTransactions = this.handleTransactions.bind(this);
   }
 
+  static navigationOptions = ({ navigation  }) => {
+    const headerStyle={
+      alignSelf: 'center',
+      color:'white',
+      position: 'relative',
+      ...Platform.select({
+        android:{
+          left: 30
+        }
+      })
+    }
+    return {
+         headerTitle: ` XɃT/CAD `,
+         headerTitleStyle:{
+              ...headerStyle
+        },
+        headerStyle:{
+              backgroundColor:'orange'
+            },
+        tabBarLabel: 'XɃT/CAD',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+          name="bitcoin-circle"
+          color={tintColor}
+          size={30}
+        />
+          )
+        }
+    };
   componentWillMount(){
     
   }
@@ -142,4 +173,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export const BuySellScreen = connect(mapStateToProps,mapDispatchToProps)(BuySell);  
+export const BuySellBTCScreen = connect(mapStateToProps,mapDispatchToProps)(BuySellBTC);  

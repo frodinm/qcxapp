@@ -11,6 +11,9 @@ import {
 import {Button,Header} from 'react-native-elements'
 import {connect} from 'react-redux'
 import {encryptAuthenticationQuadriga} from 'util'
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+import fontelloConfig from '../../assets/config';
+const Icon = createIconSetFromFontello(fontelloConfig);
 
 import {
 
@@ -32,7 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 
-class BuySell extends Component {
+class BuySellLTC extends Component {
   constructor(){
     super();
     this.state = {
@@ -43,6 +46,36 @@ class BuySell extends Component {
     this.handleBalance = this.handleBalance.bind(this);
     this.handleTransactions = this.handleTransactions.bind(this);
   }
+
+  static navigationOptions = ({ navigation  }) => {
+    const headerStyle={
+      alignSelf: 'center',
+      color:'white',
+      position: 'relative',
+      ...Platform.select({
+        android:{
+          left: 30
+        }
+      })
+    }
+    return {
+         headerTitle: ` LTC/CAD `,
+         headerTitleStyle:{
+              ...headerStyle
+        },
+        headerStyle:{
+              backgroundColor:'orange'
+            },
+        tabBarLabel: 'LTC/CAD',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+          name="ltc"
+          color={tintColor}
+          size={30}
+        />
+          )
+        }
+    };
 
   componentWillMount(){
     
@@ -142,4 +175,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export const BuySellScreen = connect(mapStateToProps,mapDispatchToProps)(BuySell);  
+export const BuySellLTCScreen = connect(mapStateToProps,mapDispatchToProps)(BuySellLTC);  

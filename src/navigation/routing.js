@@ -10,7 +10,12 @@ import {
     QuadrigaExchangeScreen,
     BuySellScreen,
     AccountsWalletsScreen,
-    WalletScreen
+    WalletScreen,
+    BuySellBTCScreen,
+    BuySellETHScreen,
+    BuySellBCHScreen,
+    BuySellBTGScreen,
+    BuySellLTCScreen
 } from 'account'
 import {
     ChangellyExchangeScreen,
@@ -45,6 +50,40 @@ export const AuthenticatedRoute = TabNavigator({
     },
 }, {
     tabBarPosition: 'bottom',
+    swipeEnabled: false,
+    animationEnabled: false,
+    backBehavior: 'none',
+    tabBarOptions: {
+        labelStyle: {
+            fontSize: 12,
+        },
+        activeTintColor: '#fff',
+        inactiveTintColor:'#000',
+        style: {
+            backgroundColor: '#e9993b',
+
+        }
+    },
+})
+
+const BuySellTabNav = TabNavigator({
+    XɃTCAD: {
+        screen: BuySellBTCScreen
+    },
+    ΞTH: {
+        screen: BuySellETHScreen
+    },
+    BCHCAD: {
+        screen: BuySellBCHScreen
+    },
+    BTGCAD:{
+        screen: BuySellBTGScreen
+    },
+    ŁTCCAD: {
+        screen: BuySellLTCScreen
+    },
+},
+{
     swipeEnabled: false,
     animationEnabled: false,
     backBehavior: 'none',
@@ -131,7 +170,7 @@ export const InitialRouting = StackNavigator({
         screen: AuthenticatedRoute,
     },
     BuySell: {
-        screen: BuySellScreen,
+        screen: BuySellTabNav,
         navigationOptions: {
             headerStyle: {
                 backgroundColor: 'orange'
