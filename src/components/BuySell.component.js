@@ -19,9 +19,46 @@ const {width,height} = Dimensions.get('window')
 export class BuySellComponent extends Component {
   constructor(){
     super();
+    this.state={
+      amount:"0",
+      price: "",
+      interval:null,
+    }
     this.handleBidOrderView = this.handleBidOrderView.bind(this);
     this.handleAskOrderView = this.handleAskOrderView.bind(this);
+    this.handleAmount = this.handleAmount.bind(this);
+    this.handlePrice = this.handlePrice.bind(this);
+    this.handleTotalPrice = this.handleTotalPrice.bind(this);
+    this.handleUserOrders = this.handleUserOrders.bind(this);
   }
+
+  handleAmount(text){
+    if(text !== ""){
+      this.setState({
+        amount: text
+      })
+    }else{
+      this.setState({
+        amount: "0"
+      })
+    }
+  }
+
+  handleTotalPrice(){
+    const {quadrigaOrders} = this.props;
+    if(this.state.price === ""){
+      return parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])
+    }else{
+      return parseFloat(this.state.amount)*parseFloat(this.state.price);
+    }
+  }
+
+  handlePrice(text){
+    this.setState({
+      price:text
+    })
+  }
+
 
 
   handleBidOrderView(){
@@ -39,7 +76,7 @@ export class BuySellComponent extends Component {
 
   handleAskOrderView(){
     const {quadrigaOrders} = this.props;
-    let btcAsks = quadrigaOrders.asks.reverse().slice(0,10);
+    let btcAsks = quadrigaOrders.asks.slice(0,10);
     return btcAsks.map((item,index)=>{
       return <View key={index} style={{flexDirection:'column',alignSelf:'flex-start',marginTop:2}}>
         <View style={{flexDirection:'row'}}>
@@ -49,26 +86,33 @@ export class BuySellComponent extends Component {
       </View>
     })
   }
+
+  handleUserOrders(){
+    const {name} = this.props;
+    return <Text style={{textAlign:'center',margin:30}}>{`Buy ${name} now \n and your orders will show here`}</Text>
+  
+  }
   
   render() {
-    const {acronym} = this.props;
+    const {acronym,quadrigaOrders} = this.props;
     return (
       <View style={styles.container}>
         <ScrollView>
           <View style={{flexDirection:'row',alignSelf:'center',alignItems:'center',justifyContent:'center',backgroundColor:'white',width:width/1.03,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,marginTop:5}}>
-            <View style={{flexDirection:'column',margin:10}}>
+            <View style={{flexDirection:'column', marginTop:15,marginBottom:15,width:width/2.2}}>
               <Text style={[iOSUIKit.body,{}]}>Amount</Text>
-              <TextInput onBlur={()=>{alert('test')}} keyboardType="numeric" placeholder={`Amount ${acronym}`} style={styles.textInput}/>
+              <TextInput onChangeText={(text)=>this.handleAmount(text)} keyboardType="numeric" placeholder={`Amount ${acronym}`} style={styles.textInput}/>
               <Text style={[iOSUIKit.body,{}]}>Price</Text>
-              <TextInput keyboardType="numeric" placeholder={`CAD per ${acronym}`} style={styles.textInput}/>
+              <TextInput onChangeText={(text)=>this.handlePrice(text)} keyboardType="numeric" placeholder={`CAD per ${acronym} at MP`} style={styles.textInput}/>
             </View>
-            <View style={{flexDirection:'column',margin:5,marginTop:15,justifyContent:'center'}}>
+            <View style={{flexDirection:'column',justifyContent:'center',width:width/2.2,alignItems:'center'}}>
                 <Text style={[iOSUIKit.title3,styles.text]}>Available</Text>
                 <Text style={[iOSUIKit.caption,styles.text]}>$0.00 CAD</Text>
-                <Text style={[iOSUIKit.caption,styles.text]}>Total: $0.00 CAD</Text>
+                <Text style={[iOSUIKit.caption,styles.text]}>$0.00 {acronym}</Text>
+                <Text style={[iOSUIKit.caption,styles.text]}>Total: ${this.handleTotalPrice()}</Text>
             </View>
           </View>
-          <View style={{flexDirection:'row',width:width/1.03,height:height/8,alignItems:'center',backgroundColor:'white',marginBottom:5,marginLeft:5,marginTop:5,justifyContent:'center',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
+          <View style={{flexDirection:'row',width:width/1.03-5,height:height/8,alignItems:'center',backgroundColor:'white',marginBottom:5,marginLeft:5,marginTop:5,justifyContent:'center',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
               <Button title="BUY" buttonStyle={{backgroundColor:'#4ca64c',height:height/15,width:width/2.5}}/>
               <Button title="SELL" buttonStyle={{backgroundColor:'#ffb732',height:height/15,width:width/2.5}}/>
           </View>
@@ -90,7 +134,10 @@ export class BuySellComponent extends Component {
               {this.handleAskOrderView()}
           </View>
           </View>
-          <Text style={[iOSUIKit.title3,{width:width,textAlign:'center',marginTop:10}]}>Your Orders</Text>
+          <View style={{width:width/1.03-5,alignItems:'center',backgroundColor:'white',marginBottom:5,marginLeft:5,marginTop:5,justifyContent:'center',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
+            <Text style={[iOSUIKit.title3,{width:width,textAlign:'center',marginTop:10}]}>Your Orders</Text>
+            {this.handleUserOrders()}
+          </View>
         </ScrollView>
         </View>
     );
@@ -113,12 +160,12 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderColor:'#8E8E93',
         borderRadius:5,
-        paddingLeft:5
+        paddingLeft:5,
+        height:30,
       }
     }),
     width:width/2.2,
     marginTop:5,
-    height:30,
   },
   dropdownBtn:{
     width:width,

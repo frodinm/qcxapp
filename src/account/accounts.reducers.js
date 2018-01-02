@@ -52,7 +52,7 @@ const initialState = {
   isCancellingOrder:false,
   quadrigaUserBalance:null,
   quadrigaUserTransactions:[],
-  quadrigaOrders:null,
+  quadrigaOrders:{bids:[],asks:[]},
   quadrigaTransactions:null,
   quadrigaUserOrders:null,
   quadrigaUserOrdersLookup:null,

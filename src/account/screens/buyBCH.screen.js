@@ -17,7 +17,8 @@ import fontelloConfig from '../../assets/config';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 import {
-  getQuadrigaOrders
+  getQuadrigaOrders,
+  postUserQuadrigaBalance
 } from 'account'
 import {iOSUIKit} from 'react-native-typography';
 
@@ -30,9 +31,11 @@ const mapStateToProps = (state) => ({
     clientId:state.user.clientId,
     privateKey:state.user.privateKey,
     quadrigaOrders: state.account.quadrigaOrders,
+    quadrigaUserBalance: state.account.quadrigaUserBalance,
 })
 const mapDispatchToProps = (dispatch) => ({
-  getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))}
+  getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))},
+  //postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))}
 })
 
 class BuySellBCH extends Component {
@@ -76,8 +79,10 @@ class BuySellBCH extends Component {
 
     
     componentWillMount(){
-      const {getQuadrigaOrdersDispatch} = this.props;
+      const {getQuadrigaOrdersDispatch,postUserQuadrigaBalanceDispatch} = this.props;
       getQuadrigaOrdersDispatch("bch_cad",0)
+      const nonce = Date.now();
+      //postUserQuadrigaBalanceDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce);
     }
   
     componentDidMount(){
@@ -97,7 +102,7 @@ class BuySellBCH extends Component {
 
     render() {
       return (
-        <BuySellComponent acronym="BCH" quadrigaOrders={this.props.quadrigaOrders} />
+        <BuySellComponent acronym="BCH" name="Bitcoin Cash" quadrigaOrders={this.props.quadrigaOrders} />
       );
     }
   }

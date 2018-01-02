@@ -10,14 +10,15 @@ import {
   Dimensions,
   ScrollView
 } from 'react-native';
-
 import Swiper from 'react-native-swiper'
 import {Button} from 'react-native-elements'
 import {AuthenticatedRoute} from 'navigation'
 import {connect} from 'react-redux'
 import {encryptAuthenticationQuadriga,resetNavigation} from 'util'
+import {iOSUIKit} from 'react-native-typography'
 import { Isao  } from 'react-native-textinput-effects';
 import {userLogin} from 'users'
+import ChangellyLogo from '../assets/img/logo.png'
 
 const {height,width} = Dimensions.get('window')
 
@@ -53,7 +54,6 @@ class NewUser extends Component {
         }else if(pin != ''){
           resetNavigation( 'Auth'/*'AuthPin'*/,navigation)
         }
-        console.log(encryptAuthenticationQuadriga("1391683499","3","JJHlXeDcFM","230664ae53cbe5a07c6c389910540729"))
       }
       handleLogin(){
         const {navigation,userLoginDispatch} = this.props;
@@ -85,9 +85,13 @@ class NewUser extends Component {
     
   render() {
     const {isLoggedIn,navigation} = this.props;
-        return <Swiper style={styles.wrapper} loop={false} dotColor={'#ffff'} activeDotColor={'#da9733'}>
+        return <Swiper style={styles.wrapper} loop={false} dotColor={'#000'} activeDotColor={'#da9733'}>
         <View style={styles.slide1}>
-          <Text style={styles.text}>Easily manage your cryptocurrency wallets and exchange them at the best rates provided by Changelly</Text>
+          <Text style={[iOSUIKit.body,styles.text]}>{`Easily trade, deposit,\n and withdraw on QuadrigaCX`}</Text>
+        </View>
+        <View style={styles.slide1}>
+          <Image resizeMode="contain" source={ChangellyLogo} style={{height:100,width:250}}/>
+          <Text style={[iOSUIKit.body,styles.text]}>{`Easy and fast exchange to any of the supported cryptocurrencies on Changelly `}</Text>
         </View>
         <ScrollView behavior={'padding'} style={styles.slide2}>
           <Isao
@@ -96,7 +100,7 @@ class NewUser extends Component {
             inputStyle={styles.textInput}
             label={'Client Id'}
             activeColor={'#da9733'}
-            passiveColor={'#fff'}
+            passiveColor={'#000'}
             onChangeText={(value)=>this.handleClientId(value)}
           />
           <Isao
@@ -105,7 +109,7 @@ class NewUser extends Component {
             inputStyle={styles.textInput}
             label={'Api Key'}
             activeColor={'#da9733'}
-            passiveColor={'#fff'}
+            passiveColor={'#000'}
             onChangeText={(value)=>this.handleApiKey(value)}
           />
           <Isao
@@ -114,17 +118,17 @@ class NewUser extends Component {
             inputStyle={styles.textInput}
             label={'Private Key'}
             activeColor={'#da9733'}
-            passiveColor={'#fff'}
+            passiveColor={'#000'}
             onChangeText={(value) => this.handleprivateKey(value)}
           />
           <Button
-          buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',margin:30,marginTop:50,right:70,paddingLeft:40,paddingRight:40}}
+          buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',margin:30,marginTop:50,right:70,paddingLeft:20,paddingRight:20}}
           textStyle={{textAlign: 'center'}}
-          title={`Log In`}
+          title={`Get Started!`}
           onPress={()=>this.handleLogin()}
         />
           <Button
-            buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',position:'relative',top:-73,right:-70,paddingLeft:40,paddingRight:40}}
+            buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',position:'relative',top:-73,right:-70,paddingLeft:35,paddingRight:35}}
             textStyle={{textAlign: 'center'}}
             title={`Register`}
             onPress={()=>navigation.navigate('Register')}
@@ -159,14 +163,14 @@ const styles = StyleSheet.create({
   },
   slide1:{
     flex: 1,
-    backgroundColor:'#313231',
+    backgroundColor:'white',
     justifyContent:'center',
     alignItems: 'center',
 
   },
   slide2:{
     flex: 1,
-    backgroundColor:'#313231',
+    backgroundColor:'white',
 
 
   },
@@ -179,7 +183,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   textInput:{
-    color: '#fff',
+    color: '#000',
   },
   textInputWrapper:{
     alignSelf:'center',

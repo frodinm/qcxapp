@@ -80,7 +80,7 @@ class AccountsWallets extends Component {
 
   componentDidMount(){
     setTimeout(() => {
-      this.props.navigation.setParams({add:()=>this.handleAddNewAddress()})
+      this.props.navigation.setParams({add:this.handleAddNewAddress})
     }, 1000);
   }
 
@@ -209,7 +209,9 @@ class AccountsWallets extends Component {
       <ScrollView >
           {this.handlePlatform()}
 
-          <Modal 
+      
+    </ScrollView>
+    <Modal 
             style={[styles.modal]}
             position={"center"}
 
@@ -225,8 +227,7 @@ class AccountsWallets extends Component {
                 <Text onPress={()=>this.refs.modal.close()}>Close</Text>
               </TouchableHighlight>
             </View>
-          </Modal>
-    </ScrollView>
+    </Modal>
     <View style={{position:'absolute',bottom:0,width:width}}>
         <AdMobBanner
       adSize="smartBannerLandscape"

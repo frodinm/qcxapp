@@ -90,7 +90,7 @@ class BuySellLTC extends Component {
 
     render() {
       return (
-        <BuySellComponent acronym="ŁTC" quadrigaOrders={this.props.quadrigaOrders} />
+        <BuySellComponent acronym="ŁTC" name="Litecoin" quadrigaOrders={this.props.quadrigaOrders} />
       );
     }
   }

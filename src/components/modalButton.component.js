@@ -30,7 +30,7 @@ export class ModalButtonComponent extends Component {
     }else{
       return(
         <TouchableHighlight onPress={onPressAction} >
-          <View style={{...buttonStyle,backgroundColor:'#F5FCFF',justifyContent:'center',alignItems:'center'}} pointerEvents='box-only' >
+          <View style={{...buttonStyle,backgroundColor:'white',justifyContent:'center',alignItems:'center'}} pointerEvents='box-only' >
           <Text style={{textAlign:'center',fontSize:20,color:'black',fontWeight:'bold',marginBottom:10}}>{text}</Text>
           <Image style={{height:80,width:80,marginBottom:10,marginTop:10}} resizeMode="contain"  source={imageSource}/>
           </View>

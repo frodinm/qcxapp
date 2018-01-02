@@ -93,7 +93,7 @@ class App extends Component {
   }
   render() {
     return (
-      this.handleRedirect()
+         this.handleRedirect()
     );
   }
 }

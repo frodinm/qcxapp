@@ -95,7 +95,7 @@ class BuySellBTC extends Component {
 
     render() {
       return (
-        <BuySellComponent acronym="XɃT" quadrigaOrders={this.props.quadrigaOrders} />
+        <BuySellComponent acronym="XɃT" name="Bitcoin" quadrigaOrders={this.props.quadrigaOrders} />
       );
     }
   }

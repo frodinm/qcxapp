@@ -96,7 +96,7 @@ class BuySellETH extends Component {
 
     render() {
       return (
-        <BuySellComponent acronym="ΞTH" quadrigaOrders={this.props.quadrigaOrders} />
+        <BuySellComponent acronym="ΞTH" name="Ethereum" quadrigaOrders={this.props.quadrigaOrders} />
       );
     }
   }

@@ -91,7 +91,7 @@ class BuySellBTG extends Component {
 
     render() {
       return (
-        <BuySellComponent acronym="BTG" quadrigaOrders={this.props.quadrigaOrders} />
+        <BuySellComponent acronym="BTG" name="Bitcoin Gold" quadrigaOrders={this.props.quadrigaOrders} />
       );
     }
   }
