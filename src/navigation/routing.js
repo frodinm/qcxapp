@@ -149,8 +149,8 @@ export const InitialRouting = StackNavigator({
     ΞTH: {
         screen: BuySellETHScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
-        }
+            headerTintColor: 'black',
+        },
     },
     BCHCAD: {
         screen: BuySellBCHScreen,

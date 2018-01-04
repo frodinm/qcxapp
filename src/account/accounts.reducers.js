@@ -1,4 +1,5 @@
 import {
+  SET_TRADING_BOOK,
   GET_QUADRIGA_TICKER_BTC,
   GET_QUADRIGA_TICKER_ETH,
   GET_QUADRIGA_TICKER_BCH,
@@ -77,6 +78,7 @@ const initialState = {
   quadrigaTickerBCH:null,
   quadrigaTickerETH:null,
   quadrigaTickerBTG:null,
+  tradingBook: '',
   error: null,
 }
 
@@ -529,6 +531,11 @@ export const AccountReducer = (state = initialState, action) => {
         ...state,
         isGettingUserQuadrigaLitecoinWalletWithdraw: false,
         error: action.payload,
+      }
+    case SET_TRADING_BOOK.SUCCESS:
+      return {
+        ...state,
+        tradingBook: action.payload,
       }
     default:
       return state

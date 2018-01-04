@@ -9,7 +9,7 @@ import {
   TextInput
 } from 'react-native';
 import {Button,Header} from 'react-native-elements'
-import {BuySellComponent} from 'components'
+import {BuySellComponent,TradingButtonComponent} from 'components'
 import {connect} from 'react-redux'
 import {encryptAuthenticationQuadriga} from 'util'
 import { createIconSetFromFontello } from 'react-native-vector-icons';
@@ -17,25 +17,44 @@ import fontelloConfig from '../../assets/config';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 import {
+  setTradingBook,
   getQuadrigaOrders,
-  postUserQuadrigaBalance
+  postUserQuadrigaBalance,
+  postUserOpenOrdersQuadriga,
+  postUserLookupOrderQuadriga,
+  postUserCancelOrderQuadriga,
+  postUserBuyAtPriceQuadriga,
+  postUserBuyMarketOrderQuadriga,
+  postUserSellLimitQuadriga,
+  postUserSellMarketOrderQuadriga
 } from 'account'
 import {iOSUIKit} from 'react-native-typography';
 
-
+const apiKey = "PoDWcWznpm"
+const secret = "534158c052093441c9bb309788f4e3d5"
+const clientId = "2515766"
 
 const {height,width} = Dimensions.get('window');
-
 const mapStateToProps = (state) => ({
-    apiKey: state.user.apiKey,
-    clientId:state.user.clientId,
-    privateKey:state.user.privateKey,
-    quadrigaOrders: state.account.quadrigaOrders,
-    quadrigaUserBalance: state.account.quadrigaUserBalance,
+  apiKey: state.user.apiKey,
+  clientId:state.user.clientId,
+  privateKey:state.user.privateKey,
+  quadrigaOrders: state.account.quadrigaOrders,
+  quadrigaUserBalance: state.account.quadrigaUserBalance,
+  isGettingUserQuadrigaBalance: state.account.isGettingUserQuadrigaBalance,
+  tradingBook: state.account.tradingBook,
 })
 const mapDispatchToProps = (dispatch) => ({
-  getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))},
-  //postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))}
+setTradingBookDispatch:(book)=>{dispatch(setTradingBook(book))},
+getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))},
+postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))},
+postUserOpenOrdersQuadrigaDispatch:(key,sign,nonce,book)=>{dispatch(postUserOpenOrdersQuadriga(key,sign,nonce,book))},
+postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))},
+postUserCancelOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserCancelOrderQuadriga(key,sign,nonce,id))},
+postUserBuyAtPriceQuadrigaDispatch:(key,sign,nonce,amount,price,book)=>{dispatch(postUserBuyAtPriceQuadriga(key,sign,nonce,amount,price,book))},
+postUserBuyMarketOrderQuadrigaDispatch:(key,sign,nonce,amount,book)=>{dispatch(postUserBuyMarketOrderQuadriga(key,sign,nonce,amount,book))},
+postUserSellLimitQuadrigaDispatch:(key,sign,nonce,amount,price,book)=>{dispatch(postUserSellLimitQuadriga(key,sign,nonce,amount,price,book))},
+postUserSellMarketOrderQuadrigaDispatch:(key,sign,nonce,amount,book)=>{dispatch(postUserSellMarketOrderQuadriga(key,sign,nonce,amount,book))}
 })
 
 class BuySellBCH extends Component {
@@ -63,36 +82,25 @@ class BuySellBCH extends Component {
          headerTitleStyle:{
               ...headerStyle
         },
+        headerRight: <TradingButtonComponent/>,
         headerStyle:{
               backgroundColor:'orange'
             },
-        tabBarLabel: 'BCH/CAD',
-        tabBarIcon: ({ tintColor }) => (
-          <Icon
-          name="bch"
-          color={tintColor}
-          size={30}
-        />
-          )
         }
     };
 
     
     componentWillMount(){
-      const {getQuadrigaOrdersDispatch,postUserQuadrigaBalanceDispatch} = this.props;
+      const {getQuadrigaOrdersDispatch,postUserQuadrigaBalanceDispatch,setTradingBookDispatch} = this.props;
       getQuadrigaOrdersDispatch("bch_cad",0)
+      setTradingBookDispatch('bch_cad')
       const nonce = Date.now();
       //postUserQuadrigaBalanceDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce);
     }
   
     componentDidMount(){
-      const {getQuadrigaOrdersDispatch} = this.props;
-      const intervalInstance = setInterval(()=>{
-        getQuadrigaOrdersDispatch("bch_cad",0)
-      },20000)
-      this.setState({
-        interval:intervalInstance
-      })
+     
+      
     }
   
     componentWillUnmount(){
@@ -101,8 +109,39 @@ class BuySellBCH extends Component {
 
 
     render() {
+      const {
+        tradingBook,
+        quadrigaUserBalance,
+        isGettingUserQuadrigaBalance,
+        postUserQuadrigaBalanceDispatch,
+        postUserOpenOrdersQuadrigaDispatch,
+        postUserLookupOrderQuadrigaDispatch,
+        postUserCancelOrderQuadrigaDispatch,
+        postUserBuyAtPriceQuadrigaDispatch,
+        postUserBuyMarketOrderQuadrigaDispatch,
+        postUserSellLimitQuadrigaDispatch,
+        postUserSellMarketOrderQuadrigaDispatch
+      } = this.props;
+
       return (
-        <BuySellComponent acronym="BCH" name="Bitcoin Cash" quadrigaOrders={this.props.quadrigaOrders} />
+        <BuySellComponent acronym="BCH" name="Bitcoin Cash" quadrigaOrders={this.props.quadrigaOrders} 
+        trading={{
+          apiKey: apiKey,
+          clientId: clientId,
+          secret: secret,
+          token: "eth",
+          tradingBook: tradingBook,
+          quadrigaUserBalance: quadrigaUserBalance,
+          isGettingUserQuadrigaBalance:isGettingUserQuadrigaBalance,
+          userBalance:(key,sign,nonce)=>postUserQuadrigaBalanceDispatch(key,sign,nonce),
+          userOpenOrders:(key,sign,nonce,book)=>postUserOpenOrdersQuadrigaDispatch(key,sign,nonce,book),
+          userLookupOrder:(key,sign,nonce,id)=>postUserLookupOrderQuadrigaDispatch(key,sign,nonce,id),
+          userCancelOrder:(key,sign,nonce,id)=>postUserCancelOrderQuadrigaDispatch(key,sign,nonce,id),
+          userBuyAtPrice:(key,sign,nonce,amount,price,book)=>{postUserBuyAtPriceQuadrigaDispatch(key,sign,nonce,amount,price,book)},
+          userBuyMarketPrice:(key,sign,nonce,amount,book)=>{postUserBuyMarketOrderQuadrigaDispatch(key,sign,nonce,amount,book)},
+          userSellAtPrice:(key,sign,nonce,amount,price,book)=>{postUserSellLimitQuadrigaDispatch(key,sign,nonce,amount,price,book)},
+          userSellMarketPrice:(key,sign,nonce,amount,book)=>{postUserSellMarketOrderQuadrigaDispatch(key,sign,nonce,amount,book)}
+        }} />
       );
     }
   }

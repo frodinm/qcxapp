@@ -1,4 +1,5 @@
 import {
+  SET_TRADING_BOOK,
   GET_QUADRIGA_TICKER_BTC,
   GET_QUADRIGA_TICKER_ETH,
   GET_QUADRIGA_TICKER_BCH,
@@ -52,6 +53,11 @@ import {
 import {encryptAuthenticationQuadriga} from 'util'
 
 
+export const setTradingBook = (tradingBook) =>{
+    return dispatch =>{
+      dispatch({type:SET_TRADING_BOOK.SUCCESS,payload:tradingBook})
+    }
+}
 
 export const getQuadrigaOrders = (book,group) => {
   return dispatch => {
@@ -197,7 +203,7 @@ export const postUserBuyAtPriceQuadriga = (key,sign,nonce,amount,price,book) => 
 }
 
 
-export const postUserBuyOrderQuadrigaMarket = (key,sign,nonce,amount,book) => {
+export const postUserBuyMarketOrderQuadriga = (key,sign,nonce,amount,book) => {
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_BUY_ORDER_MARKET.PENDING})
     postBuyOrderQuadrigaMarket(key,sign,nonce,amount,book).then((response) => {
