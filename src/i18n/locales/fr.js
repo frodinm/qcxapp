@@ -1,0 +1,57 @@
+
+
+
+export default {  
+    bitcoin:'Bitcoin', //If a transaction exists
+    bitcoinGold:'Bitcoin Gold',
+    bitcoinCash:'Bitcoin Cash',
+    ethereum: 'Ethereum',
+    litecoin:'Litecoin',
+    account: 'Account',
+    exchange: 'Exchange',
+    wallet: 'wallet',
+    available: 'available',
+    balance: 'balance',
+    buyLower:'buy',// if its different then upper
+    buyUpper:'Buy',
+    sell:'sell',
+    withdraw:'withdraw',
+    transactionsUpper: 'Transactions',
+    transactionsLower: 'transactions',// if its different then upper
+    transactionId:'Transaction ID',
+    toThisAddress:'to this address',
+    goToAccount:'Go to account',
+    quickSend:'Quick Send with Quadriga',
+    now:'now',
+    and:'and',
+    your:'your',
+    will:'will',
+    show:'show',
+    here:'here',
+    past:'past',
+    my:'my',
+    address:'address',
+    close:'close',
+    copy:'COPY',
+    addressUpper:'ADDRESS',
+    from:'from',
+    to: 'to',
+    enter:'Enter',
+    the:'the',
+    recipients: 'recipient\'s',
+    recipient:'recipient',
+    paste:'paste',
+    savedAddress:'Saved address',
+    scanQr:'Scan Qr',
+    sendUpper:'SEND',
+    send:'Send',
+    continue:'Continue',
+    youHave:'YOU HAVE',
+    youGet: 'YOU GET',
+    you:'You',
+    have:'have',
+    no:'no',
+    cancel:'cancel',
+    create:'create'
+
+  };

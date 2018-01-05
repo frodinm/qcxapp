@@ -25,10 +25,6 @@ import {
     postUserOpenOrdersQuadriga
 } from 'account'
 
-const apiKey = "PoDWcWznpm"
-const secret = "534158c052093441c9bb309788f4e3d5"
-const clientId = "2515766"
-
 const {height, width} = Dimensions.get('window');
 let colorChangeBTC = 'white';
 let colorChangeETH = 'white';
@@ -128,9 +124,9 @@ class QuadrigaExchange extends Component {
 
 
     handleGetBalance() {
-        const {postUserQuadrigaBalanceDispatch} = this.props;
+        const {postUserQuadrigaBalanceDispatch,apiKey,clientId,privateKey} = this.props;
         const nonce = Date.now();
-        postUserQuadrigaBalanceDispatch(apiKey, encryptAuthenticationQuadriga(nonce, clientId, apiKey, secret), nonce);
+        postUserQuadrigaBalanceDispatch(apiKey, encryptAuthenticationQuadriga(nonce, clientId, apiKey, privateKey), nonce);
     }
 
     handleGetTicker() {

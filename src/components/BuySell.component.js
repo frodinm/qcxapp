@@ -11,6 +11,7 @@ import {
   Animated
 } from 'react-native'
 import LottieView from 'lottie-react-native'
+import DropdownAlert from 'react-native-dropdownalert';
 import {Button} from 'react-native-elements'
 import { iOSUIKit } from 'react-native-typography'
 import IconMaterial from 'react-native-vector-icons/dist/MaterialIcons';
@@ -39,6 +40,10 @@ export class BuySellComponent extends Component {
     this.handleTokenAvailable = this.handleTokenAvailable.bind(this);
     this.handleFromAvailableAmount=this.handleFromAvailableAmount.bind(this);
     this.handleToFixed = this.handleToFixed.bind(this);
+    this.handleBuyToken = this.handleBuyToken.bind(this);
+    this.handleSellToken = this.handleSellToken.bind(this);
+    this.handleBuyMArketAlert=this.handleBuyMArketAlert.bind(this);
+    this.handleBuyAtPriceAlert = this.handleBuyAtPriceAlert.bind(this);
   }
   componentDidMount() {
     this.animation.play();
@@ -60,8 +65,13 @@ export class BuySellComponent extends Component {
 
   handleTotalPrice(){
     const {quadrigaOrders} = this.props;
+    const {tradingBook} = this.props.trading
     if(this.state.price === ""){
-      return parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])
+      if(tradingBook.slice(4,7) !== 'btc'){
+        return (parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(2)
+      }else{
+        return (parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(6)
+      }
     }else{
       return parseFloat(this.state.amount)*parseFloat(this.state.price);
     }
@@ -158,34 +168,76 @@ handleFromAvailableAmount(){
               return `${ parseFloat(quadrigaUserBalance.data.btc_available).toFixed(6)} BTC`
             }
         }
-}
+  }
 
   handleTokenAvailable(){
     const {quadrigaUserBalance,token} = this.props.trading;
 
     switch (token) {
       case "btc":
-      return quadrigaUserBalance.data.btc_available
+      return parseFloat(quadrigaUserBalance.data.btc_available).toFixed(6)
         break;
       case "eth":
           return parseFloat(quadrigaUserBalance.data.eth_available).toFixed(6)
         break;
       case "bch":
-         return quadrigaUserBalance.data.bch_available
+         return parseFloat(quadrigaUserBalance.data.bch_available).toFixed(6)
         break;
       case "btg":
-        return quadrigaUserBalance.data.btg_available
+        return parseFloat(quadrigaUserBalance.data.btg_available).toFixed(6)
         break;
       case "ltc":
-         return quadrigaUserBalance.data.ltc_available
+         return parseFloat(quadrigaUserBalance.data.ltc_available).toFixed(6)
         break;
       default:
         return "0"
         break;
     }
+  }
 
+  handleBuyMArketAlert(){
+    const {quadrigaUserBuyMarket} = this.props.trading;
+    if(quadrigaUserBuyMarket.data.hasOwnProperty('error')){
 
+      this.dropdown.alertWithType('error', 'Error', quadrigaUserBuyMarket.data.error.message);
+    }else{
+
+    }
+  }
+
+  handleBuyAtPriceAlert(){
+    const {quadrigaUserBuyAt} = this.props.trading;
+    if(quadrigaUserBuyAt.data.hasOwnProperty('error')){
+      this.dropdown.alertWithType('error', 'Error', quadrigaUserBuyAt.data.error.message);
+    }else{
+
+    }
+  }
+
+  handleBuyToken(){
+    const {tradingBook,userBuyAtPrice,userBuyMarketPrice,apiKey,clientId,secret,quadrigaUserBuyAt,quadrigaUserBuyMarket} = this.props.trading;
+    if(this.state.price === ""){
+      userBuyMarketPrice(apiKey,clientId,secret,this.state.amount,tradingBook);
+      setTimeout(()=>{
+        this.handleBuyMArketAlert();
+      },1000)
+    }else{
+      userBuyAtPrice(apiKey,clientId,secret,this.state.amount,this.state.price,tradingBook);
+      setTimeout(()=>{
+        this.handleBuyAtPriceAlert();
+      },1000)
+    }
+  
     
+  }
+
+  handleSellToken(){
+      const {tradingBook,apiKey,clientId,secret,userSellAtPrice,userSellMarketPrice,quadrigaUserSellLimit,quadrigaUserSellMarket} = this.props.trading;
+      if(this.state.price === ""){
+        userSellMarketPrice(apiKey,clientId,secret,this.state.amount,tradingBook);
+      }else{
+        userSellAtPrice(apiKey,clientId,secret,this.state.amount,this.state.price,tradingBook);
+      }
   }
 
   render() {
@@ -205,7 +257,7 @@ handleFromAvailableAmount(){
                   <Text style={[iOSUIKit.title3,styles.text]}>Available</Text>
                   <Text style={[iOSUIKit.caption,styles.text]}>${this.handleFromAvailableAmount()}</Text>
                   <Text style={[iOSUIKit.caption,styles.text]}>{this.handleTokenAvailable()} {acronym}</Text>
-                  <Text style={[iOSUIKit.caption,styles.text]}>Total: ${this.handleTotalPrice()}</Text>
+                  <Text style={[iOSUIKit.caption,styles.text]}>Total: {this.handleTotalPrice()}</Text>
                 </View>
                 <View style={{marginTop:30}}>
                   <TouchableOpacity onPress={()=>{this.handleRefreshUserBalance()}}>
@@ -222,8 +274,8 @@ handleFromAvailableAmount(){
             </View>
           </View>
           <View style={{flexDirection:'row',width:width/1.03-5,height:height/8,alignItems:'center',backgroundColor:'white',marginBottom:5,marginLeft:5,marginTop:5,justifyContent:'center',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
-              <Button title="BUY" buttonStyle={{backgroundColor:'#4ca64c',height:height/15,width:width/2.5}}/>
-              <Button title="SELL" buttonStyle={{backgroundColor:'#ffb732',height:height/15,width:width/2.5}}/>
+              <Button onPress={()=>this.handleBuyToken()} title="BUY" buttonStyle={{backgroundColor:'#4ca64c',height:height/15,width:width/2.5}}/>
+              <Button onPress={()=>this.handleSellToken()} title="SELL" buttonStyle={{backgroundColor:'#ffb732',height:height/15,width:width/2.5}}/>
           </View>
           <View style={{flexDirection:'row'}}>
             <View style={{backgroundColor:'white',marginLeft:5,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,alignItems:'center',justifyContent:'center'}}>
@@ -248,6 +300,7 @@ handleFromAvailableAmount(){
             {this.handleUserOrders()}
           </View>
         </ScrollView>
+        <DropdownAlert ref={ref => this.dropdown = ref}  />
         </View>
     );
   }

@@ -10,10 +10,12 @@ import {
   Dimensions,
   TouchableOpacity
 } from 'react-native';
+import * as Animatable from 'react-native-animatable'; 
 import {Button} from 'react-native-elements'
 import {connect} from 'react-redux'
 import {resetNavigation} from 'util'
 import {setPin} from 'users'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const {height,width} = Dimensions.get('window')
 const pinRef = null;
@@ -50,9 +52,7 @@ class AuthPincode extends Component {
   }
   componentDidMount(){
    this.refs.pin1.focus();
-  //  console.log(this.refs.pin1)
-  //  pinRef = this.refs.pin1;
-  //  console.log(pinRef);
+  
   }
 
   componentWillUnmount(){
@@ -71,7 +71,10 @@ class AuthPincode extends Component {
       }
 
     } else {
-      alert('Entered pin was not valid');
+      this.refs.view1.shake()
+      this.refs.view2.shake()
+      this.refs.view3.shake()
+      this.refs.view4.shake()
       this.setState({
         error: true
       })
@@ -197,13 +200,12 @@ class AuthPincode extends Component {
   }
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"} pointerEvents="none">
-          <Text style={{fontSize:30,color:'orange',}}> Enter pin</Text>
-          <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
-          <View style={this.handlePin1Style()} />
-          <View style={this.handlePin2Style()} />
-          <View  style={this.handlePin3Style()} />
-          <View  style={this.handlePin4Style()} />
+      <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"} >
+          <Text style={{fontSize:30,color:'orange',marginBottom:50}}> Enter pin</Text>
+          <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
+          <Animatable.View   useNativeDriver={true}  ref="view2" style={this.handlePin2Style()} />
+          <Animatable.View  useNativeDriver={true}  ref="view3" style={this.handlePin3Style()} />
+          <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
           <Button
           raised
           large
@@ -212,7 +214,8 @@ class AuthPincode extends Component {
           color={'orange'}
           title='   Enter   '
           onPress={()=>this.handleClick()}/>
-      </ScrollView>
+          <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
+      </KeyboardAwareScrollView>
     );
   }
 }
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   welcome: {
     fontSize: 20,
@@ -236,6 +239,8 @@ const styles = StyleSheet.create({
   },
   pin:{
     opacity: 0,
+    position:'relative',
+    bottom:60
   },
   pin2:{
     ...pinStyle,

@@ -27,12 +27,7 @@ import {
 } from 'account'
 import {iOSUIKit} from 'react-native-typography';
 
-
-
 const {height,width} = Dimensions.get('window');
-const apiKey = "PoDWcWznpm"
-const secret = "534158c052093441c9bb309788f4e3d5"
-const clientId = "2515766"
 
 const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
@@ -42,6 +37,12 @@ const mapStateToProps = (state) => ({
     quadrigaUserBalance: state.account.quadrigaUserBalance,
     isGettingUserQuadrigaBalance: state.account.isGettingUserQuadrigaBalance,
     tradingBook: state.account.tradingBook,
+    quadrigaUserBuyAt:state.account.quadrigaUserBuyAt,
+    quadrigaUserBuyMarket:state.account.quadrigaUserBuyMarket,
+    quadrigaUserCancelOrder:state.account.quadrigaUserCancelOrder,
+    quadrigaUserSellLimit:state.account.quadrigaUserSellLimit,
+    quadrigaUserSellMarket:state.account.quadrigaUserSellMarket,
+    quadrigaUserOrders:state.account.quadrigaUserOrders,
 })
 const mapDispatchToProps = (dispatch) => ({
   setTradingBookDispatch:(book)=>{dispatch(setTradingBook(book))},
@@ -49,12 +50,12 @@ const mapDispatchToProps = (dispatch) => ({
   postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))},
   postUserOpenOrdersQuadrigaDispatch:(key,sign,nonce,book)=>{dispatch(postUserOpenOrdersQuadriga(key,sign,nonce,book))},
   postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))},
-  postUserCancelOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserCancelOrderQuadriga(key,sign,nonce,id))},
-  postUserBuyAtPriceQuadrigaDispatch:(key,sign,nonce,amount,price,book)=>{dispatch(postUserBuyAtPriceQuadriga(key,sign,nonce,amount,price,book))},
-  postUserBuyMarketOrderQuadrigaDispatch:(key,sign,nonce,amount,book)=>{dispatch(postUserBuyMarketOrderQuadriga(key,sign,nonce,amount,book))},
-  postUserSellLimitQuadrigaDispatch:(key,sign,nonce,amount,price,book)=>{dispatch(postUserSellLimitQuadriga(key,sign,nonce,amount,price,book))},
-  postUserSellMarketOrderQuadrigaDispatch:(key,sign,nonce,amount,book)=>{dispatch(postUserSellMarketOrderQuadriga(key,sign,nonce,amount,book))}
-})
+  postUserCancelOrderQuadrigaDispatch:(apiKey,clientId,secret,id)=>{dispatch(postUserCancelOrderQuadriga(apiKey,clientId,secret,id))},
+  postUserBuyAtPriceQuadrigaDispatch:(apiKey,clientId,secret,amount,price,book)=>{dispatch(postUserBuyAtPriceQuadriga(apiKey,clientId,secret,amount,price,book))},
+  postUserBuyMarketOrderQuadrigaDispatch:(apiKey,clientId,secret,amount,book)=>{dispatch(postUserBuyMarketOrderQuadriga(apiKey,clientId,secret,amount,book))},
+  postUserSellLimitQuadrigaDispatch:(apiKey,clientId,secret,amount,price,book)=>{dispatch(postUserSellLimitQuadriga(apiKey,clientId,secret,amount,price,book))},
+  postUserSellMarketOrderQuadrigaDispatch:(apiKey,clientId,secret,amount,book)=>{dispatch(postUserSellMarketOrderQuadriga(apiKey,clientId,secret,amount,book))}
+  })
 
 
 
@@ -98,9 +99,9 @@ class BuySellETH extends Component {
 
   
     componentDidMount(){
-      const {postUserQuadrigaBalanceDispatch} = this.props;
+      const {postUserQuadrigaBalanceDispatch,apiKey,clientId,privateKey} = this.props;
       const nonce = Date.now();
-      postUserQuadrigaBalanceDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce)
+      postUserQuadrigaBalanceDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce)
     }
   
     componentWillUnmount(){
@@ -111,8 +112,17 @@ class BuySellETH extends Component {
 
     render() {
       const {
+        apiKey,
+        clientId,
+        privateKey,
         tradingBook,
         quadrigaUserBalance,
+        quadrigaUserOrders,
+        quadrigaUserBuyAt,
+        quadrigaUserBuyMarket,
+        quadrigaUserCancelOrder,
+        quadrigaUserSellLimit,
+        quadrigaUserSellMarket,
         isGettingUserQuadrigaBalance,
         postUserQuadrigaBalanceDispatch,
         postUserOpenOrdersQuadrigaDispatch,
@@ -129,19 +139,25 @@ class BuySellETH extends Component {
         trading={{
           apiKey: apiKey,
           clientId: clientId,
-          secret: secret,
+          secret: privateKey,
           token: "eth",
+          quadrigaUserOrders:quadrigaUserOrders,
+          quadrigaUserBuyAt:quadrigaUserBuyAt,
+          quadrigaUserBuyMarket:quadrigaUserBuyMarket,
+          quadrigaUserCancelOrder:quadrigaUserCancelOrder,
+          quadrigaUserSellLimit:quadrigaUserSellLimit,
+          quadrigaUserSellMarket:quadrigaUserSellMarket,
           tradingBook: tradingBook,
           quadrigaUserBalance: quadrigaUserBalance,
           isGettingUserQuadrigaBalance:isGettingUserQuadrigaBalance,
           userBalance:(key,sign,nonce)=>postUserQuadrigaBalanceDispatch(key,sign,nonce),
           userOpenOrders:(key,sign,nonce,book)=>postUserOpenOrdersQuadrigaDispatch(key,sign,nonce,book),
           userLookupOrder:(key,sign,nonce,id)=>postUserLookupOrderQuadrigaDispatch(key,sign,nonce,id),
-          userCancelOrder:(key,sign,nonce,id)=>postUserCancelOrderQuadrigaDispatch(key,sign,nonce,id),
-          userBuyAtPrice:(key,sign,nonce,amount,price,book)=>{postUserBuyAtPriceQuadrigaDispatch(key,sign,nonce,amount,price,book)},
-          userBuyMarketPrice:(key,sign,nonce,amount,book)=>{postUserBuyMarketOrderQuadrigaDispatch(key,sign,nonce,amount,book)},
-          userSellAtPrice:(key,sign,nonce,amount,price,book)=>{postUserSellLimitQuadrigaDispatch(key,sign,nonce,amount,price,book)},
-          userSellMarketPrice:(key,sign,nonce,amount,book)=>{postUserSellMarketOrderQuadrigaDispatch(key,sign,nonce,amount,book)}
+          userCancelOrder:(apiKey,clientId,secret,id)=>postUserCancelOrderQuadrigaDispatch(apiKey,clientId,secret,id),
+          userBuyAtPrice:(apiKey,clientId,secret,amount,price,book)=>{postUserBuyAtPriceQuadrigaDispatch(apiKey,clientId,secret,amount,price,book)},
+          userBuyMarketPrice:(apiKey,clientId,secret,amount,book)=>{postUserBuyMarketOrderQuadrigaDispatch(apiKey,clientId,secret,amount,book)},
+          userSellAtPrice:(apiKey,clientId,secret,amount,price,book)=>{postUserSellLimitQuadrigaDispatch(apiKey,clientId,secret,amount,price,book)},
+          userSellMarketPrice:(apiKey,clientId,secret,amount,book)=>{postUserSellMarketOrderQuadrigaDispatch(apiKey,clientId,secret,amount,book)}
         }} 
         />
       );

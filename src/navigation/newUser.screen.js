@@ -6,10 +6,10 @@ import {
   View,
   Image,
   TextInput,
-  KeyboardAvoidingView,
   Dimensions,
   ScrollView
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Swiper from 'react-native-swiper'
 import {Button} from 'react-native-elements'
 import {AuthenticatedRoute} from 'navigation'
@@ -93,7 +93,8 @@ class NewUser extends Component {
           <Image resizeMode="contain" source={ChangellyLogo} style={{height:100,width:250}}/>
           <Text style={[iOSUIKit.body,styles.text]}>{`Easy and fast exchange to any of the supported cryptocurrencies on Changelly `}</Text>
         </View>
-        <ScrollView behavior={'padding'} style={styles.slide2}>
+        <KeyboardAwareScrollView behavior={'padding'} style={styles.slide2}>
+        <View>
           <Isao
             style={styles.textInputWrapper}
             labelStyle={styles.labelText}
@@ -134,7 +135,8 @@ class NewUser extends Component {
             onPress={()=>navigation.navigate('Register')}
           />
           <Text style={styles.webViewHelper} onPress={this.handleGettingStarted}>Get your access keys</Text>
-        </ScrollView>
+          </View>
+        </KeyboardAwareScrollView>
       </Swiper>
   }
 }

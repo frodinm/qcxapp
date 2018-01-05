@@ -36,10 +36,6 @@ import {
 import { iOSUIKit } from 'react-native-typography'
 import { isAbsolute } from 'path';
 
-const apiKey = "PoDWcWznpm"
-const secret = "534158c052093441c9bb309788f4e3d5"
-const clientId = "2515766"
-
 const {height,width} = Dimensions.get('window');
 
 
@@ -68,13 +64,13 @@ class AccountsWallets extends Component {
     this.handleAddNewAddress = this.handleAddNewAddress.bind(this);
   }
   componentWillMount(){
-      const {postUserQuadrigaBalanceDispatch,postUserBitcoinWalletAddressQuadrigaDispatch,postUserEthereumWalletAddressQuadrigaDispatch,postAccounScreenMainCallDispatch} = this.props;
+      const {apiKey,clientId,privateKey,postUserQuadrigaBalanceDispatch,postAccounScreenMainCallDispatch} = this.props;
       if(this.props.isFirstTimeUser === true){//prevent having duplicate addresses for quadriga
-        postAccounScreenMainCallDispatch(clientId,apiKey,secret);
+        postAccounScreenMainCallDispatch(clientId,apiKey,privateKey);
         this.props.setUserFirstTimeDispatch();
       }else{
       let nonce = Date.now();
-         postUserQuadrigaBalanceDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce)
+         postUserQuadrigaBalanceDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce)
       }
   }
 

@@ -75,58 +75,115 @@ class ConfirmPincode extends Component {
     }
   }
   handlePin1Style(){
-    if(this.state.pin1 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
+    if(this.state.pinAuth.length >= 1){
       return {
         ...pinStyle,
         backgroundColor: 'orange',
+        position: 'relative',
+        right: 70,
       }
-     }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        right: 70,
+        borderColor: 'red',
+      }
+    }else{
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        right: 70,
+      }
+    }
   }
   handlePin2Style(){
-    if(this.state.pin2 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
+    if(this.state.pinAuth.length >= 2){
       return {
         ...pinStyle,
         backgroundColor: 'orange',
+        position: 'relative',
+        top: -40,
+        right:20
+
+      }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        borderColor: 'red',
+        top: -40,
+        right:20
+      }
+    }else{
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40,
+        right:20
       }
      }
   }
   handlePin3Style(){
-    if(this.state.pin3 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
+    if(this.state.pinAuth.length >= 3){
       return {
         ...pinStyle,
         backgroundColor: 'orange',
+        position: 'relative',
+        top: -40*2,
+        right: -30,
+      }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*2,
+        right: -30,
+        borderColor: 'red',
+      }
+    }else{
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*2,
+        right: -30,
       }
      }
   }
   handlePin4Style(){
-    if(this.state.pin4 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
+    if(this.state.pinAuth.length === 4){
       return {
         ...pinStyle,
         backgroundColor: 'orange',
+        position: 'relative',
+        top: -40*3,
+        right: -40*2,
+      }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*3,
+        right: -40*2,
+        borderColor: 'red',
+      }
+    }else{
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*3,
+        right: -40*2,
       }
      }
   }
-  
   handlePinReference(e,num){
     if(num === 1){
       this.setState({

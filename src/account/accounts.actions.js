@@ -13,6 +13,9 @@ import {
   POST_USER_QUADRIGA_LOOKUP_ORDERS,
   POST_USER_QUADRIGA_CANCEL_ORDERS,
   POST_USER_QUADRIGA_BUY_AT_PRICE,
+  POST_USER_QUADRIGA_BUY_ORDER_MARKET,
+  POST_USER_QUADRIGA_SELL_LIMIT,
+  POST_USER_QUADRIGA_SELL_MARKET,
   POST_USER_QUADRIGA_BITCOIN_WALLET,
   POST_USER_QUADRIGA_ETHER_WALLET,
   POST_USER_QUADRIGA_BITCOIN_CASH_WALLET,
@@ -23,7 +26,8 @@ import {
   POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW,
-  POST_USER_QUADRIGA_ACCOUNT_DATA
+  POST_USER_QUADRIGA_ACCOUNT_DATA,
+  
 
 } from 'account'
 import {
@@ -179,11 +183,20 @@ export const postUserLookupOrderQuadriga = (key,sign,nonce,id) => {
 }
 
 
-export const postUserCancelOrderQuadriga = (key,sign,nonce,id) => {
+export const postUserCancelOrderQuadriga = (apiKey,clientId,secret,id) => {
+  let nonce;
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_CANCEL_ORDERS.PENDING})
-    postCancelOrderQuadriga(key,sign,nonce,id).then((response) => {
+    nonce = Date.now();
+    postCancelOrderQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,id).then((response) => {
       dispatch({type: POST_USER_QUADRIGA_CANCEL_ORDERS.SUCCESS, payload: response})
+      dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
+      nonce = Date.now();
+      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+        dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+      }).catch((error)=>{
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+      })
     }).catch((error) => {
       dispatch({type: POST_USER_QUADRIGA_CANCEL_ORDERS.ERROR, payload: error})
     })
@@ -191,11 +204,20 @@ export const postUserCancelOrderQuadriga = (key,sign,nonce,id) => {
 }
 
 
-export const postUserBuyAtPriceQuadriga = (key,sign,nonce,amount,price,book) => {
+export const postUserBuyAtPriceQuadriga = (apiKey,clientId,secret,amount,price,book) => {
+  let nonce;
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_BUY_AT_PRICE.PENDING})
-    postBuyAtPriceQuadriga(key,sign,nonce,amount,price,book).then((response) => {
+    nonce = Date.now();
+    postBuyAtPriceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,amount,price,book).then((response) => {
       dispatch({type: POST_USER_QUADRIGA_BUY_AT_PRICE.SUCCESS, payload: response})
+      dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
+      nonce = Date.now();
+      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+        dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+      }).catch((error)=>{
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+      })
     }).catch((error) => {
       dispatch({type: POST_USER_QUADRIGA_BUY_AT_PRICE.ERROR, payload: error})
     })
@@ -203,33 +225,60 @@ export const postUserBuyAtPriceQuadriga = (key,sign,nonce,amount,price,book) => 
 }
 
 
-export const postUserBuyMarketOrderQuadriga = (key,sign,nonce,amount,book) => {
+export const postUserBuyMarketOrderQuadriga = (apiKey,clientId,secret,amount,book) => {
+  let nonce;
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_BUY_ORDER_MARKET.PENDING})
-    postBuyOrderQuadrigaMarket(key,sign,nonce,amount,book).then((response) => {
+    nonce = Date.now();
+    postBuyOrderQuadrigaMarket(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,amount,book).then((response) => {
       dispatch({type: POST_USER_QUADRIGA_BUY_ORDER_MARKET.SUCCESS, payload: response})
+      dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
+      nonce = Date.now();
+      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+        dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+      }).catch((error)=>{
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+      })
     }).catch((error) => {
       dispatch({type: POST_USER_QUADRIGA_BUY_ORDER_MARKET.ERROR, payload: error})
     })
   }
 }
 
-export const postUserSellLimitQuadriga = (key,sign,nonce,amount,price,book) => {
+export const postUserSellLimitQuadriga = (apiKey,clientId,secret,amount,price,book) => {
+  let nonce;
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_SELL_LIMIT.PENDING})
-    postSellLimitQuadriga(key,sign,nonce,amount,price,book).then((response) => {
+    nonce = Date.now();
+    postSellLimitQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,amount,price,book).then((response) => {
       dispatch({type: POST_USER_QUADRIGA_SELL_LIMIT.SUCCESS, payload: response})
+      dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
+      nonce = Date.now();
+      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+        dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+      }).catch((error)=>{
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+      })
     }).catch((error) => {
       dispatch({type: POST_USER_QUADRIGA_SELL_LIMIT.ERROR, payload: error})
     })
   }
 }
 
-export const postUserSellMarketOrderQuadriga = (key,sign,nonce,amount,book) => {
+export const postUserSellMarketOrderQuadriga = (apiKey,clientId,secret,amount,book) => {
+  let nonce;
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_SELL_MARKET.PENDING})
-    postSellMarketOrderQuadriga(key,sign,nonce,amount,book).then((response) => {
+    nonce = Date.now();
+    postSellMarketOrderQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,amount,book).then((response) => {
       dispatch({type: POST_USER_QUADRIGA_SELL_MARKET.SUCCESS, payload: response})
+      dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
+      nonce = Date.now();
+      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+        dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+      }).catch((error)=>{
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+      })
     }).catch((error) => {
       dispatch({type: POST_USER_QUADRIGA_SELL_MARKET.ERROR, payload: error})
     })

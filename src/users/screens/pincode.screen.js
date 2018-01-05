@@ -10,14 +10,30 @@ import {
   Dimensions,
   Switch
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 import {Button} from 'react-native-elements'
 import {connect} from 'react-redux'
 import {setTempPin} from 'users'
+import {resetNavigation} from 'util'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {
+  getQuadrigaTickerBTC,
+  getQuadrigaTickerETH,
+  getQuadrigaTickerBCH,
+  getQuadrigaTickerBTG,
+  getQuadrigaTickerLTC,
+  getQuadrigaTransactions
+} from 'account'
+import {setPin} from 'users'
 
 const {height,width} = Dimensions.get('window')
 
 const pinStyle = {
-  fontSize: 35,
+  height:40,
+  width:40,
+  borderRadius: 50,
+  borderWidth:2,
+  borderColor:'black',
 
 }
 
@@ -25,7 +41,9 @@ const mapStateToProps = (state) => ({
   pin: state.user.pin
 })
 const mapDispatchToProps = (dispatch) => ({
-  setTempPinDispatch : (pin) => dispatch(setTempPin(pin))
+  setPinDispatch : (pin) => dispatch(setPin(pin)),
+  getQuadrigaTickerDispatch: (ticker) =>{dispatch(getQuadrigaTickerBTC());dispatch(getQuadrigaTickerETH());dispatch(getQuadrigaTickerBCH());dispatch(getQuadrigaTickerBTG());dispatch(getQuadrigaTickerLTC())},
+  getQuadrigaTransactionsDispatch: (book,time)=>{dispatch(getQuadrigaTransactions(book,time))},
 })
 
 
@@ -35,136 +53,173 @@ class Pincode extends Component {
   constructor(){
     super();
     this.state = {
-      pin1:'',
-      pin2:'',
-      pin3:'',
-      pin4:'',
+      pinAuth:'',
+      error:false,
     }
     this.handleClick = this.handleClick.bind(this);
     this.handlePinReference = this.handlePinReference.bind(this);
   }
   componentDidMount(){
-   
+    const {getQuadrigaTickerDispatch,getQuadrigaTransactionsDispatch} = this.props;
+    this.refs.pin1.focus();
+    getQuadrigaTickerDispatch();
+    getQuadrigaTransactionsDispatch("btc_cad","hour");
   }
 
   componentWillUnmount(){
     
   }
   handleClick(){
-    const {setTempPinDispatch,navigation} = this.props;
-    const pin = this.state.pin1+this.state.pin2+this.state.pin3+this.state.pin4
-    if(pin.length === 4){
-      setTempPinDispatch(pin)
-      navigation.navigate('ConfirmPin');
+    const {navigation,setPinDispatch} = this.props;
+    if(this.state.pinAuth.length === 4) {
+        setPinDispatch(this.state.pinAuth);
+        alert("your pin is "+this.state.pinAuth)
+        resetNavigation('Auth',navigation)
+      } else {
+        this.refs.view1.shake()
+        this.refs.view2.shake()
+        this.refs.view3.shake()
+        this.refs.view4.shake()
+        this.setState({
+          error: true
+        })
+      }
+    } 
+  handlePin1Style(){
+    if(this.state.pinAuth.length >= 1){
+      return {
+        ...pinStyle,
+        backgroundColor: 'orange',
+        position: 'relative',
+        right: 70,
+      }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        right: 70,
+        borderColor: 'red',
+      }
     }else{
-      alert('Pin is not valid');
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        right: 70,
+      }
     }
   }
-  handlePin1Style(){
-    if(this.state.pin1 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
-      return {
-        ...pinStyle,
-        backgroundColor: 'orange',
-      }
-     }
-  }
   handlePin2Style(){
-    if(this.state.pin2 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
+    if(this.state.pinAuth.length >= 2){
       return {
         ...pinStyle,
         backgroundColor: 'orange',
+        position: 'relative',
+        top: -40,
+        right:20
+
+      }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        borderColor: 'red',
+        top: -40,
+        right:20
+      }
+    }else{
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40,
+        right:20
       }
      }
   }
   handlePin3Style(){
-    if(this.state.pin3 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
+    if(this.state.pinAuth.length >= 3){
       return {
         ...pinStyle,
         backgroundColor: 'orange',
+        position: 'relative',
+        top: -40*2,
+        right: -30,
+      }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*2,
+        right: -30,
+        borderColor: 'red',
+      }
+    }else{
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*2,
+        right: -30,
       }
      }
   }
   handlePin4Style(){
-    if(this.state.pin4 === ''){
-      return {
-        ...pinStyle,
-        backgroundColor: 'transparent',
-      }
-     }else{
+    if(this.state.pinAuth.length === 4){
       return {
         ...pinStyle,
         backgroundColor: 'orange',
+        position: 'relative',
+        top: -40*3,
+        right: -40*2,
+      }
+     }else if(this.state.error === true){
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*3,
+        right: -40*2,
+        borderColor: 'red',
+      }
+    }else{
+      return {
+        ...pinStyle,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: -40*3,
+        right: -40*2,
       }
      }
   }
   
-  handlePinReference(e,num){
-    if(num === 1){
-      this.setState({
-        pin1: e,
-      })
-      if(e != '' ){
-       this.refs.pin2.focus();
-      }
-    }else if(num === 2){
-      this.setState({
-        pin2: e,
-      })
-      if(e != '' ){
-        this.refs.pin3.focus();
-       }else{
-         this.refs.pin1.focus();
-       }
-    }else if(num === 3){
-      this.setState({
-        pin3: e,
-      })
-      if(e != '' ){
-        this.refs.pin4.focus();
-       }else{
-         this.refs.pin2.focus();
-       }
-    }else if(num === 4){
-      this.setState({
-        pin4: e,
-      })
-      if(e == ''){
-        this.refs.pin3.focus();
-       }
-    }
+  handlePinReference(e){
+    this.setState({
+      pinAuth: e
+    })
   }
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}  >
-          <Text style={{fontSize:30,color:'orange',}}> Set pin</Text>
-           <TextInput secureTextEntry={true} style={styles.pin1} underlineColorAndroid={'orange'} maxLength={1} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event,1) }}/>
-          <TextInput secureTextEntry={true} style={styles.pin2}  underlineColorAndroid={'orange'} maxLength={1} ref={'pin2'} keyboardType={'numeric'}  onChangeText={(event) => { this.handlePinReference(event,2) }}/>
-          <TextInput  secureTextEntry={true} style={styles.pin3}  underlineColorAndroid={'orange'} maxLength={1} ref={'pin3'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event,3)}}/>
-          <TextInput  secureTextEntry={true} style={styles.pin4}  underlineColorAndroid={'orange'} maxLength={1} ref={'pin4'} keyboardType={'numeric'}  onChangeText={(event) => { this.handlePinReference(event,4)}}/>
+      <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"}>
+      <Text style={{fontSize:30,color:'orange',marginBottom:50}}> Set up pin</Text>
+      <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
+      <Animatable.View   useNativeDriver={true}  ref="view2" style={this.handlePin2Style()} />
+      <Animatable.View  useNativeDriver={true}  ref="view3" style={this.handlePin3Style()} />
+      <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
+      <Button
+      raised
+      large
+      buttonStyle={{backgroundColor:'black',zIndex:5}}
+      borderRadius={30}
     
-          <Button
-          large
-          borderRadius={30}
-          backgroundColor={'black'}
-          color={'orange'}
-          title='   Next   ' 
-          onPress={()=>this.handleClick()}/>
-      </ScrollView>
+      color={'orange'}
+      title='   Confirm   '
+      onPress={()=>this.handleClick()}/>
+      <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
+  </KeyboardAwareScrollView>
     );
   }
 }
@@ -174,7 +229,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems:'center',
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   welcome: {
     fontSize: 20,
@@ -186,52 +241,28 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  pin1:{
-    ...pinStyle,
-    position: 'relative',
-    top: 68,
-    left: -70,
-    color:'black',
-    height:60,
-    width:50
+  pin:{
+    opacity: 0,
+    position:'relative',
+    bottom:60
   },
   pin2:{
     ...pinStyle,
     position: 'relative',
-    left: -20,
-    color:'black',
-    height:60,
-    width:50
+    left: -20
   },
   pin3:{
     ...pinStyle,
     position: 'relative',
     top: -68,
-    left: 30,
-    color:'black',
-    height:60,
-    width:50
+    left: 30
   },
   pin4:{
     ...pinStyle,
     position: 'relative',
     top: -68*2,
-    left: 80,
-    color:'black',
-    height:60,
-    width:50
-  },
-  t1: {
-    margin: 10,
-    backgroundColor: 'red',
-    width: 200,
-  },
-  t2: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    width: 200
-  },
+    left: 80
+  }
 });
 
 export const PinCodeScreen = connect(mapStateToProps,mapDispatchToProps)(Pincode);

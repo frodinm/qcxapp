@@ -90,7 +90,7 @@ export const postLookupOrderQuadriga = (key,signature,nonce,id) => {
   })
 }
 
-export const postCancelOrderQuadriga = (key,signature,nonce,offset,id) => {
+export const postCancelOrderQuadriga = (key,signature,nonce,id) => {
   return axios.request({
     baseURL: `${rootEndpoint}`,
     url:'/cancel_order',

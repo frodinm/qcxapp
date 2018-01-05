@@ -49,11 +49,6 @@ const textStyle = {
     color: 'black',
     marginBottom:10,
 }
-
-const apiKey = "PoDWcWznpm"
-const secret = "534158c052093441c9bb309788f4e3d5"
-const clientId = "2515766"
-
 const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
     clientId:state.user.clientId,
@@ -193,11 +188,11 @@ class Wallet extends Component {
     }
     //btc_cad btc_usd  eth_btc, eth_cad, ltc_cad, bch_cad, btg_cad
     componentWillMount(){
-        const {postUserQuadrigaTransactionsDispatch} = this.props;
+        const {postUserQuadrigaTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
         const {book} = this.props.navigation.state.params;
 
         let nonce = Date.now();
-        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,0,50,"desc",book);
+        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,0,50,"desc",book);
     }
     componentDidMount(){
         this.props.navigation.setParams({ handleQrCode: this.handleQrCode})
@@ -205,9 +200,9 @@ class Wallet extends Component {
 
     handleTestPress(){
         const {book} = this.props.navigation.state.params;
-        const {postUserQuadrigaTransactionsDispatch} = this.props;
+        const {postUserQuadrigaTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
         let nonce = Date.now();
-        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,0,50,"desc",book);
+        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,0,50,"desc",book);
     }
 
     static navigationOptions = ({navigation}) => {
@@ -340,17 +335,17 @@ class Wallet extends Component {
     }
 
     handleRefresh(){
-        const {postUserQuadrigaTransactionsDispatch} = this.props;
+        const {postUserQuadrigaTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
         const {book} = this.props.navigation.state.params;
 
         let nonce = Date.now();
-        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,0,50,"desc",book);
+        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,0,50,"desc",book);
     }
 
     handleTransactionInfo(item){
-        const {postUserLookupOrderQuadrigaDispatch} = this.props;
+        const {postUserLookupOrderQuadrigaDispatch,apiKey,clientId,privateKey} = this.props;
         let nonce = Date.now();
-        postUserLookupOrderQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,item.order_id);
+        postUserLookupOrderQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,item.order_id);
         this.refs.modalLookUp.open()
     }
 
