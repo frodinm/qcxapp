@@ -26,7 +26,8 @@ import {
   postUserBuyAtPriceQuadriga,
   postUserBuyMarketOrderQuadriga,
   postUserSellLimitQuadriga,
-  postUserSellMarketOrderQuadriga
+  postUserSellMarketOrderQuadriga,
+  postUserQuadrigaBalanceAndOpenOrders
 } from 'account'
 import {iOSUIKit} from 'react-native-typography';
 
@@ -46,12 +47,14 @@ const mapStateToProps = (state) => ({
   quadrigaUserSellLimit:state.account.quadrigaUserSellLimit,
   quadrigaUserSellMarket:state.account.quadrigaUserSellMarket,
   quadrigaUserOrders:state.account.quadrigaUserOrders,
+  quadrigaUserOrdersLookup: state.account.quadrigaUserOrdersLookup,
 })
 const mapDispatchToProps = (dispatch) => ({
 setTradingBookDispatch:(book)=>{dispatch(setTradingBook(book))},
 getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))},
 postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))},
 postUserOpenOrdersQuadrigaDispatch:(key,sign,nonce,book)=>{dispatch(postUserOpenOrdersQuadriga(key,sign,nonce,book))},
+postUserQuadrigaBalanceAndOpenOrdersDispatch:(apiKey,clientId,secret,tradingBook)=>{dispatch(postUserQuadrigaBalanceAndOpenOrders(apiKey,clientId,secret,tradingBook))},
 postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))},
 postUserCancelOrderQuadrigaDispatch:(apiKey,clientId,secret,id)=>{dispatch(postUserCancelOrderQuadriga(apiKey,clientId,secret,id))},
 postUserBuyAtPriceQuadrigaDispatch:(apiKey,clientId,secret,amount,price,book)=>{dispatch(postUserBuyAtPriceQuadriga(apiKey,clientId,secret,amount,price,book))},
@@ -102,9 +105,8 @@ class BuySellLTC extends Component {
     }
   
     componentDidMount(){
-      const {postUserQuadrigaBalanceDispatch,apiKey,clientId,privateKey} = this.props;
-      const nonce = Date.now();
-      postUserQuadrigaBalanceDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce)
+      const {postUserQuadrigaBalanceAndOpenOrdersDispatch,apiKey,clientId,privateKey,tradingBook} = this.props;
+      postUserQuadrigaBalanceAndOpenOrdersDispatch(apiKey,clientId,privateKey,'ltc_cad')
     }
   
     componentWillUnmount(){
@@ -125,6 +127,7 @@ class BuySellLTC extends Component {
         quadrigaUserCancelOrder,
         quadrigaUserSellLimit,
         quadrigaUserSellMarket,
+        quadrigaUserOrdersLookup,
         isGettingUserQuadrigaBalance,
         postUserQuadrigaBalanceDispatch,
         postUserOpenOrdersQuadrigaDispatch,
@@ -141,7 +144,8 @@ class BuySellLTC extends Component {
           apiKey: apiKey,
           clientId: clientId,
           secret: privateKey,
-          token: "eth",
+          token: "ltc",
+          quadrigaUserOrdersLookup:quadrigaUserOrdersLookup,
           quadrigaUserOrders:quadrigaUserOrders,
           quadrigaUserBuyAt:quadrigaUserBuyAt,
           quadrigaUserBuyMarket:quadrigaUserBuyMarket,

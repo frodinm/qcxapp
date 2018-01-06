@@ -29,10 +29,13 @@ import {setPin} from 'users'
 const {height,width} = Dimensions.get('window')
 
 const pinStyle = {
-  height:40,
-  width:40,
+  height:13,
+  width:13,
+  marginRight:10,
+  marginLeft:10,
+  marginBottom:height/5,
   borderRadius: 50,
-  borderWidth:2,
+  borderWidth:1,
   borderColor:'black',
 
 }
@@ -90,23 +93,17 @@ class Pincode extends Component {
       return {
         ...pinStyle,
         backgroundColor: 'orange',
-        position: 'relative',
-        right: 70,
       }
      }else if(this.state.error === true){
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
-        right: 70,
         borderColor: 'red',
       }
     }else{
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
-        right: 70,
       }
     }
   }
@@ -115,27 +112,18 @@ class Pincode extends Component {
       return {
         ...pinStyle,
         backgroundColor: 'orange',
-        position: 'relative',
-        top: -40,
-        right:20
 
       }
      }else if(this.state.error === true){
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
         borderColor: 'red',
-        top: -40,
-        right:20
       }
     }else{
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
-        top: -40,
-        right:20
       }
      }
   }
@@ -144,26 +132,17 @@ class Pincode extends Component {
       return {
         ...pinStyle,
         backgroundColor: 'orange',
-        position: 'relative',
-        top: -40*2,
-        right: -30,
       }
      }else if(this.state.error === true){
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
-        top: -40*2,
-        right: -30,
         borderColor: 'red',
       }
     }else{
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
-        top: -40*2,
-        right: -30,
       }
      }
   }
@@ -172,26 +151,17 @@ class Pincode extends Component {
       return {
         ...pinStyle,
         backgroundColor: 'orange',
-        position: 'relative',
-        top: -40*3,
-        right: -40*2,
       }
      }else if(this.state.error === true){
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
-        top: -40*3,
-        right: -40*2,
         borderColor: 'red',
       }
     }else{
       return {
         ...pinStyle,
         backgroundColor: 'transparent',
-        position: 'relative',
-        top: -40*3,
-        right: -40*2,
       }
      }
   }
@@ -205,10 +175,12 @@ class Pincode extends Component {
     return (
       <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"}>
       <Text style={{fontSize:30,color:'orange',marginBottom:50}}> Set up pin</Text>
-      <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
-      <Animatable.View   useNativeDriver={true}  ref="view2" style={this.handlePin2Style()} />
-      <Animatable.View  useNativeDriver={true}  ref="view3" style={this.handlePin3Style()} />
-      <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
+      <View style={{flexDirection:'row'}}>
+            <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
+            <Animatable.View   useNativeDriver={true}  ref="view2" style={this.handlePin2Style()} />
+            <Animatable.View  useNativeDriver={true}  ref="view3" style={this.handlePin3Style()} />
+            <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
+      </View>
       <Button
       raised
       large
@@ -243,25 +215,15 @@ const styles = StyleSheet.create({
   },
   pin:{
     opacity: 0,
-    position:'relative',
-    bottom:60
   },
   pin2:{
     ...pinStyle,
-    position: 'relative',
-    left: -20
   },
   pin3:{
     ...pinStyle,
-    position: 'relative',
-    top: -68,
-    left: 30
   },
   pin4:{
     ...pinStyle,
-    position: 'relative',
-    top: -68*2,
-    left: 80
   }
 });
 

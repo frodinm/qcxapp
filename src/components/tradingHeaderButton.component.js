@@ -12,9 +12,11 @@ import {
 import IconFoundation from 'react-native-vector-icons/dist/Foundation'
 import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons'
 import {connect} from 'react-redux'
+import {encryptAuthenticationQuadriga} from 'util'
 import { 
     setTradingBook,
     getQuadrigaOrders,
+    postUserOpenOrdersQuadriga
  } from 'account'
  import { createIconSetFromFontello } from 'react-native-vector-icons';
 import fontelloConfig from '../assets/config.json';
@@ -23,12 +25,16 @@ const IconCustom = createIconSetFromFontello(fontelloConfig);
 const {height,width} = Dimensions.get('window');
 
 const mapStatetoProps = state =>({
+    apiKey: state.user.apiKey,
+    clientId:state.user.clientId,
+    privateKey:state.user.privateKey,
     tradingBook: state.account.tradingBook,
 })
 
 const mapDispatchToProps = dispatch =>({
     setTradingBookDispatch:(book)=>{dispatch(setTradingBook(book))},
     getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))},
+    postUserOpenOrdersQuadrigaDispatch:(key,sign,nonce,book)=>{dispatch(postUserOpenOrdersQuadriga(key,sign,nonce,book))},
 })
 
 class TradingButton extends Component {
@@ -56,7 +62,7 @@ class TradingButton extends Component {
 
 
   handleOnPress(){
-    const {setTradingBookDispatch,tradingBook,getQuadrigaOrdersDispatch} = this.props;
+    const {setTradingBookDispatch,tradingBook,getQuadrigaOrdersDispatch,postUserOpenOrdersQuadrigaDispatch,apiKey,clientId,privateKey} = this.props;
 
     if( tradingBook === 'btc_cad' || tradingBook === 'btc_usd'){
         if(tradingBook === 'btc_cad'){
@@ -69,6 +75,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'btc_usd');
         }else{
             setTradingBookDispatch('btc_cad')
             getQuadrigaOrdersDispatch("btc_cad",0)
@@ -79,6 +87,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'btc_cad');
         }
     }else if(tradingBook === 'eth_cad' || tradingBook === 'eth_btc'){
         if(tradingBook === 'eth_cad'){
@@ -91,6 +101,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'eth_btc');
         }else{
             setTradingBookDispatch('eth_cad')
             getQuadrigaOrdersDispatch("eth_cad",0)
@@ -101,6 +113,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'eth_cad');
         }
     }else if(tradingBook === 'ltc_cad' || tradingBook === 'ltc_btc'){
         if(tradingBook === 'ltc_cad'){
@@ -113,6 +127,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'ltc_btc');
         }else{
             setTradingBookDispatch('ltc_cad')
             getQuadrigaOrdersDispatch("ltc_cad",0)
@@ -123,6 +139,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'ltc_cad');
         }
     }else if(tradingBook === 'bch_cad' || tradingBook === 'bch_btc'){
         if(tradingBook === 'bch_cad'){
@@ -135,6 +153,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'bch_btc');
         }else{
             setTradingBookDispatch('bch_cad')
             getQuadrigaOrdersDispatch("bch_cad",0)
@@ -145,6 +165,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'bch_cad');
         }
     }else if(tradingBook === 'btg_cad' || tradingBook === 'btg_btc'){
         if(tradingBook === 'btg_cad'){
@@ -157,6 +179,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'btg_btc');
         }else{
             setTradingBookDispatch('btg_cad')
             getQuadrigaOrdersDispatch("btg_cad",0)
@@ -167,6 +191,8 @@ class TradingButton extends Component {
             this.setState({
                 interval:intervalInstance 
             })
+            let nonce = Date.now();
+            postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,'btg_cad');
         }
     }
   }

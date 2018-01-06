@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  TouchableHighlight,
   Platform,
   Dimensions,
   ScrollView,
@@ -12,10 +13,12 @@ import {
 } from 'react-native'
 import LottieView from 'lottie-react-native'
 import DropdownAlert from 'react-native-dropdownalert';
-import {Button} from 'react-native-elements'
+import {Divider,Button} from 'react-native-elements'
 import { iOSUIKit } from 'react-native-typography'
-import IconMaterial from 'react-native-vector-icons/dist/MaterialIcons';
+import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons'
 import IconIOS from 'react-native-vector-icons/dist/Ionicons';
+import Modal from 'react-native-modalbox';
 import {encryptAuthenticationQuadriga} from 'util'
 
 const {width,height} = Dimensions.get('window')
@@ -44,8 +47,12 @@ export class BuySellComponent extends Component {
     this.handleSellToken = this.handleSellToken.bind(this);
     this.handleBuyMArketAlert=this.handleBuyMArketAlert.bind(this);
     this.handleBuyAtPriceAlert = this.handleBuyAtPriceAlert.bind(this);
+    this.handleSellAtPriceAlert = this.handleSellAtPriceAlert.bind(this);
+    this.handleSellMarketAlert = this.handleSellMarketAlert.bind(this);
+    this.handleOpenInfo = this.handleOpenInfo.bind(this);
   }
   componentDidMount() {
+    const {userOpenOrders,tradingBook,apiKey,clientId,secret} = this.props.trading;
     this.animation.play();
     
     
@@ -60,6 +67,14 @@ export class BuySellComponent extends Component {
       this.setState({
         amount: "0"
       })
+    }
+  }
+
+  handleCloseButtonIcon(){
+    if(Platform.OS === 'android'){
+      return <IconMaterial name="close" size={25}/>
+    }else{
+      return <IconIOS name="ios-close" size={25}/>
     }
   }
 
@@ -91,7 +106,28 @@ export class BuySellComponent extends Component {
       return value.toFixed(2)
     }
   }
+
+  handleText(type){
+    switch(type){
+      case "0":
+        return "Buy"
+      break;
+      case "1":
+        return "Sell";
+      break;
+    }
+  }
   
+  handleStatus(type){
+    switch(type){
+      case "0":
+        return "Active";
+      break;
+      case "1":
+        return "Partially filled";
+      break;
+    }
+  }
 
 
 
@@ -121,9 +157,37 @@ export class BuySellComponent extends Component {
     })
   }
 
+  handleOpenInfo(item){
+    const {userLookupOrder,apiKey,clientId,secret} = this.props.trading;
+    let nonce = Date.now();
+    userLookupOrder(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,item.id)
+    this.refs.modalOrderInfo.open()
+
+  }
+
   handleUserOrders(){
+    const {quadrigaUserOrders,tradingBook} = this.props.trading;
     const {name} = this.props;
-    return <Text style={{textAlign:'center',margin:30}}>{`Buy ${name} now \n and your orders will show here`}</Text>
+    if(quadrigaUserOrders.data.length === 0){
+        return <Text style={{textAlign:'center',margin:30}}>{`Buy ${name} now \n and your orders will show here`}</Text>
+    }else{
+      return(
+          quadrigaUserOrders.data.map((item,index)=>{
+            return (
+            <TouchableHighlight underlayColor="orange" onPress={()=>this.handleOpenInfo(item)} key={index} style={{height:50, width:width/1.03-5}}>
+              <View style={{height:50,flexDirection:'row',alignItems:'center',backgroundColor:'white'}}>
+                <Text style={[iOSUIKit.body,{width:'18%',textAlign:'center'}]}>{this.handleText(item.type)}</Text>
+                <Text style={{color:'black',width:'30%',textAlign:'center'}}>{item.amount}</Text>
+                <Text style={{width:'26%',textAlign:'center'}}>{item.price}</Text>
+                <Text style={{width:'15%',textAlign:'center'}}>{this.handleStatus(item.status)}</Text>
+                <View style={{width:'10%',alignItems:'center'}}><SimpleIcon name="arrow-right" size={15} color="orange"/></View>
+              </View>
+            </TouchableHighlight>     
+            )
+          })
+        
+      )
+    }
   
   }
 
@@ -214,6 +278,24 @@ handleFromAvailableAmount(){
     }
   }
 
+  handleSellAtPriceAlert(){
+    const {quadrigaUserSellLimit} = this.props.trading;
+    if(quadrigaUserSellLimit.data.hasOwnProperty('error')){
+      this.dropdown.alertWithType('error', 'Error', quadrigaUserSellLimit.data.error.message);
+    }else{
+
+    }
+  }
+
+  handleSellMarketAlert(){
+    const {quadrigaUserSellMarket} = this.props.trading;
+    if(quadrigaUserSellMarket.data.hasOwnProperty('error')){
+      this.dropdown.alertWithType('error', 'Error', quadrigaUserSellMarket.data.error.message);
+    }else{
+
+    }
+  }
+
   handleBuyToken(){
     const {tradingBook,userBuyAtPrice,userBuyMarketPrice,apiKey,clientId,secret,quadrigaUserBuyAt,quadrigaUserBuyMarket} = this.props.trading;
     if(this.state.price === ""){
@@ -235,13 +317,77 @@ handleFromAvailableAmount(){
       const {tradingBook,apiKey,clientId,secret,userSellAtPrice,userSellMarketPrice,quadrigaUserSellLimit,quadrigaUserSellMarket} = this.props.trading;
       if(this.state.price === ""){
         userSellMarketPrice(apiKey,clientId,secret,this.state.amount,tradingBook);
+        setTimeout(()=>{
+          this.handleSellMarketAlert();
+        },1000)
       }else{
         userSellAtPrice(apiKey,clientId,secret,this.state.amount,this.state.price,tradingBook);
+        setTimeout(()=>{
+          this.handleSellAtPriceAlert();
+        },1000)
       }
+  }
+
+  handleStatusColor(value){
+    switch(value){
+      case "-1" :
+        return <View style={{height:10,width:10,borderRadius:100,backgroundColor:'#cc3232'}}/>
+      break;
+      case "0":
+       return <View style={{height:10,width:10,borderRadius:100,backgroundColor:'#2B73B6'}}/>
+      break;
+      case "1" :
+        return <View style={{height:10,width:10,borderRadius:100,backgroundColor:'#ecec4c'}}/>
+      break;
+      case "2":
+        return <View style={{height:10,width:10,borderRadius:100,backgroundColor:'#32A54A'}}/>
+      break;
+    }
+  }
+
+  handleStatusText(value){
+    switch(value){
+      case "-1" :
+        return <Text>Canceled</Text>
+      break;
+      case "0":
+       return <Text>Active</Text>
+      break;
+      case "1" :
+        return <Text>Partially filled</Text>
+      break;
+      case "2":
+        return <Text>Complete</Text>
+      break;
+    }
+  }
+
+  handleType(type){
+    switch(type){
+      case "0" :
+        return {
+          title: "Buy",
+          return:"Paid",
+        }
+      break;
+      case "1":
+       return {
+         title: "Sell",
+         return:"Return",
+      }
+      break;
+      default:
+        return {
+          title: "",
+          return:"",
+        }
+      break;
+    }
   }
 
   render() {
     const {acronym,quadrigaOrders,trading} = this.props;
+    const {quadrigaUserOrdersLookup} = this.props.trading;
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -296,11 +442,73 @@ handleFromAvailableAmount(){
           </View>
           </View>
           <View style={{width:width/1.03-5,alignItems:'center',backgroundColor:'white',marginBottom:5,marginLeft:5,marginTop:5,justifyContent:'center',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
-            <Text style={[iOSUIKit.title3,{width:width,textAlign:'center',marginTop:10}]}>Your Orders</Text>
+            <Text style={[iOSUIKit.title3,{width:width,textAlign:'center',marginTop:10,marginBottom:10}]}>Your Orders</Text>
+            <View style={{flexDirection:'row',width:width/1.03-5,alignItems:'center'}}>
+              <Text style={[iOSUIKit.body,{width:'18%',textAlign:'center'}]}>Type</Text>
+              <Text style={{color:'black',width:'30%',textAlign:'center'}}>Amount({trading.tradingBook.slice(0,3).toUpperCase()})</Text>
+              <Text style={{width:'26%',textAlign:'center'}}>Price({trading.tradingBook.slice(4,7).toUpperCase()})</Text>
+              <Text style={{width:'15%',textAlign:'center'}}>Status</Text>
+            </View>
             {this.handleUserOrders()}
           </View>
         </ScrollView>
-        <DropdownAlert ref={ref => this.dropdown = ref}  />
+        <Modal 
+          style={styles.modalOrderInfo}
+          position={"center"}
+          coverScreen={true}
+          ref={"modalOrderInfo"} 
+          >
+            <View style={{flexDirection:'column',alignItems:'center',marginTop:30,height: 350,width: 300}}>
+                <Text style={[iOSUIKit.title3,{marginBottom:10}]}>Order Info</Text>
+                <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Type</Text>
+                <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{this.handleType(quadrigaUserOrdersLookup.data[0].type).title}</Text>
+                </View> 
+                <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Amount</Text>
+                <Text style={{width:width/1.21/1.9,textAlign:'center'}}>{quadrigaUserOrdersLookup.data[0].amount} {quadrigaUserOrdersLookup.data[0].book.slice(0,3).toUpperCase()}</Text>
+                </View> 
+                <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Price</Text>
+                <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{quadrigaUserOrdersLookup.data[0].price} {quadrigaUserOrdersLookup.data[0].book.slice(4,7).toUpperCase()}</Text>
+                </View> 
+                <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                <Text style={{width:width/1.21/3.0,paddingLeft:10}}>Date</Text>
+                <Text style={{width:width/1.21/1.5/2,textAlign:'right'}}>{quadrigaUserOrdersLookup.data[0].created.split(" ")[1]}</Text>
+                <Text style={{width:width/1.21/1.5/2,textAlign:'center',paddingRight:10}}>{quadrigaUserOrdersLookup.data[0].created.split(" ")[0]}</Text>
+                </View> 
+                <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Status</Text>
+                <View style={{width:width/1.21/1.9/2,justifyContent:'center',alignItems:'flex-end'}}>
+                  {this.handleStatusColor(quadrigaUserOrdersLookup.data[0].status)}
+                </View>
+                <Text style={{width:width/1.21/1.9/2,textAlign:'center'}}> {this.handleStatusText(quadrigaUserOrdersLookup.data[0].status)}</Text>
+                </View> 
+                <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                <Text style={{width:width/1.21/2.1,paddingLeft:10}}>{this.handleType(quadrigaUserOrdersLookup.data[0].type).return}</Text>
+                <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{(quadrigaUserOrdersLookup.data[0].price)*(quadrigaUserOrdersLookup.data[0].amount)} {quadrigaUserOrdersLookup.data[0].book.slice(4,7).toUpperCase()} </Text>
+                </View> 
+                <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                <View style={{flexDirection:'row'}}>
+                   <View style={{height:height/7.8,width:width/1.2/1.66,justifyContent:'flex-end',alignItems:'flex-end'}}>
+                      <TouchableOpacity style={{margin:20,marginRight:0}}>
+                          <Text style={{fontSize:15,color:'#ff3b30'}}>Cancel Order</Text>
+                      </TouchableOpacity>
+                   </View>
+                   <View style={{height:height/7.8,width:width/1.2/2.5,justifyContent:'flex-end',alignItems:'flex-end'}}>
+                   <TouchableOpacity onPress={()=>{this.refs.modalOrderInfo.close()}} style={{margin:20}}>
+                          <Text style={{fontSize:15,color:'#007aff'}}>Close</Text>
+                      </TouchableOpacity>
+                   </View>
+                </View>
+            </View>
+        </Modal>
+        <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
         </View>
     );
   }
@@ -360,5 +568,17 @@ const styles = StyleSheet.create({
       fontSize:25,
       color:'black',
       marginTop:6
-  }
+  },
+  modalOrderInfo: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius:5,
+    ...Platform.select({
+        ios:{
+            marginTop:0
+        }
+    }),
+    height: height/1.74,
+    width: width/1.2
+},
 });

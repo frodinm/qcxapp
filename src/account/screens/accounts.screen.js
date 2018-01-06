@@ -128,32 +128,42 @@ class AccountsWallets extends Component {
 
     handleBalance(acronym){
       const {quadrigaUserBalance} = this.props;
-      if(acronym === 'btc'){
-        return {
-          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.btc_available: "0.000000",//componentWillMount is not a promise sinse quadrigaUserBalance.data would give null on initial load
-          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.btc_balance: "0.000000",
+      let returnObject;
+      switch(acronym){
+        case 'btc': 
+          return {
+            available: quadrigaUserBalance.data.btc_available,
+            balance:  quadrigaUserBalance.data.btc_balance
+         }
+        break;
+        case 'eth':
+          returnObject = {
+            available:quadrigaUserBalance.data.eth_available,
+            balance:quadrigaUserBalance.data.eth_balance
+          }
+        break;
+        case 'bch':
+          return{
+            available:quadrigaUserBalance.data.bch_available,
+            balance:quadrigaUserBalance.data.bch_balance
+          }
+        break;
+        case 'btg':
+        return{
+          available:quadrigaUserBalance.data.btg_available,
+          balance:quadrigaUserBalance.data.btg_balance
         }
-      }else if(acronym === 'eth'){
-        return {
-          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.eth_available: "0.000000",
-          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.eth_balance: "0.0000000"
+        break;
+        case 'ltc':
+        return{
+          available:quadrigaUserBalance.data.ltc_available,
+          balance:quadrigaUserBalance.data.ltc_balance
         }
-      }else if(acronym === 'bch'){
-        return {
-          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.bch_available: "0.000000",
-          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.bch_balance: "0.0000000"
-        }
-      }else if(acronym === 'btg'){
-        return {
-          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.btg_available: "0.000000",
-          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.btg_balance: "0.0000000"
-        }
-      }else if(acronym === 'ltc'){
-        return {
-          available: quadrigaUserBalance !== null ? quadrigaUserBalance.data.ltc_available: "0.000000",
-          balance: quadrigaUserBalance !== null ? quadrigaUserBalance.data.ltc_balance: "0.0000000"
-        }
+        break;
+        default: "0"
+          
       }
+      return returnObject;
     }
 
     handlePlatform(){
@@ -167,8 +177,8 @@ class AccountsWallets extends Component {
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                   <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
                   <View style={{position:'absolute',right:10, flexDirection:'column'}}>
-                  <Text >{parseInt(this.handleBalance(item.acronym).available).toFixed(6)} {item.acronym.toUpperCase()} available</Text>
-                  <Text >{parseInt(this.handleBalance(item.acronym).balance).toFixed(6)} {item.acronym.toUpperCase()} balance</Text>
+                  <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} available</Text>
+                  <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} balance</Text>
                   </View>
                 </View>
               </TouchableNativeFeedback>         
@@ -183,10 +193,10 @@ class AccountsWallets extends Component {
               <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book})}}>
                 <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
-                  <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
+                  <Text style={[iOSUIKit.caption,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
                   <View style={{position:'absolute',right:20, flexDirection:'column'}}>
-                    <Text style={iOSUIKit.caption}>{parseInt(this.handleBalance(item.acronym).available).toFixed(3)} {item.acronym.toUpperCase()} available</Text>
-                    <Text style={iOSUIKit.caption} >{parseInt(this.handleBalance(item.acronym).balance).toFixed(3)} {item.acronym.toUpperCase()} balance</Text>
+                    <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} available</Text>
+                    <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} balance</Text>
                   </View>
                   <SimpleIcon name="arrow-right" style={{position: 'absolute',right:5,color:'#ffa500'}}/>
                 </View>

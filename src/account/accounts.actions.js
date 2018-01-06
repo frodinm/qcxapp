@@ -137,6 +137,26 @@ export const getQuadrigaTransactions = (book,time) => {
   }
 }
 // Authenticated calls
+export const postUserQuadrigaBalanceAndOpenOrders = (apiKey,clientId,secret,tradingBook) =>{
+    let nonce;
+     return dispatch => {
+    dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
+    nonce = Date.now();
+    postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response) => {
+      dispatch({type: POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+      dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
+      nonce = Date.now();
+      postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,tradingBook).then((response) => {
+        dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+      }).catch((error) => {
+        dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+      })
+    }).catch((error) => {
+      dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+    })
+  }
+}
+
 export const postUserQuadrigaBalance = (key,sign,nonce) => {
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})

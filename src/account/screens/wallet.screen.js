@@ -45,9 +45,10 @@ import {encryptAuthenticationQuadriga,convertunixTime} from 'util';
 const {height, width} = Dimensions.get('window');
 
 const textStyle = {
-    fontSize: 19,
+    fontSize: 17,
     color: 'black',
     marginBottom:10,
+    textAlign:'center',
 }
 const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
@@ -67,108 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
     postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))}
 })
 
-const testLookUp = {
-//     id - the order id passed to that function
-//     book - which orderbook it belongs to
-//     price - price of the order
-//     amount - amount of the order
-//     type - buy or sell (0 - buy; 1 - sell)
-//     status - status of the order (-1 - canceled; 0 - active; 1 - partially filled; 2 - complete)
-//     created - date the order was created
-//     updated - date the order was last updated (not shown when status = 0)
-}
-
-const testObject = [
-    {
-    datetime: Date.now(),
-    id: "1892832323",
-    type: "2",
-    method: "deposit",
-    major:'btc',
-    minor:'cad',
-    order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-    fee:0.05,
-    rate:'19234'
-    },
-    {
-        datetime: Date.now(),
-        id: "1892832323",
-        type: "1",
-        method: "deposit",
-        major:'btc',
-        minor:'cad',
-        order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-        fee:0.05,
-        rate:'19234'
-        },
-        {
-            datetime: Date.now(),
-            id: "1892832323",
-            type: "2",
-            method: "withdrawal",
-            major:'btc',
-            minor:'cad',
-            order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-            fee:0.05,
-            rate:'19234'
-            },
-            {
-                datetime: Date.now(),
-                id: "1892832323",
-                type: "2",
-                method: "withdrawal",
-                major:'btc',
-                minor:'cad',
-                order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-                fee:0.05,
-                rate:'19234'
-                },
-                {
-                    datetime: Date.now(),
-                    id: "1892832323",
-                    type: "0",
-                    method: "deposit",
-                    major:'btc',
-                    minor:'cad',
-                    order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-                    fee:0.05,
-                    rate:'19234'
-                    },
-                    {
-                        datetime: Date.now(),
-                        id: "1892832323",
-                        type: "1",
-                        method: "withdrawal",
-                        major:'btc',
-                        minor:'cad',
-                        order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-                        fee:0.05,
-                        rate:'19234'
-                        },
-                        {
-                            datetime: Date.now(),
-                            id: "1892832323",
-                            type: "0",
-                            method: "deposit",
-                            major:'btc',
-                            minor:'cad',
-                            order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-                            fee:0.05,
-                            rate:'19234'
-                            },
-                            {
-                                datetime: Date.now(),
-                                id: "1892832323",
-                                type: "1",
-                                method: "withdrawal",
-                                major:'btc',
-                                minor:'cad',
-                                order_id:'jfqwoijfqwernktnjqjknq4jknqjwknefqkjwefn',
-                                fee:0.05,
-                                rate:'19234'
-                                }
-    
-]
 
 class Wallet extends Component {
     constructor() {
@@ -263,52 +162,51 @@ class Wallet extends Component {
     }
     handleData(acronym){
         const {quadrigaTickerBTC,quadrigaTickerETH,quadrigaTickerBCH,quadrigaTickerBTG,quadrigaTickerLTC,quadrigaUserBalance} = this.props;
-        const textStyle = iOSUIKit.body;
         
         if(acronym === 'btc'){
             return (
                 <View>
-                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.btc_balance === "0.00000000" ? "0": quadrigaUserBalance.data.btc_balance} BTC</Text>
-                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBTC.data.last*quadrigaUserBalance.data.btc_balance).toFixed(2)}</Text>
+                    <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.btc_balance === "0.00000000" ? "0": quadrigaUserBalance.data.btc_balance} BTC</Text>
+                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBTC.data.last*quadrigaUserBalance.data.btc_balance).toFixed(2)} CAD</Text>
                 </View>
             )
         }else if(acronym === 'eth'){
             return (
                 <View>
-                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.eth_balance === "0.00000000" ? "0": quadrigaUserBalance.data.eth_balance} ETH</Text>
-                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerETH.data.last*quadrigaUserBalance.data.eth_balance).toFixed(2)}</Text>
+                    <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.eth_balance === "0.00000000" ? "0": quadrigaUserBalance.data.eth_balance} ETH</Text>
+                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerETH.data.last*quadrigaUserBalance.data.eth_balance).toFixed(2)} CAD</Text>
                 </View>
             )
         }else if(acronym === 'bch'){
             return (
                 <View>
-                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.bch_balance === "0.00000000" ? "0": quadrigaUserBalance.data.bch_balance} BCH</Text>
-                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBCH.data.last*quadrigaUserBalance.data.bch_balance).toFixed(2)}</Text>
+                    <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.bch_balance === "0.00000000" ? "0": quadrigaUserBalance.data.bch_balance} BCH</Text>
+                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBCH.data.last*quadrigaUserBalance.data.bch_balance).toFixed(2)} CAD</Text>
                 </View>
             )
         }else if(acronym === 'btg'){
             return (
                 <View>
-                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.btg_balance === "0.00000000" ? "0": quadrigaUserBalance.data.btg_balance} BTG</Text>
-                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBTG.data.last*quadrigaUserBalance.data.btg_balance).toFixed(2)}</Text>
+                    <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.btg_balance === "0.00000000" ? "0": quadrigaUserBalance.data.btg_balance} BTG</Text>
+                    <Text style={[textStyle,{marginBottom:30}]}>${(quadrigaTickerBTG.data.last*quadrigaUserBalance.data.btg_balance).toFixed(2)} CAD</Text>
                 </View>
             )
         }else if(acronym === 'ltc'){
             return (
                 <View>
-                    <Text style={[textStyle,{fontSize:20}]}>{quadrigaUserBalance.data.ltc_balance === "0.00000000" ? "0": quadrigaUserBalance.data.ltc_balance} LTC</Text>
-                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerLTC.data.last*quadrigaUserBalance.data.ltc_balance).toFixed(2)}</Text>
+                    <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.ltc_balance === "0.00000000" ? "0": quadrigaUserBalance.data.ltc_balance} LTC</Text>
+                    <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerLTC.data.last*quadrigaUserBalance.data.ltc_balance).toFixed(2)} CAD</Text>
                 </View>
             )
         }
         
     }
     handleIcon(object){
-        if(object.type === "2"){
+        if(object.type === 2){
             return <IconAwsome name="exchange" size={22}/>
-        }else if(object.type === "1"){
+        }else if(object.type === 1){
             return <IconIOS name="ios-send-outline" size={35}/>
-        }else if(object.type === "0"){
+        }else if(object.type === 0){
             return  <IconSimple name="wallet" size={22}/>
         }
 
@@ -316,17 +214,17 @@ class Wallet extends Component {
     handleText(object){
         let BuyOrSell;
         let noun;
-        if(object.type ===  '0'){
+        if(object.type ===  0){
             return{ 
                 BuyOrSell:"Deposit",
-                textObject: null
+                textObject: <Text style={[iOSUIKit.caption]}>Amount {object[Object.keys(object)[0]]} {Object.keys(object)[0].toUpperCase()}</Text>
             }
-        }else if(object.type === "1"){
+        }else if(object.type === 1){
             return{ 
                 BuyOrSell:"Sent",
                 textObject: <Text style={[iOSUIKit.body]}>To {object.minor}</Text>
             }
-        }else if(object.type === "2"){
+        }else if(object.type === 2){
             return{ 
                 BuyOrSell:"Bought",
                 textObject: <Text style={[iOSUIKit.body]}>From {object.minor}</Text>
@@ -366,19 +264,19 @@ class Wallet extends Component {
                     <View key={index} style={{width:width,height:height/14,backgroundColor:'white'}}>
         
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                        <View style={{width:width*0.28,alignItems:'center'}}>
+                        <View style={{width:width*0.14,alignItems:'center'}}>
                         {this.handleIcon(item)}
                         </View>
-                        <View style={{flexDirection:'column',justifyContent:'center',width:width*0.44}}>
+                        <View style={{flexDirection:'column',justifyContent:'center',width:width*0.52}}>
                             <Text style={[iOSUIKit.body]}>{this.handleText(item).BuyOrSell} {this.props.navigation.state.params.name} </Text>
                             {this.handleText(item).textObject}
                         </View>
                         <View style={{flexDirection:'column',width:width*0.28}}>
                             <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}} >
-                            <Text style={iOSUIKit.caption} >{convertunixTime(item.datetime).hours}:{convertunixTime(item.datetime).minutes}:{convertunixTime(item.datetime).seconds}</Text>
+                            <Text style={iOSUIKit.caption} >{item.datetime.split(" ")[1]}</Text>
                             </View>
                             <View style={{flexDirection:'row',justifyContent:'center'}} >
-                                <Text style={iOSUIKit.caption}>{convertunixTime(item.datetime).day}/{convertunixTime(item.datetime).month}/{convertunixTime(item.datetime).fullYear}</Text>
+                                <Text style={iOSUIKit.caption}>{item.datetime.split(" ")[0]}</Text>
                             </View>
                         </View>
                     </View>
@@ -390,7 +288,7 @@ class Wallet extends Component {
 
     handleTransactions(name){
         const {quadrigaUserTransactions} = this.props;
-        if(quadrigaUserTransactions.length !== 0){
+        if(quadrigaUserTransactions.length === 0){
         return (
             <View style={{width:width,...Platform.select({ios:{height:(height/2-50)},android:{height:height/2-40}}),alignItems:'center',justifyContent:'center'}}>
                 <Text style={[iOSUIKit.title3,{fontWeight:'bold'}]}>You have no transactions</Text>
@@ -400,7 +298,7 @@ class Wallet extends Component {
         }else{
             return(
                 <FlatList
-                data={testObject} // change to quadrigatransactions later
+                data={quadrigaUserTransactions}
                 extraData={this.props}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}

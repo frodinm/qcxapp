@@ -52,7 +52,7 @@ class NewUser extends Component {
         if(isLoggedIn && pin === '' ){
             resetNavigation('PinCode',navigation)
         }else if(pin != ''){
-          resetNavigation( 'Auth'/*'AuthPin'*/,navigation)
+          resetNavigation( 'AuthPin',navigation)
         }
       }
       handleLogin(){
