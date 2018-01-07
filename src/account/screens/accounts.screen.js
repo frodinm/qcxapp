@@ -172,7 +172,7 @@ class AccountsWallets extends Component {
         return userWallets.map((item,index)=>{
           return( 
             <View key={index} style={{alignItems:'center'}}>
-              <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+              <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
                 <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                   <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
@@ -190,7 +190,7 @@ class AccountsWallets extends Component {
        return userWallets.map((item,index)=>{
           return (
             <View key={index} style={{alignItems:'center'}}>
-              <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book})}}>
+              <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}}>
                 <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                   <Text style={[iOSUIKit.caption,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
@@ -218,12 +218,9 @@ class AccountsWallets extends Component {
       
     </ScrollView>
     <Modal 
-            style={[styles.modal]}
-            position={"center"}
-
-
-            ref={"modal"} 
-          >
+      style={[styles.modal]}
+      position={"center"}
+      ref={"modal"}>
             <View>
                 <Text style={iOSUIKit.title3}>Add a custom wallet</Text>
                 <Text>{i18n.t('bitcoin')}</Text>

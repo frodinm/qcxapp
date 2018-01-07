@@ -140,31 +140,31 @@ export const InitialRouting = StackNavigator({
     Auth: {
         screen: AuthenticatedRoute,
     },
-    XɃTCAD: {
+    btc: {
         screen: BuySellBTCScreen,
         navigationOptions: {
             headerTintColor: 'black', 
         }
     },
-    ΞTH: {
+    eth: {
         screen: BuySellETHScreen,
         navigationOptions: {
             headerTintColor: 'black',
         },
     },
-    BCHCAD: {
+    bch: {
         screen: BuySellBCHScreen,
         navigationOptions: {
             headerTintColor: 'black', 
         }
     },
-    BTGCAD:{
+    btg:{
         screen: BuySellBTGScreen,
         navigationOptions: {
             headerTintColor: 'black', 
         }
     },
-    ŁTCCAD: {
+    ltc: {
         screen: BuySellLTCScreen,
         navigationOptions: {
             headerTintColor: 'black', 

@@ -167,19 +167,14 @@ const styles = StyleSheet.create({
   label: {
     position: 'absolute',
     height: LABEL_HEIGHT,
-    left: PADDING,
-    paddingTop: 4,
+    paddingTop: 4, //remove left padding
     backgroundColor: 'transparent',
     fontFamily: 'Arial',
     fontSize: 14,
     fontWeight: 'bold',
   },
   textInput: {
-    ...Platform.select({
-      ios: {
-        paddingLeft: PADDING,//android prevents paste options
-      }
-    }),
+    paddingLeft: PADDING,
     color: '#afb3b8',
     fontSize: 18,
     fontWeight: 'bold',

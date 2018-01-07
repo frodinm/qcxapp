@@ -168,11 +168,22 @@ export const postUserQuadrigaBalance = (key,sign,nonce) => {
   }
 }
 
-export const postUserQuadrigaTransactions = (key,sign,nonce,offset,limit,sort,book) => {
+export const postUserQuadrigaTransactions = (apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo) => {
+  let nonce;
+  let returnArray;
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.PENDING})
-    postUserTransactionsQuadriga(key,sign,nonce,offset,limit,sort,book).then((response) => {
-      dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.SUCCESS, payload: response.data})
+    nonce = Date.now();
+    postUserTransactionsQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,offset,limit,sort,book).then((response) => {
+      returnArray = response.data;
+      dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.PENDING})
+      nonce = Date.now();
+      postUserTransactionsQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,offset,limit,sort,bookTwo).then((response) => {
+        returnArray = returnArray.concat(response.data).filter((thing, index, self) => self.findIndex(t => t.datetime === thing.datetime) === index) //filter duplicate deposits based on the same datetime.
+        dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.SUCCESS, payload: returnArray})
+      }).catch((error) => {
+        dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.ERROR, payload: error})
+      })
     }).catch((error) => {
       dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.ERROR, payload: error})
     })
@@ -203,7 +214,7 @@ export const postUserLookupOrderQuadriga = (key,sign,nonce,id) => {
 }
 
 
-export const postUserCancelOrderQuadriga = (apiKey,clientId,secret,id) => {
+export const postUserCancelOrderQuadriga = (apiKey,clientId,secret,id,book) => {
   let nonce;
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_CANCEL_ORDERS.PENDING})
@@ -212,8 +223,15 @@ export const postUserCancelOrderQuadriga = (apiKey,clientId,secret,id) => {
       dispatch({type: POST_USER_QUADRIGA_CANCEL_ORDERS.SUCCESS, payload: response})
       dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
       nonce = Date.now();
-      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+      postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
         dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+        dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
+        nonce = Date.now();
+        postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,book).then((response) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+        }).catch((error) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+        })
       }).catch((error)=>{
         dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
       })
@@ -233,8 +251,15 @@ export const postUserBuyAtPriceQuadriga = (apiKey,clientId,secret,amount,price,b
       dispatch({type: POST_USER_QUADRIGA_BUY_AT_PRICE.SUCCESS, payload: response})
       dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
       nonce = Date.now();
-      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+      postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
         dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+        dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
+        nonce = Date.now();
+        postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,book).then((response) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+        }).catch((error) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+        })
       }).catch((error)=>{
         dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
       })
@@ -254,8 +279,15 @@ export const postUserBuyMarketOrderQuadriga = (apiKey,clientId,secret,amount,boo
       dispatch({type: POST_USER_QUADRIGA_BUY_ORDER_MARKET.SUCCESS, payload: response})
       dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
       nonce = Date.now();
-      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+      postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
         dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+        dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
+        nonce = Date.now();
+        postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,book).then((response) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+        }).catch((error) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+        })
       }).catch((error)=>{
         dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
       })
@@ -274,8 +306,15 @@ export const postUserSellLimitQuadriga = (apiKey,clientId,secret,amount,price,bo
       dispatch({type: POST_USER_QUADRIGA_SELL_LIMIT.SUCCESS, payload: response})
       dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
       nonce = Date.now();
-      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+      postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
         dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+        dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
+        nonce = Date.now();
+        postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,book).then((response) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+        }).catch((error) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+        })
       }).catch((error)=>{
         dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
       })
@@ -294,8 +333,15 @@ export const postUserSellMarketOrderQuadriga = (apiKey,clientId,secret,amount,bo
       dispatch({type: POST_USER_QUADRIGA_SELL_MARKET.SUCCESS, payload: response})
       dispatch({type:POST_USER_QUADRIGA_BALANCE.PENDING})
       nonce = Date.now();
-      postUserQuadrigaBalance(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
+      postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
         dispatch({type:POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+        dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
+        nonce = Date.now();
+        postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,book).then((response) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+        }).catch((error) => {
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+        })
       }).catch((error)=>{
         dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
       })
@@ -388,23 +434,23 @@ export const postAccounScreenMainCall = (clientId,apiKey,secret) =>{ //need to g
     dispatch({type: POST_USER_QUADRIGA_BITCOIN_WALLET.PENDING})
     nonce = Date.now();
     postBitcoinWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
-      dispatch({type: POST_USER_QUADRIGA_BITCOIN_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'btc',name:'Bitcoin',receiveAddress:response.data,book:'btc_cad'}}});
+      dispatch({type: POST_USER_QUADRIGA_BITCOIN_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'btc',name:'Bitcoin',receiveAddress:response.data,book:'btc_cad',bookTwo:'btc_usd'}}});
       dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET.PENDING})
       nonce = Date.now();
       postEthereumWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
-        dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'eth',name:'Ethereum',receiveAddress:response.data,book:'eth_cad'}}});
+        dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'eth',name:'Ethereum',receiveAddress:response.data,book:'eth_cad',bookTwo:'eth_btc'}}});
         dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.PENDING})
         nonce = Date.now();
         postBitcoinCashWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
-          dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'bch',name:'Bitcoin Cash',receiveAddress:response.data,book:'bch_cad'}}});
+          dispatch({type: POST_USER_QUADRIGA_BITCOIN_CASH_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'bch',name:'Bitcoin Cash',receiveAddress:response.data,book:'bch_cad',bookTwo:'bch_btc'}}});
           dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.PENDING})
           nonce = Date.now();
           postBitcoinGoldWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
-            dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'btg',name:'Bitcoin Gold',receiveAddress:response.data,book:'btg_cad'}}});
+            dispatch({type: POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'btg',name:'Bitcoin Gold',receiveAddress:response.data,book:'btg_cad',bookTwo:'btg_btc'}}});
             dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET.PENDING})
             nonce = Date.now();
             postLitecoinWalletAddressQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{
-              dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'ltc',name:'Litecoin',receiveAddress:response.data,book:'ltc_cad'}}});
+              dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET.SUCCESS, payload: {res:response,address:{type:'quadriga',acronym:'ltc',name:'Litecoin',receiveAddress:response.data,book:'ltc_cad',bookTwo:'ltc_btc'}}});
               dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
               nonce = Date.now();
               postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response)=>{

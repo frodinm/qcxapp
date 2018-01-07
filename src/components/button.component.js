@@ -23,9 +23,21 @@ export class ButtonComponent extends Component {
       return(
         <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
           <View style={{...buttonStyle,marginTop:10,backgroundColor:color}} pointerEvents='box-only' >
-          <Image style={{height:50,width:50,}} resizeMode="contain"  source={imageSource}/>
-          <Text>{tokenData.data.last} $</Text>
-          <Text>{Math.round((tokenData.data.last / tokenData.data.low)*100)/100} %</Text>
+          <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
+            <View style={{flexDirection:'row'}}>
+              <View style={{flexDirection:'column'}}>
+                <Text>High </Text>
+                <Text>Low </Text>
+                <Text>Last </Text>
+                <Text>Vmap </Text>
+              </View>
+              <View style={{flexDirection:'column'}}>
+                <Text style={iOSUIKit.caption}>{tokenData.data.high}</Text>
+                <Text style={iOSUIKit.caption}>{tokenData.data.low}</Text>
+                <Text style={iOSUIKit.caption}>{tokenData.data.last}</Text>
+                <Text style={iOSUIKit.caption}>{parseFloat(tokenData.data.vwap).toFixed(2)}</Text>
+              </View>
+            </View>
           </View>
       </TouchableNativeFeedback>
       )
@@ -34,9 +46,21 @@ export class ButtonComponent extends Component {
         <View style={{margin:5,marginTop:10}}>
         <TouchableHighlight onPress={onPressAction}>
           <View style={{...buttonStyle,backgroundColor:color}} pointerEvents='box-only' >
-          <Image style={{height:50,width:50,}} resizeMode="contain"  source={imageSource}/>
-          <Text style={iOSUIKit.caption}>{tokenData.data.last} $</Text>
-          <Text style={iOSUIKit.caption}>{Math.round((tokenData.data.last / tokenData.data.low)*100)/100} %</Text>
+          <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
+            <View style={{flexDirection:'row'}}>
+              <View style={{flexDirection:'column'}}>
+                <Text>High </Text>
+                <Text>Low </Text>
+                <Text>Last </Text>
+                <Text>Vmap </Text>
+              </View>
+              <View style={{flexDirection:'column'}}>
+                <Text style={iOSUIKit.caption}>{tokenData.data.high}</Text>
+                <Text style={iOSUIKit.caption}>{tokenData.data.low}</Text>
+                <Text style={iOSUIKit.caption}>{tokenData.data.last}</Text>
+                <Text style={iOSUIKit.caption}>{parseFloat(tokenData.data.vwap).toFixed(2)}</Text>
+              </View>
+            </View>
           </View>
       </TouchableHighlight>
       </View>

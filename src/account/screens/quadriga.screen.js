@@ -70,27 +70,29 @@ class QuadrigaExchange extends Component {
         super();
         this.state = {
             nonce: null,
-
+            interval: null,
         }
         this.handleGetTicker = this.handleGetTicker.bind(this);
         this.handleGetBalance = this.handleGetBalance.bind(this);
         this.handleBalance = this.handleBalance.bind(this);
+        this.handleRestartInterval = this.handleRestartInterval.bind(this);
 
     }
-
     componentWillMount() {
-        const {getQuadrigaTransactionsDispatch, quadrigaTransactions, postUserOpenOrdersQuadrigaDispatch, getQuadrigaTickerDispatch} = this.props;
-        //setInterval(()=>{getQuadrigaTransactionsDispatch("btc_cad","hour");getQuadrigaTickerDispatch()},15000);
-        //setInterval(()=>{
-        //   const nonce = Date.now();
-        //   postUserOpenOrdersQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce)},20000)
-
+        const {getQuadrigaTransactionsDispatch, getQuadrigaTickerDispatch} = this.props;
+        let interval = setInterval(()=>{getQuadrigaTransactionsDispatch("btc_cad","hour");getQuadrigaTickerDispatch()},15000); //too many request... Gonna pass the instance to the modules so they clear the interval on mount.
+        this.setState({interval})
     }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.quadrigaTickerBTC.data.last != this.props.quadrigaTickerBTC.data.last) {
             this.props.navigation.setParams({btcTicker: `${Math.round(nextProps.quadrigaTickerBTC.data.last)} `});
         }
+    }
+
+    handleRestartInterval(){
+        const {getQuadrigaTransactionsDispatch, getQuadrigaTickerDispatch} = this.props;
+        let interval = setInterval(()=>{getQuadrigaTransactionsDispatch("btc_cad","hour");getQuadrigaTickerDispatch()},15000); // modules componentWillUnmount will restart the interval
+        this.setState({interval})
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -205,7 +207,8 @@ class QuadrigaExchange extends Component {
                     <Modules colorBTC={colorChangeBTC} colorETH={colorChangeETH} colorBCH={colorChangeBCH}
                              colorBTG={colorChangeBTG} colorLTC={colorChangeLTC} navigation={this.props.navigation}
                              dataBTC={quadrigaTickerBTC} dataETH={quadrigaTickerETH} dataBCH={quadrigaTickerBCH}
-                             dataBTG={quadrigaTickerBTG} dataLTC={quadrigaTickerLTC}/>
+                             dataBTG={quadrigaTickerBTG} dataLTC={quadrigaTickerLTC}
+                             intervalInstance={this.state.interval} restartInterval={()=>this.handleRestartInterval()}/>
                     <TransactionView data={quadrigaTransactions}/>
                 </ScrollView>
             </ScrollView>

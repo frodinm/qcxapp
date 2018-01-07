@@ -16,6 +16,7 @@ import {connect} from 'react-redux'
 import {setTempPin} from 'users'
 import {resetNavigation} from 'util'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import DropdownAlert from 'react-native-dropdownalert';
 import {
   getQuadrigaTickerBTC,
   getQuadrigaTickerETH,
@@ -76,8 +77,10 @@ class Pincode extends Component {
     const {navigation,setPinDispatch} = this.props;
     if(this.state.pinAuth.length === 4) {
         setPinDispatch(this.state.pinAuth);
-        alert("your pin is "+this.state.pinAuth)
-        resetNavigation('Auth',navigation)
+        this.dropdown.alertWithType('info', 'Info', `Your pin has been set to ${this.state.pinAuth}`);
+        setTimeout(()=>{
+          resetNavigation('Auth',navigation)
+        },2000)
       } else {
         this.refs.view1.shake()
         this.refs.view2.shake()
@@ -191,6 +194,7 @@ class Pincode extends Component {
       title='   Confirm   '
       onPress={()=>this.handleClick()}/>
       <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
+      <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
   </KeyboardAwareScrollView>
     );
   }

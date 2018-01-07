@@ -50,6 +50,7 @@ export class BuySellComponent extends Component {
     this.handleSellAtPriceAlert = this.handleSellAtPriceAlert.bind(this);
     this.handleSellMarketAlert = this.handleSellMarketAlert.bind(this);
     this.handleOpenInfo = this.handleOpenInfo.bind(this);
+    this.confirmCancelOrder = this.confirmCancelOrder.bind(this);
   }
   componentDidMount() {
     const {userOpenOrders,tradingBook,apiKey,clientId,secret} = this.props.trading;
@@ -83,12 +84,16 @@ export class BuySellComponent extends Component {
     const {tradingBook} = this.props.trading
     if(this.state.price === ""){
       if(tradingBook.slice(4,7) !== 'btc'){
-        return (parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(2)
+        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(2)} {tradingBook.slice(4,7).toUpperCase()}</Text>
       }else{
-        return (parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(6)
+        return <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(6)} BTC</Text>
       }
     }else{
-      return parseFloat(this.state.amount)*parseFloat(this.state.price);
+      if(tradingBook.slice(4,7) !== 'btc'){
+        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: {parseFloat(this.state.amount)*parseFloat(this.state.price)} {tradingBook.slice(4,7).toUpperCase()}</Text>
+      }else{
+        return <Text style={[iOSUIKit.caption,styles.text]}>Total: {parseFloat(this.state.amount)*parseFloat(this.state.price)} BTC</Text>
+      }
     }
   }
 
@@ -262,10 +267,9 @@ handleFromAvailableAmount(){
   handleBuyMArketAlert(){
     const {quadrigaUserBuyMarket} = this.props.trading;
     if(quadrigaUserBuyMarket.data.hasOwnProperty('error')){
-
       this.dropdown.alertWithType('error', 'Error', quadrigaUserBuyMarket.data.error.message);
     }else{
-
+      this.dropdown.alertWithType('info', 'Info', 'Buy at market price has been placed!');
     }
   }
 
@@ -274,7 +278,7 @@ handleFromAvailableAmount(){
     if(quadrigaUserBuyAt.data.hasOwnProperty('error')){
       this.dropdown.alertWithType('error', 'Error', quadrigaUserBuyAt.data.error.message);
     }else{
-
+      this.dropdown.alertWithType('info', 'Info', `${this.handleText(quadrigaUserBuyAt.data.type)} ${quadrigaUserBuyAt.data.amount} ${quadrigaUserBuyAt.data.book.slice(0,3).toUpperCase()} at ${quadrigaUserBuyAt.data.price} each has been placed!`);
     }
   }
 
@@ -283,7 +287,7 @@ handleFromAvailableAmount(){
     if(quadrigaUserSellLimit.data.hasOwnProperty('error')){
       this.dropdown.alertWithType('error', 'Error', quadrigaUserSellLimit.data.error.message);
     }else{
-
+      this.dropdown.alertWithType('info', 'Info', `${this.handleText(quadrigaUserSellLimit.data.type)} ${quadrigaUserSellLimit.data.amount} ${quadrigaUserSellLimit.data.book.slice(0,3).toUpperCase()} at ${quadrigaUserSellLimit.data.price} each has been placed!`);
     }
   }
 
@@ -292,7 +296,7 @@ handleFromAvailableAmount(){
     if(quadrigaUserSellMarket.data.hasOwnProperty('error')){
       this.dropdown.alertWithType('error', 'Error', quadrigaUserSellMarket.data.error.message);
     }else{
-
+      this.dropdown.alertWithType('info', 'Info', 'Sell at market price has been placed!');
     }
   }
 
@@ -385,6 +389,29 @@ handleFromAvailableAmount(){
     }
   }
 
+  handleErrorUnicodeText(){
+  
+  }
+
+  confirmCancelOrder(){
+    const {quadrigaUserOrdersLookup,userCancelOrder,apiKey,clientId,secret,tradingBook} = this.props.trading;
+    userCancelOrder(apiKey,clientId,secret,quadrigaUserOrdersLookup.data[0].id,tradingBook);
+    this.refs.modalCancelOrder.close();
+    this.refs.modalOrderInfo.close();
+    this.dropdown.alertWithType('info', 'Info', 'Your order has been canceled!');
+  }
+
+  confirmBuyOrder(){
+    this.handleBuyToken();
+    this.refs.modalBuyOrder.close();
+  }
+
+  confirmSellOrder(){
+    this.handleSellToken()
+    this.refs.modalSellOrder.close();
+  }
+
+
   render() {
     const {acronym,quadrigaOrders,trading} = this.props;
     const {quadrigaUserOrdersLookup} = this.props.trading;
@@ -403,7 +430,7 @@ handleFromAvailableAmount(){
                   <Text style={[iOSUIKit.title3,styles.text]}>Available</Text>
                   <Text style={[iOSUIKit.caption,styles.text]}>${this.handleFromAvailableAmount()}</Text>
                   <Text style={[iOSUIKit.caption,styles.text]}>{this.handleTokenAvailable()} {acronym}</Text>
-                  <Text style={[iOSUIKit.caption,styles.text]}>Total: {this.handleTotalPrice()}</Text>
+                  {this.handleTotalPrice()}
                 </View>
                 <View style={{marginTop:30}}>
                   <TouchableOpacity onPress={()=>{this.handleRefreshUserBalance()}}>
@@ -420,8 +447,8 @@ handleFromAvailableAmount(){
             </View>
           </View>
           <View style={{flexDirection:'row',width:width/1.03-5,height:height/8,alignItems:'center',backgroundColor:'white',marginBottom:5,marginLeft:5,marginTop:5,justifyContent:'center',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
-              <Button onPress={()=>this.handleBuyToken()} title="BUY" buttonStyle={{backgroundColor:'#4ca64c',height:height/15,width:width/2.5}}/>
-              <Button onPress={()=>this.handleSellToken()} title="SELL" buttonStyle={{backgroundColor:'#ffb732',height:height/15,width:width/2.5}}/>
+              <Button onPress={()=>this.refs.modalBuyOrder.open()} title="BUY" buttonStyle={{backgroundColor:'#4ca64c',height:height/15,width:width/2.5}}/>
+              <Button onPress={()=>this.refs.modalSellOrder.open()} title="SELL" buttonStyle={{backgroundColor:'#ffb732',height:height/15,width:width/2.5}}/>
           </View>
           <View style={{flexDirection:'row'}}>
             <View style={{backgroundColor:'white',marginLeft:5,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,alignItems:'center',justifyContent:'center'}}>
@@ -455,7 +482,6 @@ handleFromAvailableAmount(){
         <Modal 
           style={styles.modalOrderInfo}
           position={"center"}
-          coverScreen={true}
           ref={"modalOrderInfo"} 
           >
             <View style={{flexDirection:'column',alignItems:'center',marginTop:30,height: 350,width: 300}}>
@@ -495,18 +521,39 @@ handleFromAvailableAmount(){
                 </View> 
                 <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
                 <View style={{flexDirection:'row'}}>
-                   <View style={{height:height/7.8,width:width/1.2/1.66,justifyContent:'flex-end',alignItems:'flex-end'}}>
-                      <TouchableOpacity style={{margin:20,marginRight:0}}>
+                   <View style={{height:height/7.8,width:width/1.2/1.66}}>
+                      <TouchableOpacity onPress={()=>this.refs.modalCancelOrder.open()} style={{margin:20,marginBottom:10,position:'absolute',bottom:15,right:0}}>
                           <Text style={{fontSize:15,color:'#ff3b30'}}>Cancel Order</Text>
                       </TouchableOpacity>
                    </View>
-                   <View style={{height:height/7.8,width:width/1.2/2.5,justifyContent:'flex-end',alignItems:'flex-end'}}>
-                   <TouchableOpacity onPress={()=>{this.refs.modalOrderInfo.close()}} style={{margin:20}}>
+                   <View style={{height:height/7.8,width:width/1.2/2.5}}>
+                   <TouchableOpacity onPress={()=>{this.refs.modalOrderInfo.close()}} style={{margin:20,marginBottom:15,position:'absolute',bottom:10,right:10}}>
                           <Text style={{fontSize:15,color:'#007aff'}}>Close</Text>
-                      </TouchableOpacity>
+                    </TouchableOpacity>
                    </View>
                 </View>
             </View>
+        </Modal>
+        <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalCancelOrder"}>
+          <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your cancel</Text>
+          <View style={{flexDirection:'row'}}>
+              <Button onPress={()=>this.refs.modalCancelOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.confirmCancelOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+          </View>
+        </Modal>
+        <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalBuyOrder"}>
+          <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your buy order</Text>
+          <View style={{flexDirection:'row'}}>
+              <Button onPress={()=>this.refs.modalBuyOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.confirmBuyOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+          </View>
+        </Modal>
+        <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalSellOrder"}>
+          <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your sell order</Text>
+          <View style={{flexDirection:'row'}}>
+              <Button onPress={()=>this.refs.modalSellOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.confirmSellOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+          </View>
         </Modal>
         <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
         </View>
@@ -535,7 +582,7 @@ const styles = StyleSheet.create({
         height:30,
       }
     }),
-    width:width/2.2,
+    width:width/2.5,
     marginTop:5,
   },
   dropdownBtn:{
@@ -581,4 +628,10 @@ const styles = StyleSheet.create({
     height: height/1.74,
     width: width/1.2
 },
+modalConfirm: {
+  height: height/7,
+  backgroundColor: '#007aff',
+  opacity:0.95
+},
+
 });

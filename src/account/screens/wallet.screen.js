@@ -13,13 +13,14 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Clipboard,
-    Button
 } from 'react-native';
 import {connect} from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons'
 import IconSimple from 'react-native-vector-icons/dist/SimpleLineIcons'
 import IconAwsome from 'react-native-vector-icons/dist/FontAwesome'
 import IconIOS from 'react-native-vector-icons/dist/Ionicons'
+import DropdownAlert from 'react-native-dropdownalert';
 
 import {
     setFromTokenLogo,
@@ -38,7 +39,7 @@ import i18n from 'i18n'
 import {resetNavigation} from 'util'
 import QRCode from 'react-native-qrcode';
 import { iOSUIKit } from 'react-native-typography'
-import {Divider} from 'react-native-elements'
+import {Divider,Button} from 'react-native-elements'
 import Modal from 'react-native-modalbox';
 import {encryptAuthenticationQuadriga,convertunixTime} from 'util';
 
@@ -64,7 +65,7 @@ const mapStateToProps = (state) => ({
     quadrigaUserOrdersLookup: state.account.quadrigaUserOrdersLookup,
 })
 const mapDispatchToProps = (dispatch) => ({
-    postUserQuadrigaTransactionsDispatch:(key,sign,nonce,offset,limit,sort,book)=>{dispatch(postUserQuadrigaTransactions(key,sign,nonce,offset,limit,sort,book))},
+    postUserQuadrigaTransactionsDispatch:(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo)=>{dispatch(postUserQuadrigaTransactions(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo))},
     postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))}
 })
 
@@ -75,33 +76,32 @@ class Wallet extends Component {
         this.state = {
             address: null,
             refreshing: false,
+            minor:'-20.11185076',//data is just to not have an error for initial load of the modal
+            major:'0.01660000',
+            minorToken: 'cad',
+            majorToken: 'eth',
+            rate:'1205.50',
+            order_id:'ighhsvn4czab1t1lq276iu36h6f3cl4zx9czfidb4f7iun3fm1yif6boyrawft4h',
+            fee:'0.00008341',
+            datetime:'2018-01-06 18:46:44'
         }
         this.handleData = this.handleData.bind(this);
         this.handleQrCode = this.handleQrCode.bind(this);
         this.handlePlatform = this.handlePlatform.bind(this);
         this.handleCopyAddress = this.handleCopyAddress.bind(this);
         this.handleTransactions = this.handleTransactions.bind(this);
-        this.handleTestPress = this.handleTestPress.bind(this);
         this.handleRefresh = this.handleRefresh.bind(this);
         this.handleTransactionInfo = this.handleTransactionInfo.bind(this);
+        this.handleBuyAction = this.handleBuyAction.bind(this);
     }
     //btc_cad btc_usd  eth_btc, eth_cad, ltc_cad, bch_cad, btg_cad
     componentWillMount(){
         const {postUserQuadrigaTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
-        const {book} = this.props.navigation.state.params;
-
-        let nonce = Date.now();
-        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,0,50,"desc",book);
+        const {book,bookTwo} = this.props.navigation.state.params;
+        postUserQuadrigaTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo);
     }
     componentDidMount(){
         this.props.navigation.setParams({ handleQrCode: this.handleQrCode})
-    }
-
-    handleTestPress(){
-        const {book} = this.props.navigation.state.params;
-        const {postUserQuadrigaTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
-        let nonce = Date.now();
-        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,0,50,"desc",book);
     }
 
     static navigationOptions = ({navigation}) => {
@@ -226,25 +226,50 @@ class Wallet extends Component {
             }
         }else if(object.type === 2){
             return{ 
-                BuyOrSell:"Bought",
-                textObject: <Text style={[iOSUIKit.body]}>From {object.minor}</Text>
+                BuyOrSell:"Traded",
+                textObject: null
             }
         }
     }
 
     handleRefresh(){
         const {postUserQuadrigaTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
-        const {book} = this.props.navigation.state.params;
-
-        let nonce = Date.now();
-        postUserQuadrigaTransactionsDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,0,50,"desc",book);
+        const {book,bookTwo} = this.props.navigation.state.params;
+        postUserQuadrigaTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo);
     }
 
     handleTransactionInfo(item){
-        const {postUserLookupOrderQuadrigaDispatch,apiKey,clientId,privateKey} = this.props;
-        let nonce = Date.now();
-        postUserLookupOrderQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,item.order_id);
-        this.refs.modalLookUp.open()
+        if(item.type === 2){
+            if( parseFloat(item[Object.keys(item)[0]]) < 0){
+                this.setState({
+                    minor: item[Object.keys(item)[0]],
+                    major: item[Object.keys(item)[1]],
+                    minorToken: Object.keys(item)[0],
+                    majorToken: Object.keys(item)[1],
+                    rate: item.rate,
+                    order_id: item.order_id,
+                    fee: item.fee,
+                    datetime: item.datetime
+                })
+            }else{
+                this.setState({
+                    minor: item[Object.keys(item)[1]],
+                    major: item[Object.keys(item)[0]],
+                    minorToken: Object.keys(item)[1],
+                    majorToken: Object.keys(item)[0],
+                    rate:item.rate,
+                    order_id:item.order_id,
+                    fee:item.fee,
+                    datetime:item.datetime
+                })
+            }
+            this.refs.modalLookUp.open()
+        }else{
+            this.dropdown.alertWithType('info', 'Info', 'No additional info is provided');
+        }
+
+        
+        
     }
 
     handleCopyAddress(){
@@ -259,15 +284,14 @@ class Wallet extends Component {
     _keyExtractor = (item, index) => index;
 
     _renderItem = ({item,index}) => (
-        <View style={{justifyContent:'center',alignItems:'center',width:width,height:height/14,marginTop:20,}}>
-            <TouchableHighlight underlayColor="orange" style={{}} onPress={()=>this.handleTransactionInfo(item)} >
+        <View style={{width:width,height:height/11,alignItems:'center',justifyContent:'center'}}>
+            <TouchableHighlight style={{justifyContent:'center'}} underlayColor="orange" style={{}} onPress={()=>this.handleTransactionInfo(item)} >
                     <View key={index} style={{width:width,height:height/14,backgroundColor:'white'}}>
-        
-                    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                    <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',width:width,height:height/14}}>
                         <View style={{width:width*0.14,alignItems:'center'}}>
                         {this.handleIcon(item)}
                         </View>
-                        <View style={{flexDirection:'column',justifyContent:'center',width:width*0.52}}>
+                        <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',width:width*0.52}}>
                             <Text style={[iOSUIKit.body]}>{this.handleText(item).BuyOrSell} {this.props.navigation.state.params.name} </Text>
                             {this.handleText(item).textObject}
                         </View>
@@ -282,7 +306,7 @@ class Wallet extends Component {
                     </View>
                 </View>
             </TouchableHighlight>
-              <Divider style={{height: 1, backgroundColor: 'orange',width:width/1.1,alignSelf:'center'}}/>
+              <Divider style={{height: 1, backgroundColor: 'orange',width:width/1.1, marginTop:5}}/>
             </View>
       );
 
@@ -309,11 +333,14 @@ class Wallet extends Component {
         }
     }
 
+    handleBuyAction(name){
+       this.dropdown.alertWithType('info','Info', `Please go to the Quadriga tab to buy some ${name.toUpperCase()} !`)
+    }
+
 
     render() {
         const {quadrigaTickerBTC,quadrigaTickerETH,quadrigaUserBalance} = this.props;
         const {type,acronym,name,address} = this.props.navigation.state.params;
-        if(type === 'quadriga'){
         return(
             <View style={styles.container}>
             <View style={{ flexDirection: 'column', alignItems: 'center'}}>
@@ -324,8 +351,8 @@ class Wallet extends Component {
                         </View>
                         <View style={{flexDirection:'column', ...Platform.select({ios:{height:(height/2-30)*0.25},android:{height:(height/2-40)*0.30}})}}>
                         <View style={{flexDirection:'row'}}>
-                            {this.handlePlatform(()=>{},{height:40,width:width/2.3,backgroundColor:'orange',margin:5,marginBottom:10,borderRadius:5},"Buy")}
-                            {this.handlePlatform(()=>{},{height:40,width:width/2.3,backgroundColor:'orange',margin:5,marginBottom:10,borderRadius:5},"Withdraw")}
+                            {this.handlePlatform(()=>this.handleBuyAction(acronym),{height:40,width:width/2.3,backgroundColor:'orange',margin:5,marginBottom:10,borderRadius:5},"Buy")}
+                            {this.handlePlatform(()=>this.refs.modalWithdraw.open(),{height:40,width:width/2.3,backgroundColor:'orange',margin:5,marginBottom:10,borderRadius:5},"Withdraw")}
                         </View>
                         <Divider style={{height:1,backgroundColor:'orange',width:width/1.1}}/>
                         </View>
@@ -336,21 +363,44 @@ class Wallet extends Component {
 
                 </View>
                 <Modal 
-                 style={styles.modalLookUp}
-                 position={"center"}
-                 coverScreen={true}
-                 ref={"modalLookUp"} 
-                 >
-                    <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',height: 350,width: 300}}>
-                    <Text style={[iOSUIKit.title3,{marginBottom:30,position:'absolute',top:30}]}>My {name} Address</Text>
-                    <QRCode
-                        value={address}
-                        size={180}
-                        bgColor='black'
-                        fgColor='white'
-                        />
-                        {this.handleModalButton("close".toUpperCase(),{position:'absolute',bottom:10,right:150,margin:5},{fontSize:14,color:'black',textAlign:'center'},()=>this.refs.modalLookUp.close())}
-                        {this.handleModalButton("copy address".toUpperCase(),{position:'absolute',bottom:10,right:20,margin:5},{fontSize:14,color:'orange',textAlign:'center'},()=>this.handleCopyAddress())}
+                style={styles.modalLookUp}
+                position={"center"}
+                ref={"modalLookUp"} 
+                >
+                    <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',marginTop:30,height: 350,width: 300}}>
+                        <Text style={[iOSUIKit.title3,{marginBottom:10}]}>Transaction Info</Text>
+                        <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                        <Text style={{width:width/1.21/2.1,paddingLeft:10}}>From</Text>
+                        <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{this.state.minor} {this.state.minorToken.toUpperCase()}</Text>
+                        </View> 
+                        <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                        <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                        <Text style={{width:width/1.21/2.1,paddingLeft:10}}>To</Text>
+                        <Text style={{width:width/1.21/1.9,textAlign:'center'}}>{this.state.major} {this.state.majorToken.toUpperCase()}</Text>
+                        </View> 
+                        <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                        <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                        <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Rate</Text>
+                        <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{this.state.rate}</Text>
+                        </View> 
+                        <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                        <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                        <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Fee</Text>
+                        <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{this.state.fee}</Text>
+                        </View> 
+                        <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                        <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
+                        <Text style={{width:width/1.21/2.3,paddingLeft:10}}>Date</Text>
+                        <Text style={{width:width/1.2/1.7,textAlign:'center',paddingRight:10}}>{this.state.datetime}</Text>
+                        </View> 
+                        <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
+                        <View style={{flexDirection:'row'}}>
+                        <View style={{height:height/8,width:width/1.2,alignItems:'center',justifyContent:'center'}}>
+                        <TouchableOpacity onPress={()=>{this.refs.modalLookUp.close()}} style={{margin:20,marginBottom:15}}>
+                                <Text style={{fontSize:15,color:'#007aff'}}>Close</Text>
+                        </TouchableOpacity>
+                        </View>
+                        </View>
                     </View>
                 </Modal>
                 <Modal 
@@ -371,21 +421,37 @@ class Wallet extends Component {
                         {this.handleModalButton("copy address".toUpperCase(),{position:'absolute',bottom:30,right:20,margin:5},{fontSize:14,color:'orange',textAlign:'center'},()=>this.handleCopyAddress())}
                     </View>
                 </Modal>
+                <Modal 
+                    style={styles.modalWithdraw}
+                    position={"center"}
+                    ref={"modalWithdraw"}
+                    keyboardTopOffset={0} 
+                    >
+                    <View style={{flexDirection:'column',alignItems:'center',height: height/1.4,width: width/1.1}}>
+                        <TouchableOpacity style={{position: 'absolute',top:20,left:30}}>
+                            <IconIOS name="ios-qr-scanner" size={30}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>this.refs.modalWithdraw.close()} style={{position: 'absolute',top:15,right:30}}>
+                            <IconIOS name="ios-close" size={35}/>
+                        </TouchableOpacity>
+                        <Text style={[iOSUIKit.title3,{marginTop:22}]}>Withdraw</Text>
+                        <Text style={[iOSUIKit.body,{marginTop:22}]}>Address to send your {name}</Text>
+                        <TextInput onChangeText={(text)=>{}} keyboardType="numeric" placeholder={'Address here'} style={styles.textInput}/>
+                        <Text style={[iOSUIKit.body,{marginTop:22}]}>Amount to send</Text>
+                        <TextInput onChangeText={(text)=>{}} keyboardType="numeric" placeholder={'Amount here'} style={styles.textInput}/>
+                        <Button onPress={()=>this.refs.modalConfirmWithdraw.open()} title="Withdraw!" buttonStyle={{marginTop:50,width:150,height:50,backgroundColor:'orange'}}/>
+                    </View>
+                </Modal>
+                <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalConfirmWithdraw"}>
+                    <Text style={[iOSUIKit.body, {color: "white",marginBottom:5}]}>Please confirm your withdraw</Text>
+                    <View style={{flexDirection:'row'}}>
+                        <Button onPress={()=>this.refs.modalConfirmWithdraw.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
+                        <Button onPress={()=>{}} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+                    </View>
+                </Modal>
+                <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
               </View>
             )
-        }else if(type === 'changelly'){
-            <View style={styles.container}>
-            <View style={{ flexDirection: 'column', alignItems: 'center',margin:20}}>
-                    <QRCode
-                        value={address}
-                        size={200}
-                        bgColor='black'
-                        fgColor='white'/>
-                
-                </View>
-             
-              </View>
-        }
     }
 }
 
@@ -423,9 +489,39 @@ const styles = StyleSheet.create({
                 marginTop:0
             }
         }),
-        height: height/1.7,
+        height: height/1.8,
         width: width/1.1
     },
+    modalWithdraw:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius:5,
+        ...Platform.select({
+            ios:{
+                marginTop:0
+            }
+        }),
+        height: height/1.4,
+        width: width/1.1
+    },
+    textInput:{
+        ...Platform.select({
+          ios:{
+            borderWidth:1,
+            borderColor:'#8E8E93',
+            borderRadius:5,
+            paddingLeft:5,
+            height:30,
+          }
+        }),
+        width:width/1.2,
+        marginTop:15,
+      },
+    modalConfirm: {
+        height: height/7,
+        backgroundColor: '#007aff',
+        opacity:0.95
+      },
    
 });
 

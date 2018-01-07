@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
   postUserOpenOrdersQuadrigaDispatch:(key,sign,nonce,book)=>{dispatch(postUserOpenOrdersQuadriga(key,sign,nonce,book))},
   postUserQuadrigaBalanceAndOpenOrdersDispatch:(apiKey,clientId,secret,tradingBook)=>{dispatch(postUserQuadrigaBalanceAndOpenOrders(apiKey,clientId,secret,tradingBook))},
   postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))},
-  postUserCancelOrderQuadrigaDispatch:(apiKey,clientId,secret,id)=>{dispatch(postUserCancelOrderQuadriga(apiKey,clientId,secret,id))},
+  postUserCancelOrderQuadrigaDispatch:(apiKey,clientId,secret,id,book)=>{dispatch(postUserCancelOrderQuadriga(apiKey,clientId,secret,id,book))},
   postUserBuyAtPriceQuadrigaDispatch:(apiKey,clientId,secret,amount,price,book)=>{dispatch(postUserBuyAtPriceQuadriga(apiKey,clientId,secret,amount,price,book))},
   postUserBuyMarketOrderQuadrigaDispatch:(apiKey,clientId,secret,amount,book)=>{dispatch(postUserBuyMarketOrderQuadriga(apiKey,clientId,secret,amount,book))},
   postUserSellLimitQuadrigaDispatch:(apiKey,clientId,secret,amount,price,book)=>{dispatch(postUserSellLimitQuadriga(apiKey,clientId,secret,amount,price,book))},
@@ -80,11 +80,6 @@ class BuySellBTG extends Component {
       alignSelf: 'center',
       color:'white',
       position: 'relative',
-      ...Platform.select({
-        android:{
-          left: 30
-        }
-      })
     }
     return {
          headerTitle: ` BTG/CAD `,
@@ -103,6 +98,7 @@ class BuySellBTG extends Component {
       const {getQuadrigaOrdersDispatch,setTradingBookDispatch} = this.props;
       getQuadrigaOrdersDispatch("btg_cad",0)
       setTradingBookDispatch('btg_cad')
+      clearInterval(this.props.navigation.state.params.intervalInstance)
     }
   
     componentDidMount(){
@@ -112,6 +108,7 @@ class BuySellBTG extends Component {
   
     componentWillUnmount(){
      clearInterval(this.state.interval)
+     this.props.navigation.state.params.restartInterval();
     }
 
 
@@ -159,7 +156,7 @@ class BuySellBTG extends Component {
           userBalance:(key,sign,nonce)=>postUserQuadrigaBalanceDispatch(key,sign,nonce),
           userOpenOrders:(key,sign,nonce,book)=>postUserOpenOrdersQuadrigaDispatch(key,sign,nonce,book),
           userLookupOrder:(key,sign,nonce,id)=>postUserLookupOrderQuadrigaDispatch(key,sign,nonce,id),
-          userCancelOrder:(apiKey,clientId,secret,id)=>postUserCancelOrderQuadrigaDispatch(apiKey,clientId,secret,id),
+          userCancelOrder:(apiKey,clientId,secret,id,book)=>postUserCancelOrderQuadrigaDispatch(apiKey,clientId,secret,id,book),
           userBuyAtPrice:(apiKey,clientId,secret,amount,price,book)=>{postUserBuyAtPriceQuadrigaDispatch(apiKey,clientId,secret,amount,price,book)},
           userBuyMarketPrice:(apiKey,clientId,secret,amount,book)=>{postUserBuyMarketOrderQuadrigaDispatch(apiKey,clientId,secret,amount,book)},
           userSellAtPrice:(apiKey,clientId,secret,amount,price,book)=>{postUserSellLimitQuadrigaDispatch(apiKey,clientId,secret,amount,price,book)},

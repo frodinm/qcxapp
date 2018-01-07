@@ -19,7 +19,7 @@ import LTClogo from '../assets/logos/litecoin.png'
 
 const {height,width} = Dimensions.get('window');
 const BTCETHStyle = {
-  height:height/5,
+  height:height/4.4,
   width:(width*0.464),
   justifyContent:'center',
   alignItems:'center',
@@ -35,7 +35,7 @@ const BTCETHStyle = {
   })
 }
 const OTHERStyle = {
-  height:height/5,
+  height:height/4.4,
   width:(width*0.30),
   justifyContent:'center',
   alignItems:'center',
@@ -70,17 +70,17 @@ export class Modules extends Component {
   }
 
   render(){
-    const {dataBTC,dataETH,dataBCH,dataBTG,dataLTC,navigation,colorBTC,colorETH,colorBCH,colorBTG,colorLTC} = this.props
+    const {dataBTC,dataETH,dataBCH,dataBTG,dataLTC,navigation,colorBTC,colorETH,colorBCH,colorBTG,colorLTC,intervalInstance,restartInterval} = this.props
     return(
       <View style={styles.container}>
         <View style={{flexDirection:'row'}}>
-          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('XɃTCAD')} tokenData={dataBTC} imageSource={BTClogo} color={colorBTC}/>
-          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('ΞTH')} tokenData={dataETH} imageSource={ETHlogo} tokenName={'ETH'} color={colorETH}/>
+          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('btc',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataBTC} imageSource={BTClogo} color={colorBTC}/>
+          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('eth',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataETH} imageSource={ETHlogo} tokenName={'ETH'} color={colorETH}/>
         </View>
         <View style={{flex:1,flexDirection:'row'}}>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('BCHCAD')} tokenData={dataBCH} imageSource={BCHlogo} color={colorBCH}/>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('BTGCAD')} tokenData={dataBTG} imageSource={BTGlogo} color={colorBTG}/>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('ŁTCCAD')} tokenData={dataLTC} imageSource={LTClogo} color={colorLTC}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('bch',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataBCH} imageSource={BCHlogo} color={colorBCH}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('btg',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataBTG} imageSource={BTGlogo} color={colorBTG}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('ltc',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataLTC} imageSource={LTClogo} color={colorLTC}/>
         </View>
       
       </View>
