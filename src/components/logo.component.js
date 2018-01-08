@@ -56,9 +56,7 @@ export class LogoComponent extends Component {
     )
   }
   }
-  _handleResults(results) {
-   
-  }
+  
  handleChangeText(text){
     const newArray = []
     Logos.map((item)=>{

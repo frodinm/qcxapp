@@ -114,13 +114,19 @@ class ConfirmExchange extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'column', alignItems: 'center',margin:20}}>
-                    <Text style={{...titleStyle}}>YOU HAVE </Text>
-                    <Text style={{...amountStyle}}> {fromAmount} {state.params.fromCoin.toUpperCase()}</Text>
-                    <Text style={{...titleStyle}}>YOU GET</Text>
-                    <Text style={{...amountStyle}}>{tokenTwoTextInputValue} {state.params.toCoin.toUpperCase()}</Text>
-                    <Text style={{...titleStyle}}>RECIPIENT ADDRESS</Text>
-                    <Text onPress={()=>navigate('CheckAddress',{address:state.params.address,toAcronym:state.params.toCoin})} style={{fontSize: 18, color: '#ffa200'}} adjustsFontSizeToFit={true}>{state.params.address}</Text>
+                <View style={{ flexDirection: 'column', alignItems: 'center'}}>
+                    <View style={{width:width/1.05,marginBottom:5,marginTop:5,backgroundColor:'white',alignItems:'center',justifyContent:'center',padding:10,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
+                        <Text style={{...titleStyle}}>YOU HAVE </Text>
+                        <Text style={{...amountStyle}}> {fromAmount} {state.params.fromCoin.toUpperCase()}</Text>
+                    </View>
+                    <View style={{width:width/1.05,marginBottom:5,backgroundColor:'white',alignItems:'center',justifyContent:'center',padding:10,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
+                        <Text style={{...titleStyle}}>YOU GET</Text>
+                        <Text style={{...amountStyle}}>{tokenTwoTextInputValue} {state.params.toCoin.toUpperCase()}</Text>
+                    </View>
+                    <View style={{width:width/1.05,marginBottom:5,backgroundColor:'white',alignItems:'center',justifyContent:'center',padding:10,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
+                        <Text style={{...titleStyle}}>RECIPIENT ADDRESS</Text>
+                        <Text onPress={()=>navigate('CheckAddress',{address:state.params.address,toAcronym:state.params.toCoin})} style={{fontSize: 18, color: '#ffa200'}} adjustsFontSizeToFit={true}>{state.params.address}</Text>
+                    </View>
                 </View>
                 {this.handlePlatform()}
             </View>
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'white',
+        backgroundColor: '#f1f1f1',
         alignItems: 'center',
     },
     text: {

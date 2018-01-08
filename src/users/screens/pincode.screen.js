@@ -34,7 +34,7 @@ const pinStyle = {
   width:13,
   marginRight:10,
   marginLeft:10,
-  marginBottom:height/5,
+  marginBottom:height/6,
   borderRadius: 50,
   borderWidth:1,
   borderColor:'black',
@@ -219,6 +219,8 @@ const styles = StyleSheet.create({
   },
   pin:{
     opacity: 0,
+    position:'relative',
+    bottom:40
   },
   pin2:{
     ...pinStyle,

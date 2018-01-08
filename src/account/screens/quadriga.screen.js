@@ -46,12 +46,20 @@ const mapStateToProps = (state) => ({
     quadrigaUserBalance: state.account.quadrigaUserBalance
 })
 const mapDispatchToProps = (dispatch) => ({
-    getQuadrigaTickerDispatch: (ticker) => {
+    getQuadrigaTickerDispatch: (ticker) => { // timeouts to reduce the too many calls error
         dispatch(getQuadrigaTickerBTC());
-        dispatch(getQuadrigaTickerETH());
-        dispatch(getQuadrigaTickerBCH());
-        dispatch(getQuadrigaTickerBTG());
-        dispatch(getQuadrigaTickerLTC())
+        setTimeout(()=>{
+            dispatch(getQuadrigaTickerETH());
+        },2000)
+        setTimeout(()=>{
+            dispatch(getQuadrigaTickerBCH());
+        },2000)
+        setTimeout(()=>{
+            dispatch(getQuadrigaTickerBTG());
+        },2000)
+        setTimeout(()=>{
+            dispatch(getQuadrigaTickerLTC())
+        },2000)  
     },
     getQuadrigaTransactionsDispatch: (book, time) => {
         dispatch(getQuadrigaTransactions(book, time))

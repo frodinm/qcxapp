@@ -38,7 +38,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setFromTokenDispatch: (token)=>{dispatch(setFromTokenLogo(token))},
   setToTokenDispatch: (token)=>{dispatch(setToTokenLogo(token))},
-  getChangellyCurrencyDispatch: () =>{dispatch(postChangellyMinAmount())},
+  getChangellyCurrencyDispatch: () =>{dispatch(postChangellyCurrency())},
   getChangellyMinAmountDispatch: (fromCoin,toCoin) =>{dispatch(getChangellyMinAmount(fromCoin,toCoin))}
 })
 
@@ -47,21 +47,16 @@ const mapDispatchToProps = (dispatch) => ({
 class ChangellyExchange extends Component {
     constructor(){
         super();
-        this.handleGetCurrencies = this.handleGetCurrencies.bind(this);
+       
     }
     componentWillMount(){
-      const {setFromTokenDispatch,setToTokenDispatch} = this.props;
+      const {setFromTokenDispatch,setToTokenDispatch,getChangellyCurrencyDispatch,changellyCurrencies} = this.props;
+      let availableTokenArray;
       setFromTokenDispatch(Logos[0].logo);
       setToTokenDispatch(Logos[1].logo);
+      getChangellyCurrencyDispatch();
+     
     }
-  
-  
-  handleGetCurrencies(){
-    const {getChangellyCurrencyDispatch,getChangellyMinAmountDispatch} = this.props;
-    console.log(getChangellyCurrencyDispatch())
-    console.log(getChangellyMinAmountDispatch("eth","storj"))
-    
-  }
 
   static navigationOptions = ({ navigation  }) => {
     const headerStyle={

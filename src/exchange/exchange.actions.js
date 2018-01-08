@@ -23,6 +23,7 @@ import {
     createAddressPairChangelly
 } from 'api'
 
+
 export const setTokenFromAmount = (amount) => {
     return dispatch => {
         dispatch({type: SET_TOKEN_FROM_AMOUNT.SUCCESS, payload: amount})
@@ -115,9 +116,12 @@ export const postChangellyCreateTransaction = (fromCoin, toCoin, amount, address
     return dispatch => {
         dispatch({type: POST_CHANGELLY_CREATE_TRANSACTION.PENDING})
         createTransactionChangelly(fromCoin, toCoin, amount, address, extraId).then((response) => {
-            dispatch({type: POST_CHANGELLY_CREATE_TRANSACTION.SUCCESS, payload: response})
-            dispatch(getChangellyTransactions(null,null,null,null,null));
-            navigation.navigate('PayExchange',{fromCoin: fromCoin})
+            if(response.data.hasOwnProperty('error')){
+                alert(response.data.error.message);
+            }else{
+                dispatch({type: POST_CHANGELLY_CREATE_TRANSACTION.SUCCESS, payload: {res:response,amount:amount}})
+                navigation.navigate('PayExchange',{fromCoin: fromCoin})
+            }
         }).catch((error) => {
             dispatch({type: POST_CHANGELLY_CREATE_TRANSACTION.ERROR, payload: error})
         })

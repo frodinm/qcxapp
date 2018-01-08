@@ -157,6 +157,35 @@ export const postUserQuadrigaBalanceAndOpenOrders = (apiKey,clientId,secret,trad
   }
 }
 
+export const postUserQuadrigaBalanceAndTransactions = (apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo) => {
+  let nonce;
+  let returnArray;
+  return dispatch => {
+      dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
+      nonce = Date.now();
+      postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce).then((response) => {
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+        dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.PENDING})
+        nonce = Date.now();
+        postUserTransactionsQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,offset,limit,sort,book).then((response) => {
+          returnArray = response.data;
+          dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.PENDING})
+          nonce = Date.now();
+          postUserTransactionsQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,offset,limit,sort,bookTwo).then((response) => {
+            returnArray = returnArray.concat(response.data).filter((thing, index, self) => self.findIndex(t => t.datetime === thing.datetime) === index) //filter duplicate deposits based on the same datetime.
+            dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.SUCCESS, payload: returnArray})
+          }).catch((error) => {
+            dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.ERROR, payload: error})
+          })
+        }).catch((error) => {
+          dispatch({type: POST_USER_QUADRIGA_TRANSACTIONS.ERROR, payload: error})
+        })
+      }).catch((error)=>{
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+      })
+  }
+}
+
 export const postUserQuadrigaBalance = (key,sign,nonce) => {
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
@@ -364,11 +393,11 @@ export const postUserBitcoinWalletAddressQuadriga = (key,sign,nonce) => {
 
 export const postUserBitcoinWalletWithdrawQuadriga = (key,sign,nonce,amount,address) => {
   return dispatch => {
-    dispatch({type: POST_USER_QUADRIGA_BITCOIN_WITHDRAW.PENDING})
+    dispatch({type: POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW.PENDING})
     postBitcoinWalletWithdrawQuadriga(key,sign,nonce,amount,address).then((response) => {
-      dispatch({type: POST_USER_QUADRIGA_BITCOIN_WITHDRAW.SUCCESS, payload: response})
+      dispatch({type: POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW.SUCCESS, payload: response})
     }).catch((error) => {
-      dispatch({type: POST_USER_QUADRIGA_BITCOIN_WITHDRAW.ERROR, payload: error})
+      dispatch({type: POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW.ERROR, payload: error})
     })
   }
 }
@@ -386,11 +415,11 @@ export const postUserEthereumWalletAddressQuadriga = (key,sign,nonce) => {
 
 export const postUserEthereumWalletWithdrawQuadriga = (key,sign,nonce,amount,address) => {
   return dispatch => {
-    dispatch({type: POST_USER_QUADRIGA_ETHER_WITHDRAW.PENDING})
+    dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW.PENDING})
     postEthereumWalletWithdrawQuadriga(key,sign,nonce,amount,address).then((response) => {
-      dispatch({type: POST_USER_QUADRIGA_ETHER_WITHDRAW.SUCCESS, payload: response})
+      dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW.SUCCESS, payload: response})
     }).catch((error) => {
-      dispatch({type: POST_USER_QUADRIGA_ETHER_WITHDRAW.ERROR, payload: error})
+      dispatch({type: POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW.ERROR, payload: error})
     })
   }
 }
@@ -417,7 +446,7 @@ export const postUserBitcoinGoldWalletWithdrawQuadriga = (key,sign,nonce,amount,
   }
 }
 
-export const postUserLitecoinEthereumWalletWithdrawQuadriga = (key,sign,nonce,amount,address) => {
+export const postUserLitecoinWalletWithdrawQuadriga = (key,sign,nonce,amount,address) => {
   return dispatch => {
     dispatch({type: POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.PENDING})
     postLitecoinWalletWithdrawQuadriga(key,sign,nonce,amount,address).then((response) => {

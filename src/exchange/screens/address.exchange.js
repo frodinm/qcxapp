@@ -148,7 +148,6 @@ class AddressExchange extends Component {
                         <View style={{marginRight:10}}>
                             {this.handlePlatform(()=>this.handleClipboard(),'fontAwsome','paste','Paste',styles.paste)}
                         </View>
-                        {this.handlePlatform(()=>{},'fontAwsome','exchange',`Saved\n address`,styles.address)}
                         {this.handlePlatform(()=>{navigate('Camera',{setAddress:(address)=>{this.handleSetAddress(address)}})},'material','qrcode-scan','Scan Qr',styles.qrCode,{marginLeft:10,})}
                     </View>
                     <View style={{width:width,alignItems:'center'}}>
@@ -187,7 +186,7 @@ const styles = StyleSheet.create({
     qrCode:{
         backgroundColor:'#4eb7ff',
         height:60,
-        width:width/3.3,
+        width:width/2.5,
         alignItems:'center',
         justifyContent:'center',
         flexDirection:'row'
@@ -203,7 +202,7 @@ const styles = StyleSheet.create({
     paste:{
         backgroundColor:'#399f08',
         height:60,
-        width:width/3.3,
+        width:width/2.5,
         alignItems:'center',
         justifyContent:'center',
         flexDirection:'row',

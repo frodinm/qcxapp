@@ -5,6 +5,7 @@ import {LogoComponent, ModalButtonComponent} from 'components'
 import {Logos} from 'util'
 import arrows from '../assets/img/arrows.png'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import DropdownAlert from 'react-native-dropdownalert';
 
 import {
     AppRegistry,
@@ -51,7 +52,7 @@ const textInput = {
     borderLeftWidth: 1,
     borderBottomWidth:1,
     borderColor: 'orange',
-    textAlign: 'right',
+    textAlign: 'center',
     height: 50,
     width: width / 2,
 }
@@ -76,9 +77,7 @@ const mapDispatchToProps = dispatch => ({
     setToTokenDispatch: (token) => {
         dispatch(setToTokenLogo(token))
     },
-    getChangellyCurrencyDispatch: () => {
-        dispatch(postChangellyCurrency())
-    },
+    getChangellyCurrencyDispatch: () =>{dispatch(postChangellyCurrency())},
     getChangellyMinAmountDispatch: (fromCoin, toCoin, toName, exchangeAmount, navigator) => {
         dispatch(postChangellyMinAmount(fromCoin, toCoin, toName, exchangeAmount, navigator))
     },
@@ -118,12 +117,9 @@ class ModalComponent extends Component {
     }
 
     componentDidMount(){
+        const {getChangellyCurrencyDispatch} = this.props;
         this.refs.tokenOne.clear();
         this.refs.tokenTwo.clear();
-    }
-
-    handleCheckIfAvailable(){
-        const {getChangellyCurrencyDispatch} = this.props;
         getChangellyCurrencyDispatch();
     }
 
@@ -131,26 +127,40 @@ class ModalComponent extends Component {
         const {isSelectingToken} = this.state;
         const {setFromTokenDispatch, setToTokenDispatch} = this.props;
 
-        this.handleCheckIfAvailable();
-        if (isSelectingToken === 'From') {
-            this.handleSelectedFromToken(acronym);
-            Logos.map((e) => {
-                if (e.acronym.indexOf(acronym) !== -1) {
-                    setFromTokenDispatch(e.logo)
-                }
-            })
-            this.refs.modal1.close()
-        } else {
-            this.handleToName(name);
-            this.handleSelectedToToken(acronym);
-            Logos.map((e) => {
-                if (e.acronym.indexOf(acronym) !== -1) {
-                    setToTokenDispatch(e.logo)
-                }
-            })
-            this.refs.modal1.close()
+        if(this.handleCheckIfAvailable(acronym)===true){
+            if (isSelectingToken === 'From') {
+                    this.handleSelectedFromToken(acronym);
+                    Logos.map((e) => {
+                        if (e.acronym.indexOf(acronym) !== -1) {
+                            setFromTokenDispatch(e.logo)
+                        }
+                    })
+                    this.refs.modal1.close()
+            } else {
+                this.handleToName(name);
+                this.handleSelectedToToken(acronym);
+                Logos.map((e) => {
+                    if (e.acronym.indexOf(acronym) !== -1) {
+                        setToTokenDispatch(e.logo)
+                    }
+                })
+                this.refs.modal1.close()
+            }
+        }else{
+              alert('The selected token is not available at the moment. Please try again later or select a different token.')  
         }
 
+    }
+
+    handleCheckIfAvailable(acronym){
+       const {changellyCurrencies} = this.props;
+       let result = false;
+       changellyCurrencies.map((item)=>{
+            if(item === acronym){
+                return result = true;
+            }
+       })
+       return result;
     }
 
     handleSelectingFrom() {
@@ -296,7 +306,7 @@ class ModalComponent extends Component {
                     <LogoComponent closeFunction={{return: (acronym,name) => this.handleReturn(acronym,name)}}/>
                 </Modal>
                 </SafeAreaView>
-
+                <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
             </ScrollView>
         );
     }

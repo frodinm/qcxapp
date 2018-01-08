@@ -11,6 +11,7 @@ import {
     BuySellScreen,
     AccountsWalletsScreen,
     WalletScreen,
+    ExchangeWalletScreen,
     BuySellBTCScreen,
     BuySellETHScreen,
     BuySellBCHScreen,
@@ -185,6 +186,9 @@ export const InitialRouting = StackNavigator({
     },
     Wallet:{
         screen:WalletScreen,
+    },
+    ExchangeWallet:{
+        screen:ExchangeWalletScreen
     }
 },
 {

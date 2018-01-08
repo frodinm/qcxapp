@@ -74,8 +74,9 @@ import BitcoinGoldLogo from '../assets/logos/bitcoin-gold.png'
 import DigiByteLogo from '../assets/logos/digibyte.png'
 import RipioCredidNetworkLogo from '../assets/logos/ripio-credit-network.png'
 import PowerLedgerLogo from '../assets/logos/power-ledger.png'
+import VibrateLogo from '../assets/logos/viberate.png'
 
-
+//add support for all coins with extra id
 
 export const Logos = [
     {
@@ -98,11 +99,11 @@ export const Logos = [
         acronym: "exp",
         logo: ExpanseLogo
     }, 
-    {
-        name:"Nem",
-        acronym: "xem",
-        logo: NemLogo
-    }, 
+    // {
+    //     name:"Nem",
+    //     acronym: "xem",
+    //     logo: NemLogo
+    // }, 
     {
         name:"Lisk",
         acronym: "lsk",
@@ -118,16 +119,16 @@ export const Logos = [
         acronym: "game",
         logo: GameLogo
     }, 
-    {
-        name:"Steem",
-        acronym: "steem",
-        logo: SteemLogo
-    }, 
-    {
-        name:"SteemDollar",
-        acronym: "sbd",
-        logo: SteemDollarLogo
-    }, 
+    // {
+    //     name:"Steem",
+    //     acronym: "steem",
+    //     logo: SteemLogo
+    // }, 
+    // {
+    //     name:"SteemDollar",
+    //     acronym: "sbd",
+    //     logo: SteemDollarLogo
+    // }, 
     {
         name:"Zcash",
         acronym: "zec",
@@ -168,11 +169,11 @@ export const Logos = [
         acronym: "bcn",
         logo: ByteCoinLogo
     }, 
-    {
-        name:"Ripple",
-        acronym: "xrp",
-        logo: RippleLogo
-    }, 
+    // {
+    //     name:"Ripple",
+    //     acronym: "xrp",
+    //     logo: RippleLogo
+    // }, 
     {
         name:"DogeCoin",
         acronym: "doge",
@@ -313,11 +314,11 @@ export const Logos = [
         acronym: "lun",
         logo: LunyrLogo
     },
-    {
-        name:"Stellar",
-        acronym: "str",
-        logo: StellarLogo
-    },
+    // {
+    //     name:"Stellar",
+    //     acronym: "str",
+    //     logo: StellarLogo
+    // },
     {
         name:"Basic Attention Token",
         acronym: "bat",
@@ -457,5 +458,10 @@ export const Logos = [
         name:"PowerLedger",
         acronym: "powr",
         logo: PowerLedgerLogo
-    }  
+    },
+    {
+        name: "Vibrate",
+        acronym: "vib",
+        logo: VibrateLogo
+    }
 ]

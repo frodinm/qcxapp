@@ -33,7 +33,13 @@ import {
 } from 'exchange'
 import {
     postUserQuadrigaTransactions,
-    postUserLookupOrderQuadriga
+    postUserLookupOrderQuadriga,
+    postUserBitcoinWalletWithdrawQuadriga,
+    postUserEthereumWalletWithdrawQuadriga,
+    postUserBitcoinGoldWalletWithdrawQuadriga,
+    postUserLitecoinWalletWithdrawQuadriga,
+    postUserBitcoinCashWalletWithdrawQuadriga,
+    postUserQuadrigaBalanceAndTransactions
 } from 'account';
 import i18n from 'i18n'
 import {resetNavigation} from 'util'
@@ -41,7 +47,7 @@ import QRCode from 'react-native-qrcode';
 import { iOSUIKit } from 'react-native-typography'
 import {Divider,Button} from 'react-native-elements'
 import Modal from 'react-native-modalbox';
-import {encryptAuthenticationQuadriga,convertunixTime} from 'util';
+import {encryptAuthenticationQuadriga} from 'util';
 
 const {height, width} = Dimensions.get('window');
 
@@ -55,6 +61,7 @@ const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
     clientId:state.user.clientId,
     privateKey:state.user.privateKey,
+    quadrigaUserWalletWithdraw: state.account.quadrigaUserWalletWithdraw,
     quadrigaTickerBTC: state.account.quadrigaTickerBTC,
     quadrigaTickerETH: state.account.quadrigaTickerETH,
     quadrigaTickerBCH: state.account.quadrigaTickerBCH,
@@ -66,7 +73,13 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
     postUserQuadrigaTransactionsDispatch:(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo)=>{dispatch(postUserQuadrigaTransactions(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo))},
-    postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))}
+    postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))},
+    postUserBitcoinWalletWithdrawQuadrigaDispatch:(key,sign,nonce,amount,address)=>{dispatch(postUserBitcoinWalletWithdrawQuadriga(key,sign,nonce,amount,address))},
+    postUserEthereumWalletWithdrawQuadrigaDispatch:(key,sign,nonce,amount,address)=>{dispatch(postUserEthereumWalletWithdrawQuadriga(key,sign,nonce,amount,address))},
+    postUserBitcoinGoldWalletWithdrawQuadrigaDispatch:(key,sign,nonce,amount,address)=>{dispatch(postUserBitcoinGoldWalletWithdrawQuadriga(key,sign,nonce,amount,address))},
+    postUserLitecoinWalletWithdrawQuadrigaDispatch:(key,sign,nonce,amount,address)=>{dispatch(postUserLitecoinWalletWithdrawQuadriga(key,sign,nonce,amount,address))},
+    postUserBitcoinCashWalletWithdrawQuadriga:(key,sign,nonce,amount,address)=>{dispatch(postUserBitcoinCashWalletWithdrawQuadriga(key,sign,nonce,amount,address))},
+    postUserQuadrigaBalanceAndTransactionsDispatch:(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo)=>{dispatch(postUserQuadrigaBalanceAndTransactions(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo))}
 })
 
 
@@ -74,7 +87,8 @@ class Wallet extends Component {
     constructor() {
         super();
         this.state = {
-            address: null,
+            address: '',
+            amount:'',
             refreshing: false,
             minor:'-20.11185076',//data is just to not have an error for initial load of the modal
             major:'0.01660000',
@@ -83,7 +97,8 @@ class Wallet extends Component {
             rate:'1205.50',
             order_id:'ighhsvn4czab1t1lq276iu36h6f3cl4zx9czfidb4f7iun3fm1yif6boyrawft4h',
             fee:'0.00008341',
-            datetime:'2018-01-06 18:46:44'
+            datetime:'2018-01-06 18:46:44',
+            acronym:''
         }
         this.handleData = this.handleData.bind(this);
         this.handleQrCode = this.handleQrCode.bind(this);
@@ -93,15 +108,19 @@ class Wallet extends Component {
         this.handleRefresh = this.handleRefresh.bind(this);
         this.handleTransactionInfo = this.handleTransactionInfo.bind(this);
         this.handleBuyAction = this.handleBuyAction.bind(this);
+        this.handleWithdraw = this.handleWithdraw.bind(this);
     }
     //btc_cad btc_usd  eth_btc, eth_cad, ltc_cad, bch_cad, btg_cad
     componentWillMount(){
-        const {postUserQuadrigaTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
+        const {postUserQuadrigaBalanceAndTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
         const {book,bookTwo} = this.props.navigation.state.params;
-        postUserQuadrigaTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo);
+        postUserQuadrigaBalanceAndTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo);
+
     }
     componentDidMount(){
         this.props.navigation.setParams({ handleQrCode: this.handleQrCode})
+        const {acronym} = this.props.navigation.state.params;
+        this.setState({acronym})
     }
 
     static navigationOptions = ({navigation}) => {
@@ -272,12 +291,68 @@ class Wallet extends Component {
         
     }
 
+    handleWithdrawAlert(){
+        const {quadrigaUserWalletWithdraw,postUserQuadrigaBalanceAndTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
+        const {book,bookTwo} = this.props.navigation.state.params;
+        if(quadrigaUserWalletWithdraw.data.hasOwnProperty('error')){
+            this.dropdown.alertWithType('error','Error', quadrigaUserWalletWithdraw.data.error.message);
+        }else{
+            this.dropdown.alertWithType('success','Success', 'Your withdraw has been sent !');
+            setTimeout(()=>{
+                postUserQuadrigaBalanceAndTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo)
+            },500)
+        }
+    }
+
+    handleWithdraw(){
+        const {acronym,address,amount} = this.state;
+        const {
+            apiKey,
+            clientId,
+            privateKey,
+            postUserBitcoinWalletWithdrawQuadrigaDispatch,
+            postUserEthereumWalletWithdrawQuadrigaDispatch,
+            postUserBitcoinGoldWalletWithdrawQuadrigaDispatch,
+            postUserLitecoinWalletWithdrawQuadrigaDispatch,
+            postUserBitcoinCashWalletWithdrawQuadriga,
+        } = this.props;
+        let nonce;
+        switch(acronym){
+            case 'btc':
+                nonce = Date.now();
+                postUserBitcoinWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+            break;
+            case 'eth':
+                nonce = Date.now();
+                postUserEthereumWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+            break;
+            case 'bch':
+                nonce = Date.now();
+                postUserBitcoinCashWalletWithdrawQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+            break;
+            case 'btg':
+                nonce = Date.now();
+                postUserBitcoinGoldWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+            break;
+            case 'ltc':
+                nonce = Date.now();
+                postUserLitecoinWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+            break;
+
+        }
+        this.refs.modalConfirmWithdraw.close();
+        this.refs.modalWithdraw.close();
+        setTimeout(()=>{
+            this.handleWithdrawAlert();
+        },1000)
+    }
+
     handleCopyAddress(){
         const {address} = this.props.navigation.state.params;
         Clipboard.setString(address);
         this.refs.modal.close();
         setTimeout(()=>{
-            alert("Address was copied to clipboard!")
+            this.dropdown.alertWithType('info','Info',"Address was copied to clipboard!")
         },550)
     }
 
@@ -387,7 +462,7 @@ class Wallet extends Component {
                         <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
                         <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Fee</Text>
                         <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{this.state.fee}</Text>
-                        </View> 
+                        </View>  
                         <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
                         <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
                         <Text style={{width:width/1.21/2.3,paddingLeft:10}}>Date</Text>
@@ -436,17 +511,17 @@ class Wallet extends Component {
                         </TouchableOpacity>
                         <Text style={[iOSUIKit.title3,{marginTop:22}]}>Withdraw</Text>
                         <Text style={[iOSUIKit.body,{marginTop:22}]}>Address to send your {name}</Text>
-                        <TextInput onChangeText={(text)=>{}} keyboardType="numeric" placeholder={'Address here'} style={styles.textInput}/>
+                        <TextInput onChangeText={(text)=>this.setState({address:text})} keyboardType="numeric" placeholder={'Address here'} style={styles.textInput}/>
                         <Text style={[iOSUIKit.body,{marginTop:22}]}>Amount to send</Text>
-                        <TextInput onChangeText={(text)=>{}} keyboardType="numeric" placeholder={'Amount here'} style={styles.textInput}/>
-                        <Button onPress={()=>this.refs.modalConfirmWithdraw.open()} title="Withdraw!" buttonStyle={{marginTop:50,width:150,height:50,backgroundColor:'orange'}}/>
+                        <TextInput onChangeText={(text)=>this.setState({amount:text})} keyboardType="numeric" placeholder={'Amount here'} style={styles.textInput}/>
+                        <Button onPress={()=>this.refs.modalConfirmWithdraw.open()} title="Withdraw!" containerViewStyle={{position:'relative',top:25,width:150,height:50,}} buttonStyle={{backgroundColor:'orange'}}/>
                     </View>
                 </Modal>
                 <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalConfirmWithdraw"}>
                     <Text style={[iOSUIKit.body, {color: "white",marginBottom:5}]}>Please confirm your withdraw</Text>
                     <View style={{flexDirection:'row'}}>
                         <Button onPress={()=>this.refs.modalConfirmWithdraw.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
-                        <Button onPress={()=>{}} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+                        <Button onPress={()=>this.handleWithdraw()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
                     </View>
                 </Modal>
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />

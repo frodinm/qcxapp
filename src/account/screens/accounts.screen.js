@@ -45,6 +45,7 @@ const mapStateToProps = (state) => ({
   privateKey:state.user.privateKey,
   isFirstTimeUser: state.user.isFirstTimeUser,
   userWallets:state.account.userWallets,
+  changellyAddressesUsed:state.exchange.changellyAddressesUsed,
   quadrigaUserBalance: state.account.quadrigaUserBalance,
 })
 const mapDispatchToProps = (dispatch) => ({
@@ -61,7 +62,8 @@ class AccountsWallets extends Component {
     super(props);
     this.handlePlatform = this.handlePlatform.bind(this);
     this.handleBalance = this.handleBalance.bind(this);
-    this.handleAddNewAddress = this.handleAddNewAddress.bind(this);
+    this.handleExchangePlatform = this.handleExchangePlatform.bind(this);
+    // this.handleAddNewAddress = this.handleAddNewAddress.bind(this); new feature
   }
   componentWillMount(){
       const {apiKey,clientId,privateKey,postUserQuadrigaBalanceDispatch,postAccounScreenMainCallDispatch} = this.props;
@@ -75,15 +77,15 @@ class AccountsWallets extends Component {
   }
 
   componentDidMount(){
-    setTimeout(() => {
-      this.props.navigation.setParams({add:this.handleAddNewAddress})
-    }, 1000);
+    // setTimeout(() => {
+    //   this.props.navigation.setParams({add:this.handleAddNewAddress})
+    // }, 1000);
   }
 
 
-  handleAddNewAddress(){
-    this.refs.modal.open();
-  }
+  // handleAddNewAddress(){
+  //   this.refs.modal.open();
+  // }
 
   static navigationOptions = ({ navigation  }) => {
     const headerStyle={
@@ -98,7 +100,7 @@ class AccountsWallets extends Component {
     }
     return {
          headerTitle: `Account`,
-         headerRight: <AddButtonComponent onPressAction={()=>navigation.state.params.add()}/>,
+        //  headerRight: <AddButtonComponent onPressAction={()=>navigation.state.params.add()}/>,  eventually add
          headerTitleStyle:{
               ...headerStyle
         },
@@ -166,6 +168,57 @@ class AccountsWallets extends Component {
       return returnObject;
     }
 
+    handleExchangePlatform(){
+      const {changellyAddressesUsed} = this.props;
+      if(changellyAddressesUsed.length === 0){
+        return (
+          <View style={{width:width,alignItems:'center',justifyContent:'center',backgroundColor:'white'}}>
+            <Text style={[iOSUIKit.body,{fontWeight:'bold',marginTop:20}]}>You have no exchanges</Text>
+            <Text style={{textAlign:'center',fontSize:14,padding:30,paddingTop:10}}>{`\nMake an exchange now and your\nunique addresses will show here`}</Text>
+          </View>
+        )
+      }else{
+        if(Platform.OS === 'android'){
+          return changellyAddressesUsed.map((item,index)=>{
+            return( 
+              <View key={index} style={{alignItems:'center'}}>
+                <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('ExchangeWallet',{currencyFrom:item.currencyFrom,currencyTo:item.currencyTo,payinAddress:item.payinAddress,payoutAddress:item.payoutAddress})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                  <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
+                    <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
+                    <Text style={[iOSUIKit.subhead,{marginLeft:10}]}> WALLET</Text>
+                    <View style={{position:'absolute',right:10, flexDirection:'column'}}>
+                    <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} available</Text>
+                    <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} balance</Text>
+                    </View>
+                  </View>
+                </TouchableNativeFeedback>         
+              <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
+              </View>
+            )
+          })
+        }else{
+         return changellyAddressesUsed.map((item,index)=>{
+            return (
+              <View key={index} style={{alignItems:'center'}}>
+                <TouchableHighlight onPress={()=>{this.props.navigation.navigate('ExchangeWallet',{currencyFrom:item.currencyFrom,currencyTo:item.currencyTo,payinAddress:item.payinAddress,payoutAddress:item.payoutAddress})}}>
+                  <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
+                    <Text style={[iOSUIKit.caption,{marginLeft:10}]}> From</Text>
+                    <Image resizeMode="contain" style={{height:40,width:40,marginLeft:10}} source={this.handleLogo(item.currencyFrom)}/>
+                    <Text style={[iOSUIKit.caption,{marginLeft:10}]}> to   </Text>
+                    <Image resizeMode="contain" style={{height:40,width:40}} source={this.handleLogo(item.currencyTo)}/>
+                    <Text>   Exchange Pair </Text>
+                    <SimpleIcon name="arrow-right" style={{position: 'absolute',right:5,color:'#ffa500'}}/>
+                  </View>
+                </TouchableHighlight>         
+              <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
+              </View>
+            )
+          })
+        }
+      }     
+    }
+
+
     handlePlatform(){
       const {userWallets} = this.props;
       if(Platform.OS === 'android'){
@@ -212,12 +265,17 @@ class AccountsWallets extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <ScrollView >
+      <ScrollView>
+          <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>Your QuadrigaCX wallets</Text>
+          <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1,alignSelf:'center'}}/>
           {this.handlePlatform()}
-
-      
+          <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>Your Exchange wallets</Text>
+          <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1,alignSelf:'center'}}/>
+          <View style={{marginBottom:90}}>
+            {this.handleExchangePlatform()}
+          </View>
     </ScrollView>
-    <Modal 
+    {/* <Modal 
       style={[styles.modal]}
       position={"center"}
       ref={"modal"}>
@@ -225,12 +283,12 @@ class AccountsWallets extends Component {
                 <Text style={iOSUIKit.title3}>Add a custom wallet</Text>
                 <Text>{i18n.t('bitcoin')}</Text>
             </View>
-            <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',height: 350,width: 300}}>
+            <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center',height: 350,width: 300}}> add with an update feature
               <TouchableHighlight>
                 <Text onPress={()=>this.refs.modal.close()}>Close</Text>
               </TouchableHighlight>
             </View>
-    </Modal>
+    </Modal> */}
     <View style={{position:'absolute',bottom:0,width:width}}>
         <AdMobBanner
       adSize="smartBannerLandscape"
@@ -247,7 +305,7 @@ class AccountsWallets extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'#fafafa',
+    backgroundColor:'white',
     height:height
   },
   modal: {

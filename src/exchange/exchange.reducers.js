@@ -103,8 +103,8 @@ export const ExchangeReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isCreatingTransaction: false,
-                changellyCreateTransaction: action.payload,
-                changellyAddressesUsed: [...state.changellyAddressesUsed,action.payload.data.result.payoutAddress].filter((value,index,array)=>{return array.indexOf(value) === index}),
+                changellyCreateTransaction: action.payload.res,
+                changellyAddressesUsed: [...state.changellyAddressesUsed,{currencyTo:action.payload.res.data.result.currencyTo,currencyFrom:action.payload.res.data.result.currencyFrom,payoutAddress:action.payload.res.data.result.payoutAddress,payinAddress:action.payload.res.data.result.payinAddress}].filter((thing, index, self) => self.findIndex(t => t.payinAddress === thing.payinAddress) === index),
 
             }
         case POST_CHANGELLY_CREATE_TRANSACTION.ERROR:

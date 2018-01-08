@@ -107,15 +107,11 @@ const initialState = {
   quadrigaUserSellLimit:null,
   quadrigaUserSellMarket:null,
   quadrigaUserBitcoinWallet:null,
-  quadrigaUserBitcoinWalletWithdraw:null,
+  quadrigaUserWalletWithdraw:null,
   quadrigaUserEtherWallet:null,
-  quadrigaUserEtherWalletWithdraw:null,
   quadrigaUserBitcoinCashWallet:null,
-  quadrigaUserBitcoinCashWalletWithdraw:null,
   quadrigaUserBitcoinGoldWallet:null,
-  quadrigaUserBitcoinGoldWalletWithdraw:null,
   quadrigaUserLitecoinWallet:null,
-  quadrigaUserLitecoinWalletWithdraw:null,
   userWallets:[],
   quadrigaTickerBTC: null,
   quadrigaTickerLTC:null,
@@ -428,7 +424,7 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         isGettingUserQuadrigaBitcoinWithdraw: false,
-        quadrigaUserBitcoinWalletWithdraw: action.payload,
+        quadrigaUserWalletWithdraw: action.payload,
       }
     case POST_USER_QUADRIGA_BITCOIN_WALLET_WITHDRAW.ERROR:
       return {
@@ -463,7 +459,7 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         isGettingUserQuadrigaEtherWalletWithdraw: false,
-        quadrigaUserEtherWalletWithdraw: action.payload,
+        quadrigaUserWalletWithdraw: action.payload,
       }
     case POST_USER_QUADRIGA_ETHER_WALLET_WITHDRAW.ERROR:
       return {
@@ -498,7 +494,7 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         isGettingUserQuadrigaBitcoinCashWalletWithdraw: false,
-        quadrigaUserBitcoinCashWalletWithdraw: action.payload,
+        quadrigaUserWalletWithdraw: action.payload,
       }
     case POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW.ERROR:
       return {
@@ -533,7 +529,7 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         isGettingUserQuadrigaBitcoinGoldWalletWithdraw: false,
-        quadrigaUserBitcoinGoldWalletWithdraw: action.payload,
+        quadrigaUserWalletWithdraw: action.payload,
       }
     case POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW.ERROR:
       return {
@@ -568,7 +564,7 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         isGettingUserQuadrigaLitecoinWalletWithdraw: false,
-        quadrigaUserLitecoinWalletWithdraw: action.payload,
+        quadrigaUserWalletWithdraw: action.payload,
       }
     case POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW.ERROR:
       return {
