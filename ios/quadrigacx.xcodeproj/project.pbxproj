@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -52,6 +53,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		83411D7508DA8B8F8A1EA855 /* libPods-quadrigacx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ED4234F7DC69496BA1E43AB /* libPods-quadrigacx.a */; };
 		83437D695DDCFD36B832EB6F /* libPods-quadrigacx-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1EBACC2F0065D627D2DA6A /* libPods-quadrigacx-tvOS.a */; };
+		85720E0D18EE40E7A2BE292B /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66002468E12847C7A5002E05 /* fontello.ttf */; };
 		864C0E3C200F43599B4134EB /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC1ADA4582F34922823EF74F /* libSplashScreen.a */; };
 		8697E88DFF5646DBAA307415 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7DE633B418714EC5ACC26576 /* EvilIcons.ttf */; };
 		8A21562534944BD488181B73 /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C66193328A094703B517622C /* libAppCenterReactNativeCrashes.a */; };
@@ -68,7 +70,6 @@
 		E7E596B7C85EBB4A21CBDA85 /* libPods-quadrigacx-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B212F223277030DC4A8C89B /* libPods-quadrigacx-tvOSTests.a */; };
 		EF1AEEB30CEF48FBBF7F2C31 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89696A429A746C5AE794C41 /* libRNAdMobManager.a */; };
 		F845C40419FD41AE90A3F2AA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */; };
-		85720E0D18EE40E7A2BE292B /* fontello.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66002468E12847C7A5002E05 /* fontello.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -540,6 +541,7 @@
 		60B264CCBB13434F8EC761EF /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		60BA1BE0562BD662188B2285 /* Pods-quadrigacx-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quadrigacx-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-quadrigacx-tvOSTests/Pods-quadrigacx-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		63781897D16C4C0CA18FD111 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		66002468E12847C7A5002E05 /* fontello.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = fontello.ttf; path = ../src/assets/fonts/fontello.ttf; sourceTree = "<group>"; };
 		69150FA9AD4849DE9E990159 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		6A13961BB15546358FA74C89 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 		6ED4234F7DC69496BA1E43AB /* libPods-quadrigacx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quadrigacx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -575,7 +577,6 @@
 		EB48C135BBB54681A81B8582 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		F0BBFEFEBA6249A2833AD851 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		FB1EBACC2F0065D627D2DA6A /* libPods-quadrigacx-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-quadrigacx-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		66002468E12847C7A5002E05 /* fontello.ttf */ = {isa = PBXFileReference; name = "fontello.ttf"; path = "../src/assets/fonts/fontello.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2156,6 +2157,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = quadrigacx;
+				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2165,6 +2167,7 @@
 			baseConfigurationReference = D0E60DF0916229B8A55F6715 /* Pods-quadrigacx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DXVK95TC7H;
 				HEADER_SEARCH_PATHS = (
@@ -2193,6 +2196,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = quadrigacx;
+				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
