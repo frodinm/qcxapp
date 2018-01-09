@@ -50,16 +50,16 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(getQuadrigaTickerBTC());
         setTimeout(()=>{
             dispatch(getQuadrigaTickerETH());
-        },2000)
+        },3000)
         setTimeout(()=>{
             dispatch(getQuadrigaTickerBCH());
-        },2000)
+        },5000)
         setTimeout(()=>{
             dispatch(getQuadrigaTickerBTG());
-        },2000)
+        },8000)
         setTimeout(()=>{
             dispatch(getQuadrigaTickerLTC())
-        },2000)  
+        },11000)  
     },
     getQuadrigaTransactionsDispatch: (book, time) => {
         dispatch(getQuadrigaTransactions(book, time))

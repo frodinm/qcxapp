@@ -8,11 +8,15 @@ import {
     TouchableOpacity,
     StatusBar,
     Image,
-    Vibration
+    Vibration,
+    Dimensions
 } from 'react-native';
+import IOSicon from 'react-native-vector-icons/dist/Ionicons'
 import flashon from '../assets/camera/ic_flash_on_white.png'
 import flashoff from '../assets/camera/ic_flash_off_white.png'
 import Camera from 'react-native-camera'
+
+const {width,height} = Dimensions.get('window');
 
 
 export class CameraComponent extends Component {
@@ -80,16 +84,15 @@ export class CameraComponent extends Component {
                     aspect={this.state.camera.aspect}
                     type={this.state.camera.type}
                     torchMode={this.state.camera.torchMode}
-                    onBarCodeRead={this.onBarCodeRead.bind(this)}
-                >
-                    <View>
-                        <TouchableOpacity
-                            style={styles.flashButton}
-                            onPress={() => this.switchTorch()}
-                        >
-                            <Image
-                                source={this.flashIcon()}
-                            />
+                    onBarCodeRead={this.onBarCodeRead.bind(this)}>
+                    <View >
+                        <TouchableOpacity style={styles.flashButton} onPress={() => this.switchTorch()}>
+                            <Image source={this.flashIcon()}/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{position:'absolute',top:30,right:50}}>
+                        <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
+                            <IOSicon name="ios-close" size={35}/>
                         </TouchableOpacity>
                     </View>
                 </Camera>

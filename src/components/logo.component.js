@@ -14,6 +14,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import { SearchBar } from 'react-native-elements'
+import IOSicon from 'react-native-vector-icons/dist/Ionicons'
 import {Logos} from 'util'
 
 const {height,width} = Dimensions.get('window');
@@ -73,12 +74,20 @@ export class LogoComponent extends Component {
   render() {
     return (
         <View style={styles.container}>
-        <SearchBar
-          round
-          lightTheme
-          placeholder='Type Here...' 
-          onChangeText={(text)=>{this.handleChangeText(text)}}
-          style={{width:width}}/>
+        <View style={{flexDirection:'row',width:width/1.2}}>
+          <SearchBar
+            round
+            lightTheme
+            placeholder='Type Here...' 
+            onChangeText={(text)=>{this.handleChangeText(text)}}
+            containerStyle={{width:'100%'}}
+          />
+          <View style={{width:width/6,justifyContent:'center',alignItems:'center',backgroundColor:'#e1e8ee'}}>
+            <TouchableOpacity onPress={()=>{this.props.modalRef.close()}}>
+              <IOSicon name="ios-close" size={35}/>
+            </TouchableOpacity>
+          </View>
+          </View>
         <FlatList
         data={this.state.results}
         keyExtractor={this._keyExtractor}

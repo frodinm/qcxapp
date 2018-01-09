@@ -88,6 +88,7 @@ class Wallet extends Component {
         super();
         this.state = {
             address: '',
+            withdrawAddress:'',
             amount:'',
             refreshing: false,
             minor:'-20.11185076',//data is just to not have an error for initial load of the modal
@@ -502,8 +503,8 @@ class Wallet extends Component {
                     ref={"modalWithdraw"}
                     keyboardTopOffset={0} 
                     >
-                    <View style={{flexDirection:'column',alignItems:'center',height: height/1.4,width: width/1.1}}>
-                        <TouchableOpacity style={{position: 'absolute',top:20,left:30}}>
+                    <View style={{flexDirection:'column',alignItems:'center',width: width/1.1}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Camera',{setAddress:(address)=>{this.setState({withdrawAddress:address})}})} style={{position: 'absolute',top:20,left:30}}>
                             <IconIOS name="ios-qr-scanner" size={30}/>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.refs.modalWithdraw.close()} style={{position: 'absolute',top:15,right:30}}>
@@ -568,7 +569,7 @@ const styles = StyleSheet.create({
         width: width/1.1
     },
     modalWithdraw:{
-        justifyContent: 'center',
+        
         alignItems: 'center',
         borderRadius:5,
         ...Platform.select({
@@ -576,7 +577,7 @@ const styles = StyleSheet.create({
                 marginTop:0
             }
         }),
-        height: height/1.4,
+        height: height/1.6,
         width: width/1.1
     },
     textInput:{

@@ -303,7 +303,7 @@ class ModalComponent extends Component {
                     keyboardTopOffset={0}
                     coverScreen={true}>                    
 
-                    <LogoComponent closeFunction={{return: (acronym,name) => this.handleReturn(acronym,name)}}/>
+                    <LogoComponent modalRef={this.refs.modal1} closeFunction={{return: (acronym,name) => this.handleReturn(acronym,name)}}/>
                 </Modal>
                 </SafeAreaView>
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
