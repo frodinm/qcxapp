@@ -42,17 +42,10 @@ class NewUserForm extends Component {
 
   render(){
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-
-        </Text>
         <WebView
-          source={{uri: 'https://www.quadrigacx.com'}}
+          source={{uri: 'https://www.quadrigacx.com/?ref=ung7r61g9m76cswgv7jpwycx'}}
           style={{marginTop: -30}}
         />
-
-      </View>
-
     );
   }
 }

@@ -19,15 +19,21 @@ import {iOSUIKit} from 'react-native-typography'
 import { Isao  } from 'react-native-textinput-effects';
 import {userLogin} from 'users'
 import ChangellyLogo from '../assets/img/logo.png'
+import DropdownAlert from 'react-native-dropdownalert';
+import {
+  postUserQuadrigaBalance,
+} from 'account'
 
 const {height,width} = Dimensions.get('window')
 
 const mapStateToProps = (state) => ({
+    quadrigaUserBalance: state.account.quadrigaUserBalance,
     isLoggedIn: state.user.isLoggedIn,
     pin:state.user.pin
 })
 const mapDispatchToProps = (dispatch) => ({
-    userLoginDispatch: (clientId,apiKey,privateKey)=> dispatch(userLogin(clientId,apiKey,privateKey))
+    userLoginDispatch: (clientId,apiKey,privateKey)=> dispatch(userLogin(clientId,apiKey,privateKey)),
+    postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))},
 })
 
 
@@ -44,6 +50,7 @@ class NewUser extends Component {
         this.handleClientId=this.handleClientId.bind(this);
         this.handleApiKey=this.handleApiKey.bind(this);
         this.handleprivateKey=this.handleprivateKey.bind(this);
+        this.handleLoginAlert = this.handleLoginAlert.bind(this);
 
 
     }
@@ -55,11 +62,29 @@ class NewUser extends Component {
           resetNavigation( 'AuthPin',navigation)
         }
       }
-      handleLogin(){
-        const {navigation,userLoginDispatch} = this.props;
-        userLoginDispatch(this.state.clientId,this.state.apiKey,this.state.privateKey)
-        resetNavigation('PinCode',navigation)
 
+    handleLoginAlert(){
+        const {quadrigaUserBalance,userLoginDispatch} = this.props;
+
+        if(quadrigaUserBalance.data.hasOwnProperty('error')){
+          this.dropdown.alertWithType('error','Error', quadrigaUserBalance.data.error.message);
+        }else{
+          this.dropdown.alertWithType('success','Awsome', 'Now you can set up your pin code. Please keep it secret!')
+          setTimeout(()=>{
+            userLoginDispatch(this.state.clientId,this.state.apiKey,this.state.privateKey)
+            resetNavigation('PinCode',this.props.navigation)
+          },4000)
+        }
+      }
+      handleLogin(){
+        const {navigation,userLoginDispatch,postUserQuadrigaBalanceDispatch} = this.props;
+
+        let nonce = Date.now()
+        postUserQuadrigaBalanceDispatch(this.state.apiKey,encryptAuthenticationQuadriga(nonce,this.state.clientId,this.state.apiKey,this.state.privateKey),nonce);
+
+        setTimeout(()=>{
+          this.handleLoginAlert()
+        },1000)
       }
       handleGettingStarted(){
           const {navigation} = this.props;
@@ -94,7 +119,7 @@ class NewUser extends Component {
           <Text style={[iOSUIKit.body,styles.text]}>{`Easy and fast exchange to any of the supported cryptocurrencies on Changelly `}</Text>
         </View>
         <KeyboardAwareScrollView behavior={'padding'} style={styles.slide2}>
-        <View>
+        <View style={{marginTop:20}}>
           <Isao
             style={styles.textInputWrapper}
             labelStyle={styles.labelText}
@@ -122,21 +147,25 @@ class NewUser extends Component {
             passiveColor={'#000'}
             onChangeText={(value) => this.handleprivateKey(value)}
           />
-          <Button
-          buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',margin:30,marginTop:50,right:70,paddingLeft:20,paddingRight:20}}
-          textStyle={{textAlign: 'center'}}
-          title={`Get Started!`}
-          onPress={()=>this.handleLogin()}
-        />
-          <Button
-            buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',position:'relative',top:-73,right:-70,paddingLeft:35,paddingRight:35}}
+          <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',marginTop:50,marginBottom:20}}>
+            <Button
+            buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',}}
             textStyle={{textAlign: 'center'}}
-            title={`Register`}
-            onPress={()=>navigation.navigate('Register')}
-          />
+            title={`Get Started!`}
+            onPress={()=>this.handleLogin()}
+            />
+            <Button
+              buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',}}
+              textStyle={{textAlign: 'center'}}
+              title={`  Register    `}
+              onPress={()=>navigation.navigate('Register')}
+            />
+          </View>
           <Text style={styles.webViewHelper} onPress={this.handleGettingStarted}>Get your access keys</Text>
+          <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
           </View>
         </KeyboardAwareScrollView>
+
       </Swiper>
   }
 }
@@ -201,8 +230,7 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color:'#da9733',
     margin: 10,
-    position:'relative',
-    top: -50
+   
 
 
   }

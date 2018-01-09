@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start-reset": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "release": "cd android && ./gradlew assembleRelease",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "hack-install": "./node_modules/.bin/rn-nodeify --hack --install",
     "postinstall": "./node_modules/.bin/rn-nodeify --hack",

@@ -115,7 +115,9 @@ class Wallet extends Component {
     componentWillMount(){
         const {postUserQuadrigaBalanceAndTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
         const {book,bookTwo} = this.props.navigation.state.params;
-        postUserQuadrigaBalanceAndTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo);
+        setTimeout(()=>{
+            postUserQuadrigaBalanceAndTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo);
+        },500)
 
     }
     componentDidMount(){
