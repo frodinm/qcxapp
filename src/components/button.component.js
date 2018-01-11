@@ -43,27 +43,29 @@ export class ButtonComponent extends Component {
           </TouchableNativeFeedback>
           )
       }else{
-          <View style={{margin:5,marginTop:10}}>
-          <TouchableHighlight onPress={onPressAction}>
-            <View style={{...buttonStyle,backgroundColor:color}} pointerEvents='box-only' >
-            <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
-              <View style={{flexDirection:'row'}}>
-                <View style={{flexDirection:'column'}}>
-                  <Text>High </Text>
-                  <Text>Low </Text>
-                  <Text>Last </Text>
-                  <Text>Vmap </Text>
-                </View>
-                <View style={{flexDirection:'column'}}>
-                  <Text style={iOSUIKit.caption}>{tokenData.data.high}</Text>
-                  <Text style={iOSUIKit.caption}>{tokenData.data.low}</Text>
-                  <Text style={iOSUIKit.caption}>{tokenData.data.last}</Text>
-                  <Text style={iOSUIKit.caption}>{parseFloat(tokenData.data.vwap).toFixed(2)}</Text>
+        return(
+            <View style={{margin:5,marginTop:10}}>
+            <TouchableHighlight onPress={onPressAction}>
+              <View style={{...buttonStyle,backgroundColor:color}} pointerEvents='box-only' >
+              <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
+                <View style={{flexDirection:'row'}}>
+                  <View style={{flexDirection:'column'}}>
+                    <Text>High </Text>
+                    <Text>Low </Text>
+                    <Text>Last </Text>
+                    <Text>Vmap </Text>
+                  </View>
+                  <View style={{flexDirection:'column'}}>
+                    <Text style={iOSUIKit.caption}>{tokenData.data.high}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.data.low}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.data.last}</Text>
+                    <Text style={iOSUIKit.caption}>{parseFloat(tokenData.data.vwap).toFixed(2)}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-        </TouchableHighlight>
-        </View>
+          </TouchableHighlight>
+          </View>
+        )
       }
     }else{
       return(

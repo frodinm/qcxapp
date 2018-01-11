@@ -91,12 +91,7 @@ class AccountsWallets extends Component {
     const headerStyle={
       alignSelf: 'center',
       color:'white',
-      position: 'relative',
-      ...Platform.select({
-        android:{
-          left: 30
-        }
-      })
+      
     }
     return {
          headerTitle: `Account`,

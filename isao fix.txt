@@ -76,10 +76,14 @@ export default class Isao extends BaseInput {
             style={[
               styles.textInput,
               inputStyle,
-              // {
-              //   width,
-              //   height: inputHeight,
-              // },
+              {
+                ...Platform.select({
+                  ios:{
+                    width,
+                    height: inputHeight,
+                  }
+                })
+              },
             ]}
             value={value}
             onBlur={this._onBlur}
