@@ -15,15 +15,15 @@
 		00E356F31AD99517003FC87E /* quadrigacxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* quadrigacxTests.m */; };
 		079F1A741FF65747008C850A /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; };
 		079F1A751FF65747008C850A /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		07B6476D2005A3AE00BDC83A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		07B6476E2005A3E100BDC83A /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
-		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		17445160850F4257A1E1B8C3 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4836CEFC2814C6EA97B5FFD /* Feather.ttf */; };
 		2A80BCE4F1764B79A0650A73 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71158AA777E94A42B8C4A27B /* libReactNativePermissions.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -60,7 +60,6 @@
 		8DE9751B5EA8495DB02DF740 /* libUdpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFCE5D4C2B1A4E598726EA40 /* libUdpSockets.a */; };
 		9180D0D4689B47FBAF5B9FCD /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4F0A33F1141461B85C0A45E /* libRNDeviceInfo.a */; };
 		9E572EDBEFE74348BFBE2042 /* libAppCenterReactNativeAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B56F016FFC074C39A74A05E0 /* libAppCenterReactNativeAnalytics.a */; };
-		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B02D8DB7228E4141877DF6F4 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A649C3744537497EA99EAADB /* MaterialIcons.ttf */; };
 		BB67C6C51DCA43C2AB7AF8CF /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AD0F8CC1A794024889E0E64 /* AppCenter-Config.plist */; };
 		C870389D3CB645788C9A4D3E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 891EB28629504FA68EC5018E /* SimpleLineIcons.ttf */; };
@@ -508,6 +507,7 @@
 		00E356F21AD99517003FC87E /* quadrigacxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = quadrigacxTests.m; sourceTree = "<group>"; };
 		05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		079F1A2B1FF6573C008C850A /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
+		07DF2E8C2005924800138CCF /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
 		0AD0F8CC1A794024889E0E64 /* AppCenter-Config.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "quadrigacx/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		0B54EC4F092E2C2295D35B34 /* Pods-quadrigacx-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-quadrigacx-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-quadrigacx-tvOS/Pods-quadrigacx-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -593,9 +593,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
+				07B6476E2005A3E100BDC83A /* libRCTWebSocket.a in Frameworks */,
+				07B6476D2005A3AE00BDC83A /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
-				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				079F1A741FF65747008C850A /* Lottie.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -606,7 +606,6 @@
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
-				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				D6FC25576F97445580965A42 /* libAppCenterReactNative.a in Frameworks */,
 				9E572EDBEFE74348BFBE2042 /* libAppCenterReactNativeAnalytics.a in Frameworks */,
 				8A21562534944BD488181B73 /* libAppCenterReactNativeCrashes.a in Frameworks */,
@@ -1037,6 +1036,7 @@
 		F3567FD9401C545F8300BC19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07DF2E8C2005924800138CCF /* libReact.a */,
 				07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */,
 				6ED4234F7DC69496BA1E43AB /* libPods-quadrigacx.a */,
 				FB1EBACC2F0065D627D2DA6A /* libPods-quadrigacx-tvOS.a */,
@@ -2157,7 +2157,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = quadrigacx;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2196,7 +2196,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = quadrigacx;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

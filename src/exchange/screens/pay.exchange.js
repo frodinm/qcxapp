@@ -150,20 +150,28 @@ class PayExchange extends Component {
         },1000)
     }
 
-    handlePay() {
-
-    }
-
     handlePlatform(){
         if(this.props.navigation.state.params.fromCoin === 'btc' || this.props.navigation.state.params.fromCoin === 'eth' || this.props.navigation.state.params.fromCoin === 'bch' || this.props.navigation.state.params.fromCoin === 'btg' || this.props.navigation.state.params.fromCoin === 'ltc') {
             if(Platform.OS === 'android'){
-                return (
-                    <TouchableNativeFeedback onPress={()=>this.handlePay()} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-                        <View style={{backgroundColor:'orange',marginTop:20,height:60,width:width,alignItems:'center',justifyContent:'center',flexDirection:'row',position:'absolute',bottom:0}}>
+                if(TouchableNativeFeedback.canUseNativeForeground()){
+                    return (
+                        <TouchableNativeFeedback onPress={()=>this.refs.modalConfimSend.open()} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                            <View style={{backgroundColor:'orange',marginTop:20,height:60,width:width,alignItems:'center',justifyContent:'center',flexDirection:'row',position:'absolute',bottom:0}}>
+                                <Text style={{fontSize:19,color:'white',textAlign:'center'}}> Quick Send {'\n'} with Quadriga </Text>
+                            </View>
+                        </TouchableNativeFeedback> 
+                    )
+                }else{
+                    return(
+                        <View style={{position:'absolute',bottom:0}}>
+                        <TouchableHighlight onPress={()=>this.refs.modalConfimSend.open()}>
+                        <View style={{backgroundColor:'orange',height:60,width:width,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
                             <Text style={{fontSize:19,color:'white',textAlign:'center'}}> Quick Send {'\n'} with Quadriga </Text>
                         </View>
-                    </TouchableNativeFeedback> 
-                )
+                        </TouchableHighlight>
+                        </View>
+                    )
+                }
             }else{
                 return(
                     <View style={{position:'absolute',bottom:0}}>

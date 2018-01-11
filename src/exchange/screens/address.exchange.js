@@ -83,14 +83,25 @@ class AddressExchange extends Component {
 
     handlePlatform(onPressAction,iconType,iconName,text,style,underlayStyle){
         if(Platform.OS === 'android'){
-          return(
-            <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-                <View style={style}>
-                    {this.handleIcon(iconType,iconName)}
-                    <Text style={{fontSize:18,color:'white',textAlign:'center'}}> {text}</Text>
-                </View>
-            </TouchableNativeFeedback>
-          )
+            if(TouchableNativeFeedback.canUseNativeForeground()){
+                return(
+                    <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                        <View style={style}>
+                            {this.handleIcon(iconType,iconName)}
+                            <Text style={{fontSize:18,color:'white',textAlign:'center'}}> {text}</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+                )
+            }else{
+                return(
+                    <TouchableHighlight style={underlayStyle} onPress={onPressAction}>
+                        <View style={style}>
+                            {this.handleIcon(iconType,iconName)}
+                            <Text style={{fontSize:16,color:'white',textAlign:'center'}}> {text}</Text>
+                       </View>
+                   </TouchableHighlight>
+                  )
+            }
         }else{
           return(
             <TouchableHighlight style={underlayStyle} onPress={onPressAction}>

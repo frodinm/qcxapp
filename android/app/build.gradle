@@ -119,7 +119,7 @@ android {
     }
     defaultConfig {
         applicationId "com.quadrigacx"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"

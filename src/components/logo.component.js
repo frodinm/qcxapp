@@ -38,14 +38,25 @@ export class LogoComponent extends Component {
   handleRender(item,index){
     const {closeFunction} = this.props;
     if(Platform.OS === 'android'){
-    return (
-        <TouchableNativeFeedback onPress={function(){closeFunction.return(item.acronym,item.name)}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-            <View key={index} style={{alignItems:'center',paddingBottom:10}}>
-            <Image style={{height:height/6,width:width/2,margin:5}} resizeMode="contain" source={item.logo}/>
-            <Text>{item.name} ({item.acronym})</Text>
-            </View>
-        </TouchableNativeFeedback>
-    )
+      if(TouchableNativeFeedback.canUseNativeForeground()){
+        return (
+            <TouchableNativeFeedback onPress={function(){closeFunction.return(item.acronym,item.name)}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                <View key={index} style={{alignItems:'center',paddingBottom:10}}>
+                <Image style={{height:height/6,width:width/2,margin:5}} resizeMode="contain" source={item.logo}/>
+                <Text>{item.name} ({item.acronym})</Text>
+                </View>
+            </TouchableNativeFeedback>
+        )
+    }else{
+      return(
+        <TouchableHighlight onPress={function(){closeFunction.return(item.acronym,item.name)}} >
+              <View key={index} style={{alignItems:'center',paddingBottom:10,backgroundColor:'#F5FCFF'}}>
+              <Image style={{height:height/6,width:width/2,margin:5}} resizeMode="contain" source={item.logo}/>
+              <Text>{item.name} ({item.acronym})</Text>
+              </View>
+          </TouchableHighlight>
+      )
+    }
   }else{
     return(
       <TouchableHighlight onPress={function(){closeFunction.return(item.acronym,item.name)}} >

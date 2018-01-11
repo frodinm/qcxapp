@@ -5,7 +5,6 @@ import {
   Text,
   Dimensions,
   Image,
-  TouchableNativeFeedback,
   TouchableOpacity,
   Platform,
 } from 'react-native'

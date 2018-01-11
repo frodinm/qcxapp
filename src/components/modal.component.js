@@ -228,13 +228,25 @@ class ModalComponent extends Component {
 
     handleContinuePlatform(){
         if(Platform.OS === 'android'){
-            return (
-                <TouchableNativeFeedback onPress={()=>this.handleGetStarted()} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-                <View style={{backgroundColor:'orange',width:width/1.5,height:60,marginTop:50,alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
-                   <Text  style={{color:'white',fontWeight:'bold',fontSize:22}}>Exchange !</Text>
-                   </View>
-                </TouchableNativeFeedback>
-            )
+            if(TouchableNativeFeedback.canUseNativeForeground()){
+                return (
+                    <TouchableNativeFeedback onPress={()=>this.handleGetStarted()} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                    <View style={{backgroundColor:'orange',width:width/1.5,height:60,marginTop:50,alignSelf:'center',justifyContent:'center',alignItems:'center'}}>
+                    <Text  style={{color:'white',fontWeight:'bold',fontSize:22}}>Exchange !</Text>
+                    </View>
+                    </TouchableNativeFeedback>
+                )
+            }else{
+                return(
+                    <View style={{width:width/1.5,height:60,marginTop:50,alignSelf:'center'}}>
+                    <TouchableHighlight onPress={()=>this.handleGetStarted()}>
+                    <View style={{backgroundColor:'orange',height:60,justifyContent:'center',alignItems:'center'}}>
+                            <Text style={{color:'white',fontWeight:'bold',fontSize:22}}>Exchange !</Text>
+                    </View>
+                    </TouchableHighlight>
+                    </View>
+                )
+            }
           }else{
             return(
                 <View style={{width:width/1.5,height:60,marginTop:50,alignSelf:'center'}}>

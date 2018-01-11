@@ -54,9 +54,9 @@ export default class Isao extends BaseInput {
     return (
       <View
         style={[
-          containerStyle,
+           containerStyle,
           {
-            height: inputHeight + LABEL_HEIGHT,
+             height: inputHeight + LABEL_HEIGHT,
           },
         ]}
         onLayout={this._onLayout}
@@ -72,23 +72,22 @@ export default class Isao extends BaseInput {
         >
           <TextInput
             ref="input"
-            {...this.props}
+            // {...this.props}
             style={[
               styles.textInput,
               inputStyle,
-              {
-                width,
-                height: inputHeight,
-              },
+              // {
+              //   width,
+              //   height: inputHeight,
+              // },
             ]}
             value={value}
             onBlur={this._onBlur}
-            onChange={this._onChange}
+            onChangeText={(text)=>this.props.onChangeText(text)}
             onFocus={this._onFocus}
             underlineColorAndroid={'transparent'}
           />
         </View>
-        <TouchableWithoutFeedback onPress={this.focus}>
           <View
             style={{
               height: LABEL_HEIGHT,
@@ -137,7 +136,7 @@ export default class Isao extends BaseInput {
               {label}
             </Animated.Text>
           </View>
-        </TouchableWithoutFeedback>
+
         <Animated.View
           style={[
             styles.border,
@@ -161,24 +160,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
   },
   labelContainer: {
-    paddingLeft: PADDING,
     height: LABEL_HEIGHT,
   },
   label: {
     position: 'absolute',
     height: LABEL_HEIGHT,
-    paddingTop: 4, //remove left padding
     backgroundColor: 'transparent',
     fontFamily: 'Arial',
     fontSize: 14,
     fontWeight: 'bold',
   },
   textInput: {
-    paddingLeft: PADDING,
     color: '#afb3b8',
     fontSize: 18,
     fontWeight: 'bold',
-    padding: 0,
+  
   },
   border: {
     position: 'absolute',

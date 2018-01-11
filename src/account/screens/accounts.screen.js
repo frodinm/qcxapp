@@ -179,23 +179,43 @@ class AccountsWallets extends Component {
         )
       }else{
         if(Platform.OS === 'android'){
-          return changellyAddressesUsed.map((item,index)=>{
-            return( 
-              <View key={index} style={{alignItems:'center'}}>
-                <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('ExchangeWallet',{currencyFrom:item.currencyFrom,currencyTo:item.currencyTo,payinAddress:item.payinAddress,payoutAddress:item.payoutAddress})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-                  <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
-                    <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
-                    <Text style={[iOSUIKit.subhead,{marginLeft:10}]}> WALLET</Text>
-                    <View style={{position:'absolute',right:10, flexDirection:'column'}}>
-                    <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} available</Text>
-                    <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} balance</Text>
+          if(TouchableNativeFeedback.canUseNativeForeground()){
+            return changellyAddressesUsed.map((item,index)=>{
+              return( 
+                <View key={index} style={{alignItems:'center'}}>
+                  <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('ExchangeWallet',{currencyFrom:item.currencyFrom,currencyTo:item.currencyTo,payinAddress:item.payinAddress,payoutAddress:item.payoutAddress})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                    <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
+                      <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
+                      <Text style={[iOSUIKit.subhead,{marginLeft:10}]}> WALLET</Text>
+                      <View style={{position:'absolute',right:10, flexDirection:'column'}}>
+                      <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} available</Text>
+                      <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} balance</Text>
+                      </View>
                     </View>
-                  </View>
-                </TouchableNativeFeedback>         
-              <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
-              </View>
-            )
-          })
+                  </TouchableNativeFeedback>         
+                <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
+                </View>
+              )
+            })
+          }else{
+            return changellyAddressesUsed.map((item,index)=>{
+              return (
+                <View key={index} style={{alignItems:'center'}}>
+                  <TouchableHighlight onPress={()=>{this.props.navigation.navigate('ExchangeWallet',{currencyFrom:item.currencyFrom,currencyTo:item.currencyTo,payinAddress:item.payinAddress,payoutAddress:item.payoutAddress})}}>
+                    <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
+                      <Text style={[iOSUIKit.caption,{marginLeft:10}]}> From</Text>
+                      <Image resizeMode="contain" style={{height:40,width:40,marginLeft:10}} source={this.handleLogo(item.currencyFrom)}/>
+                      <Text style={[iOSUIKit.caption,{marginLeft:10}]}> to   </Text>
+                      <Image resizeMode="contain" style={{height:40,width:40}} source={this.handleLogo(item.currencyTo)}/>
+                      <Text>   Exchange Pair </Text>
+                      <SimpleIcon name="arrow-right" style={{position: 'absolute',right:5,color:'#ffa500'}}/>
+                    </View>
+                  </TouchableHighlight>         
+                <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
+                </View>
+              )
+            })
+          }
         }else{
          return changellyAddressesUsed.map((item,index)=>{
             return (
@@ -222,23 +242,44 @@ class AccountsWallets extends Component {
     handlePlatform(){
       const {userWallets} = this.props;
       if(Platform.OS === 'android'){
-        return userWallets.map((item,index)=>{
-          return( 
-            <View key={index} style={{alignItems:'center'}}>
-              <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-                <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
-                  <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
-                  <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
-                  <View style={{position:'absolute',right:10, flexDirection:'column'}}>
-                  <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} available</Text>
-                  <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} balance</Text>
+        if(TouchableNativeFeedback.canUseNativeForeground()){
+          return userWallets.map((item,index)=>{
+            return( 
+              <View key={index} style={{alignItems:'center'}}>
+                <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                  <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
+                    <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
+                    <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
+                    <View style={{position:'absolute',right:10, flexDirection:'column'}}>
+                    <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} available</Text>
+                    <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} balance</Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableNativeFeedback>         
-            <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
-            </View>
-          )
-        })
+                </TouchableNativeFeedback>         
+              <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
+              </View>
+            )
+          })
+        }else{
+          return userWallets.map((item,index)=>{
+            return (
+              <View key={index} style={{alignItems:'center'}}>
+                <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}}>
+                  <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
+                    <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
+                    <Text style={[iOSUIKit.caption,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
+                    <View style={{position:'absolute',right:20, flexDirection:'column'}}>
+                      <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} available</Text>
+                      <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} balance</Text>
+                    </View>
+                    <SimpleIcon name="arrow-right" style={{position: 'absolute',right:5,color:'#ffa500'}}/>
+                  </View>
+                </TouchableHighlight>         
+              <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1}}/>   
+              </View>
+            )
+          })
+        }
       }else{
        return userWallets.map((item,index)=>{
           return (

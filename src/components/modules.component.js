@@ -5,7 +5,6 @@ import {
   Text,
   Dimensions,
   Image,
-  TouchableNativeFeedback,
   Platform
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'

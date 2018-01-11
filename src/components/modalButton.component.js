@@ -19,14 +19,25 @@ export class ModalButtonComponent extends Component {
 
   handlePlatform(imageSource,onPressAction,buttonStyle,text){
     if(Platform.OS === 'android'){
-      return(
-        <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-          <View style={{...buttonStyle,backgroundColor:'transparent',justifyContent:'center',alignItems:'center'}} pointerEvents='box-only' >
-          <Text style={{textAlign:'center',fontSize:20,color:'black',fontWeight:'bold',marginBottom:10}}>{text}</Text>
-          <Image style={{height:80,width:80,marginBottom:10,marginTop:10}} resizeMode="contain"  source={imageSource}/>
-          </View>
-      </TouchableNativeFeedback>
-      )
+      if(TouchableNativeFeedback.canUseNativeForeground()){
+        return(
+          <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+            <View style={{...buttonStyle,backgroundColor:'transparent',justifyContent:'center',alignItems:'center'}} pointerEvents='box-only' >
+            <Text style={{textAlign:'center',fontSize:20,color:'black',fontWeight:'bold',marginBottom:10}}>{text}</Text>
+            <Image style={{height:80,width:80,marginBottom:10,marginTop:10}} resizeMode="contain"  source={imageSource}/>
+            </View>
+        </TouchableNativeFeedback>
+        )
+      }else{
+        return(
+          <TouchableHighlight onPress={onPressAction} >
+            <View style={{...buttonStyle,backgroundColor:'white',justifyContent:'center',alignItems:'center'}} pointerEvents='box-only' >
+            <Text style={{textAlign:'center',fontSize:20,color:'black',fontWeight:'bold',marginBottom:10}}>{text}</Text>
+            <Image style={{height:80,width:80,marginBottom:10,marginTop:10}} resizeMode="contain"  source={imageSource}/>
+            </View>
+        </TouchableHighlight>
+        )
+      }
     }else{
       return(
         <TouchableHighlight onPress={onPressAction} >

@@ -7,7 +7,8 @@ import {
   Image,
   TextInput,
   Dimensions,
-  ScrollView
+  ScrollView,
+  StatusBar
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Swiper from 'react-native-swiper'
@@ -112,6 +113,9 @@ class NewUser extends Component {
     const {isLoggedIn,navigation} = this.props;
         return <Swiper style={styles.wrapper} loop={false} dotColor={'#000'} activeDotColor={'#da9733'}>
         <View style={styles.slide1}>
+          <StatusBar
+          backgroundColor="orange"
+          />
           <Text style={[iOSUIKit.body,styles.text]}>{`Easily trade, deposit,\n and withdraw on QuadrigaCX`}</Text>
         </View>
         <View style={styles.slide1}>
@@ -162,10 +166,9 @@ class NewUser extends Component {
             />
           </View>
           <Text style={styles.webViewHelper} onPress={this.handleGettingStarted}>Get your access keys</Text>
-          <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
           </View>
+          <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
         </KeyboardAwareScrollView>
-
       </Swiper>
   }
 }

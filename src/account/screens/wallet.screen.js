@@ -156,20 +156,30 @@ class Wallet extends Component {
     
     handlePlatform(onPressAction,buttonStyle,text){
         if(Platform.OS === 'android'){
-          return(
-            <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-              <View style={{...buttonStyle,justifyContent:'center'}} pointerEvents='box-only' >
-              <Text style={{textAlign:'center',fontSize:20,color:'black',fontWeight:'bold'}}>{text}</Text>
-              </View>
-          </TouchableNativeFeedback>
-          )
+            if(TouchableNativeFeedback.canUseNativeForeground()){
+                return(
+                    <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                    <View style={{...buttonStyle,justifyContent:'center'}} pointerEvents='box-only' >
+                    <Text style={{textAlign:'center',fontSize:20,color:'black',fontWeight:'bold'}}>{text}</Text>
+                    </View>
+                </TouchableNativeFeedback>
+                )
+            }else{
+                return(
+                    <TouchableHighlight style={{height:40,width:width/2.3,margin:5,marginBottom:10,borderRadius:5,}} onPress={onPressAction} >
+                      <View style={{backgroundColor:'orange',justifyContent:'center',height:40,width:width/2.3,marginBottom:10,borderRadius:5,}} pointerEvents='box-only' >
+                      <Text style={{textAlign:'center',fontSize:18,color:'black',fontWeight:'bold'}}>{text}</Text>
+                      </View>
+                  </TouchableHighlight>
+                  )
+            }
         }else{
           return(
             <TouchableHighlight style={{height:40,width:width/2.3,margin:5,marginBottom:10,borderRadius:5,}} onPress={onPressAction} >
               <View style={{backgroundColor:'orange',justifyContent:'center',height:40,width:width/2.3,marginBottom:10,borderRadius:5,}} pointerEvents='box-only' >
               <Text style={{textAlign:'center',fontSize:18,color:'black',fontWeight:'bold'}}>{text}</Text>
               </View>
-          </TouchableHighlight>
+            </TouchableHighlight>
           )
         }
       }

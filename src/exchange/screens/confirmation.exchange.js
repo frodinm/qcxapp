@@ -88,13 +88,25 @@ class ConfirmExchange extends Component {
 
     handlePlatform(){
         if(Platform.OS === 'android'){
-            return (
-                <TouchableNativeFeedback onPress={()=>this.handleConfirm()} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-                    <View style={{backgroundColor:'orange',marginTop:20,height:60,width:width,alignItems:'center',justifyContent:'center',flexDirection:'row',position:'absolute',bottom:0}}>
+            if(TouchableNativeFeedback.canUseNativeForeground()){
+                return (
+                    <TouchableNativeFeedback onPress={()=>this.handleConfirm()} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                        <View style={{backgroundColor:'orange',marginTop:20,height:60,width:width,alignItems:'center',justifyContent:'center',flexDirection:'row',position:'absolute',bottom:0}}>
+                            <Text style={{fontSize:19,color:'white',textAlign:'center'}}> Confirm </Text>
+                        </View>
+                    </TouchableNativeFeedback> 
+                )
+           }else{
+                return(
+                    <View style={{position:'absolute',bottom:0}}>
+                    <TouchableHighlight onPress={()=>this.handleConfirm()}>
+                    <View style={{backgroundColor:'orange',height:60,width:width,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
                         <Text style={{fontSize:19,color:'white',textAlign:'center'}}> Confirm </Text>
                     </View>
-                </TouchableNativeFeedback> 
-            )
+                    </TouchableHighlight>
+                    </View>
+                )
+           }
         }else{
             return(
                 <View style={{position:'absolute',bottom:0}}>
