@@ -70,7 +70,7 @@ class NewUser extends Component {
         if(quadrigaUserBalance.data.hasOwnProperty('error')){
           this.dropdown.alertWithType('error','Error', quadrigaUserBalance.data.error.message);
         }else{
-          this.dropdown.alertWithType('success','Awsome', 'Now you can set up your pin code. Please keep it secret!')
+          this.dropdown.alertWithType('success','Awesome', 'Now you can set up your pin code. Please keep it secret!')
           setTimeout(()=>{
             userLoginDispatch(this.state.clientId,this.state.apiKey,this.state.privateKey)
             resetNavigation('PinCode',this.props.navigation)

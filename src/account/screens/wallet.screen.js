@@ -32,6 +32,8 @@ import {
     postChangellyAddressPair
 } from 'exchange'
 import {
+    getQuadrigaTickers,
+    clearQuadrigaTickers,
     postUserQuadrigaTransactions,
     postUserLookupOrderQuadriga,
     postUserBitcoinWalletWithdrawQuadriga,
@@ -72,6 +74,7 @@ const mapStateToProps = (state) => ({
     quadrigaUserOrdersLookup: state.account.quadrigaUserOrdersLookup,
 })
 const mapDispatchToProps = (dispatch) => ({
+    getQuadrigaTickersDispatch: ()=>{dispatch(getQuadrigaTickers())},
     postUserQuadrigaTransactionsDispatch:(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo)=>{dispatch(postUserQuadrigaTransactions(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo))},
     postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))},
     postUserBitcoinWalletWithdrawQuadrigaDispatch:(key,sign,nonce,amount,address)=>{dispatch(postUserBitcoinWalletWithdrawQuadriga(key,sign,nonce,amount,address))},
@@ -115,6 +118,7 @@ class Wallet extends Component {
     componentWillMount(){
         const {postUserQuadrigaBalanceAndTransactionsDispatch,apiKey,clientId,privateKey} = this.props;
         const {book,bookTwo} = this.props.navigation.state.params;
+        clearQuadrigaTickers();
         setTimeout(()=>{
             postUserQuadrigaBalanceAndTransactionsDispatch(apiKey,clientId,privateKey,0,50,"desc",book,bookTwo);
         },500)
@@ -125,6 +129,10 @@ class Wallet extends Component {
         const {acronym} = this.props.navigation.state.params;
         this.setState({acronym})
     }
+    componentWillUnmount(){
+        const {getQuadrigaTickersDispatch} = this.props;
+        getQuadrigaTickersDispatch();
+      }
 
     static navigationOptions = ({navigation}) => {
         const headerStyle = {

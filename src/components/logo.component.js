@@ -95,7 +95,7 @@ export class LogoComponent extends Component {
           />
           <View style={{width:width/6,justifyContent:'center',alignItems:'center',backgroundColor:'#e1e8ee'}}>
             <TouchableOpacity onPress={()=>{this.props.modalRef.close()}}>
-              <IOSicon name="ios-close" size={35}/>
+              <Text>Cancel</Text>
             </TouchableOpacity>
           </View>
           </View>

@@ -73,13 +73,13 @@ export class Modules extends Component {
     return(
       <View style={styles.container}>
         <View style={{flexDirection:'row'}}>
-          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('btc',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataBTC} imageSource={BTClogo} color={colorBTC}/>
-          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('eth',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataETH} imageSource={ETHlogo} tokenName={'ETH'} color={colorETH}/>
+          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('btc')} tokenData={dataBTC} imageSource={BTClogo} color={colorBTC}/>
+          <ButtonComponent buttonStyle={BTCETHStyle} onPressAction={()=>navigation.navigate('eth')} tokenData={dataETH} imageSource={ETHlogo} tokenName={'ETH'} color={colorETH}/>
         </View>
         <View style={{flex:1,flexDirection:'row'}}>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('bch',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataBCH} imageSource={BCHlogo} color={colorBCH}/>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('btg',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataBTG} imageSource={BTGlogo} color={colorBTG}/>
-          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('ltc',{intervalInstance:intervalInstance,restartInterval:restartInterval})} tokenData={dataLTC} imageSource={LTClogo} color={colorLTC}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('bch')} tokenData={dataBCH} imageSource={BCHlogo} color={colorBCH}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('btg')} tokenData={dataBTG} imageSource={BTGlogo} color={colorBTG}/>
+          <ButtonComponent buttonStyle={OTHERStyle} onPressAction={()=>navigation.navigate('ltc')} tokenData={dataLTC} imageSource={LTClogo} color={colorLTC}/>
         </View>
       
       </View>

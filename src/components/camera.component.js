@@ -90,9 +90,9 @@ export class CameraComponent extends Component {
                             <Image source={this.flashIcon()}/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{position:'absolute',top:30,right:50}}>
+                    <View style={{position:'absolute',top:30,right:50,backgroundColor:'transparent'}}>
                         <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
-                            <IOSicon name="ios-close" size={35}/>
+                            <IOSicon name="ios-close" color="white" size={35}/>
                         </TouchableOpacity>
                     </View>
                 </Camera>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 
     },
     flashButton: {
-        margin: 25,
+        margin: 30,
 
     },
 

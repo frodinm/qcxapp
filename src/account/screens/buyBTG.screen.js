@@ -17,6 +17,8 @@ import fontelloConfig from '../../assets/config';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 import {
+  getQuadrigaTickers,
+  clearQuadrigaTickers,
   setTradingBook,
   getQuadrigaOrders,
   postUserQuadrigaBalance,
@@ -50,6 +52,7 @@ const mapStateToProps = (state) => ({
   quadrigaUserOrdersLookup: state.account.quadrigaUserOrdersLookup,
 })
 const mapDispatchToProps = (dispatch) => ({
+  getQuadrigaTickersDispatch: ()=>{dispatch(getQuadrigaTickers())},
   setTradingBookDispatch:(book)=>{dispatch(setTradingBook(book))},
   getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))},
   postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))},
@@ -96,9 +99,9 @@ class BuySellBTG extends Component {
     
     componentWillMount(){
       const {getQuadrigaOrdersDispatch,setTradingBookDispatch} = this.props;
+      clearQuadrigaTickers();
       getQuadrigaOrdersDispatch("btg_cad",0)
       setTradingBookDispatch('btg_cad')
-      clearInterval(this.props.navigation.state.params.intervalInstance)
     }
   
     componentDidMount(){
@@ -107,8 +110,9 @@ class BuySellBTG extends Component {
     }
   
     componentWillUnmount(){
-     clearInterval(this.state.interval)
-     this.props.navigation.state.params.restartInterval();
+      const {getQuadrigaTickersDispatch} = this.props;
+      clearInterval(this.state.interval)
+      getQuadrigaTickersDispatch();
     }
 
 

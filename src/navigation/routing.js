@@ -93,12 +93,21 @@ const PinCodeRouting = StackNavigator({
 const ExchangeRouting = StackNavigator({
     ExchangeAddress: {
         screen: AddressExchangeScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     },
     ConfirmExchange: {
         screen: ConfirmExchangeScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     },
     PayExchange:{
         screen: PayExchangeScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     },
 }, {
     transitionConfig: getSlideFromRightTransition,
@@ -117,6 +126,7 @@ export const InitialRouting = StackNavigator({
         screen: NewUserFormScreen,
         navigationOptions: {
             headerStyle: {
+                headerTintColor: 'black', 
                 backgroundColor: '#ff5d16'
             }
         }
@@ -124,13 +134,17 @@ export const InitialRouting = StackNavigator({
     Register: {
         screen: RegisterScreen,
         navigationOptions: {
+            headerTintColor: 'black', 
             headerStyle: {
                 backgroundColor: '#ff5d16'
             }
         }
     },
     PinCode: {
-        screen: PinCodeRouting
+        screen: PinCodeRouting,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     },
     AuthPin: {
         screen: AuthPinCodeScreen,
@@ -140,6 +154,9 @@ export const InitialRouting = StackNavigator({
     },
     Auth: {
         screen: AuthenticatedRoute,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     },
     btc: {
         screen: BuySellBTCScreen,
@@ -173,10 +190,16 @@ export const InitialRouting = StackNavigator({
     },
     ExchangeAddress:{
         screen: ExchangeRouting,
-
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     },
     CheckAddress:{
       screen:WebViewHelper,
+      navigationOptions: {
+        headerTintColor: 'black', 
+    }
+      
     },
     Camera:{
         screen: CameraComponent,
@@ -186,9 +209,15 @@ export const InitialRouting = StackNavigator({
     },
     Wallet:{
         screen:WalletScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     },
     ExchangeWallet:{
-        screen:ExchangeWalletScreen
+        screen:ExchangeWalletScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+        }
     }
 },
 {
