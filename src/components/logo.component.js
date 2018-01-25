@@ -13,8 +13,8 @@ import {
   TouchableNativeFeedback,
   TouchableHighlight
 } from 'react-native';
-import { SearchBar } from 'react-native-elements'
-import IOSicon from 'react-native-vector-icons/dist/Ionicons'
+import { SearchBar,Divider } from 'react-native-elements'
+import IconSimple from 'react-native-vector-icons/dist/SimpleLineIcons'
 import {Logos} from 'util'
 
 const {height,width} = Dimensions.get('window');
@@ -40,31 +40,64 @@ export class LogoComponent extends Component {
     if(Platform.OS === 'android'){
       if(TouchableNativeFeedback.canUseNativeForeground()){
         return (
+          <View>
             <TouchableNativeFeedback onPress={function(){closeFunction.return(item.acronym,item.name)}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-                <View key={index} style={{alignItems:'center',paddingBottom:10}}>
-                <Image style={{height:height/6,width:width/2,margin:5}} resizeMode="contain" source={item.logo}/>
-                <Text>{item.name} ({item.acronym})</Text>
-                </View>
+               <View key={index} style={{backgroundColor:'white',alignItems:'center',flexDirection:'row',paddingTop:10,paddingBottom:10}}>
+              <View style={{paddingLeft:10}}>
+                <Image style={{height:40,width:40,margin:5,marginRight:15}} resizeMode="contain" source={item.logo}/>
+              </View>
+              <View style={{}}>
+                <Text style={{fontSize:16}}>{item.name}</Text>
+                <Text style={{fontSize:12}}>{item.acronym.toUpperCase()}</Text>
+              </View>
+              <View style={{position:'absolute',right:'5%'}}>
+                <IconSimple name="arrow-right" size={12} color="orange"/>
+              </View>
+              </View>
             </TouchableNativeFeedback>
+            <Divider style={{height:1,width:width/1.1,backgroundColor:'orange',alignSelf:'center'}}/>
+          </View>
         )
     }else{
       return(
-        <TouchableHighlight onPress={function(){closeFunction.return(item.acronym,item.name)}} >
-              <View key={index} style={{alignItems:'center',paddingBottom:10,backgroundColor:'#F5FCFF'}}>
-              <Image style={{height:height/6,width:width/2,margin:5}} resizeMode="contain" source={item.logo}/>
-              <Text>{item.name} ({item.acronym})</Text>
+        <View>
+        <TouchableHighlight underlayColor="orange" onPress={function(){closeFunction.return(item.acronym,item.name)}} >
+              <View key={index} style={{backgroundColor:'white',alignItems:'center',flexDirection:'row',paddingTop:10,paddingBottom:10}}>
+              <View style={{paddingLeft:10}}>
+                <Image style={{height:40,width:40,margin:5,marginRight:15}} resizeMode="contain" source={item.logo}/>
+              </View>
+              <View style={{}}>
+                <Text style={{fontSize:16}}>{item.name}</Text>
+                <Text style={{fontSize:12}}>{item.acronym.toUpperCase()}</Text>
+              </View>
+              <View style={{position:'absolute',right:'5%'}}>
+                <IconSimple name="arrow-right" size={12} color="orange"/>
+              </View>
               </View>
           </TouchableHighlight>
+          <Divider style={{height:1,width:width/1.1,backgroundColor:'orange',alignSelf:'center'}}/>
+        </View>
       )
     }
   }else{
     return(
-      <TouchableHighlight onPress={function(){closeFunction.return(item.acronym,item.name)}} >
-            <View key={index} style={{alignItems:'center',paddingBottom:10,backgroundColor:'#F5FCFF'}}>
-            <Image style={{height:height/6,width:width/2,margin:5}} resizeMode="contain" source={item.logo}/>
-            <Text>{item.name} ({item.acronym})</Text>
-            </View>
-        </TouchableHighlight>
+      <View>
+        <TouchableHighlight underlayColor="orange" onPress={function(){closeFunction.return(item.acronym,item.name)}} >
+              <View key={index} style={{backgroundColor:'white',alignItems:'center',flexDirection:'row',paddingTop:10,paddingBottom:10}}>
+              <View style={{paddingLeft:10}}>
+                <Image style={{height:40,width:40,margin:5,marginRight:15}} resizeMode="contain" source={item.logo}/>
+              </View>
+              <View style={{}}>
+                <Text style={{fontSize:16}}>{item.name}</Text>
+                <Text style={{fontSize:12}}>{item.acronym.toUpperCase()}</Text>
+              </View>
+              <View style={{position:'absolute',right:'5%'}}>
+                <IconSimple name="arrow-right" size={12} color="#ebebeb"/>
+              </View>
+              </View>
+          </TouchableHighlight>
+          <Divider style={{height:1,width:width/1.1,backgroundColor:'#f1f1f1',alignSelf:'center'}}/>
+        </View>
     )
   }
   }
@@ -72,7 +105,7 @@ export class LogoComponent extends Component {
  handleChangeText(text){
     const newArray = []
     Logos.map((item)=>{
-      if(item.name.toLowerCase().indexOf(text.toLowerCase()) != -1){
+      if(item.name.toLowerCase().indexOf(text.toLowerCase()) != -1 || item.acronym.toLowerCase().indexOf(text.toLowerCase()) != -1 ){
         newArray.push(item)
       }
     })
@@ -103,7 +136,7 @@ export class LogoComponent extends Component {
         data={this.state.results}
         keyExtractor={this._keyExtractor}
         renderItem={({item,index}) => this.handleRender(item,index)}
-        numColumns={2}
+        numColumns={1}
         bounces={true}
         extraData={this.state}
         style={{backgroundColor:'#fff'}}/>

@@ -305,11 +305,11 @@ class AccountsWallets extends Component {
           <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>Your QuadrigaCX wallets</Text>
           <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1,alignSelf:'center'}}/>
           {this.handlePlatform()}
-          <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>Your Exchange wallets</Text>
+          {/* <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>Your Exchange wallets</Text>
           <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1,alignSelf:'center'}}/>
           <View style={{marginBottom:90}}>
             {this.handleExchangePlatform()}
-          </View>
+          </View> */}
     </ScrollView>
     {/* <Modal 
       style={[styles.modal]}

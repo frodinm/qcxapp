@@ -12,7 +12,7 @@ target 'quadrigacx' do
   pod 'Google-Mobile-Ads-SDK'
   pod 'RNI18n', :path => '../node_modules/react-native-i18n'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
-  pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
   'BatchedBridge', # Required For React Native 0.45.0+
   'Core',

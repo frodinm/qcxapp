@@ -166,7 +166,7 @@ class Wallet extends Component {
         if(Platform.OS === 'android'){
             if(TouchableNativeFeedback.canUseNativeForeground()){
                 return(
-                    <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                    <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0} style={{height:40,width:width/2.3,margin:5,marginBottom:10,borderRadius:5,}}>
                     <View style={{...buttonStyle,justifyContent:'center'}} pointerEvents='box-only' >
                     <Text style={{textAlign:'center',fontSize:20,color:'black',fontWeight:'bold'}}>{text}</Text>
                     </View>

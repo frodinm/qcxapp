@@ -16,7 +16,8 @@ import {
     BuySellETHScreen,
     BuySellBCHScreen,
     BuySellBTGScreen,
-    BuySellLTCScreen
+    BuySellLTCScreen,
+    SettingsScreen,
 } from 'account'
 import {
     ChangellyExchangeScreen,
@@ -49,9 +50,12 @@ export const AuthenticatedRoute = TabNavigator({
     Accounts: {
         screen: AccountsWalletsScreen
     },
-    Exchange: {
-        screen: ChangellyExchangeScreen,
-    },
+    // Exchange: {
+    //     screen: ChangellyExchangeScreen,
+    // },
+    Settings: {
+        screen: SettingsScreen
+    }
 }, {
     tabBarPosition: 'bottom',
     swipeEnabled: false,

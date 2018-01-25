@@ -41,20 +41,19 @@ import {Kaede} from 'react-native-textinput-effects'
 const {height, width} = Dimensions.get('window');
 
 const btn = {
-    borderLeftWidth: 1,
-    borderBottomWidth:1,
-    borderColor: 'orange',
     height: height / 4,
-    width: width / 2,
+    width: width / 2.2,
+    margin:10,
+    marginRight:5,
+    marginLeft:5,
+    backgroundColor:'white'
 }
 
 const textInput = {
-    borderLeftWidth: 1,
-    borderBottomWidth:1,
-    borderColor: 'orange',
+    backgroundColor:'white',
     textAlign: 'center',
     height: 50,
-    width: width / 2,
+    width: width / 2.13,
 }
 
 const mapStateToProps = state => ({
@@ -249,9 +248,9 @@ class ModalComponent extends Component {
             }
           }else{
             return(
-                <View style={{width:width/1.5,height:60,marginTop:50,alignSelf:'center'}}>
+                <View style={{width:width,height:60,marginTop:50,alignSelf:'center',alignItems:'center'}}>
                 <TouchableHighlight onPress={()=>this.handleGetStarted()}>
-                <View style={{backgroundColor:'orange',height:60,justifyContent:'center',alignItems:'center'}}>
+                <View style={{width:width/1.5,backgroundColor:'orange',height:60,justifyContent:'center',alignItems:'center'}}>
                         <Text style={{color:'white',fontWeight:'bold',fontSize:22}}>Exchange !</Text>
                 </View>
                 </TouchableHighlight>
@@ -301,7 +300,7 @@ class ModalComponent extends Component {
                                }}
                                keyboardType="numeric"
                                underlineColorAndroid='transparent'
-                               style={textInput}/>
+                               style={[textInput,{borderLeftWidth:1,borderColor:'orange'}]}/>
                 </View>
                 {this.handleContinuePlatform()}
                 <SafeAreaView >

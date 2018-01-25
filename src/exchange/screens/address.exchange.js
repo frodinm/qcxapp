@@ -11,6 +11,7 @@ import {
     TextInput,
     TouchableHighlight,
     KeyboardAvoidingView,
+    TouchableOpacity,
     Clipboard
 } from 'react-native';
 import {Button,Divider} from 'react-native-elements'
@@ -127,6 +128,10 @@ class AddressExchange extends Component {
             headerStyle: {
                 backgroundColor: 'orange',
             },
+            headerRight: <TouchableOpacity style={{flexDirection:'row',paddingRight:20,justifyContent:'center',alignItems:'center'}}>
+                <Text style={{paddingRight:10}}>Scan</Text>
+                <IconMaterial name="qrcode-scan" size={22}/>
+            </TouchableOpacity>,
             headerTitleStyle: {
                 alignSelf: 'center',
                 color: 'white',
@@ -155,18 +160,21 @@ class AddressExchange extends Component {
         return (
                 <KeyboardAvoidingView behavior="position" style={styles.container}>
                     <Text style={{textAlign:'center',fontSize:18,color:'black',fontWeight:'bold',marginBottom:50,marginTop:30}}>Enter the recipient's {state.params.toCoin.toUpperCase()} address {'\n'}(your {state.params.fromName} wallet) </Text>
-                    <View style={{flexDirection:'row', width: width,justifyContent: 'center',}}>
-                        <View style={{marginRight:10}}>
-                            {this.handlePlatform(()=>this.handleClipboard(),'fontAwsome','paste','Paste',styles.paste)}
-                        </View>
-                        {this.handlePlatform(()=>{navigate('Camera',{setAddress:(address)=>{this.handleSetAddress(address)}})},'material','qrcode-scan','Scan Qr',styles.qrCode,{marginLeft:10,})}
-                    </View>
-                    <View style={{width:width,alignItems:'center'}}>
-                        <Text style={{fontSize:20,color:'black',margin:5,marginTop:20}}>{"Send Address".toUpperCase()}</Text>
-                        <TextInput keyboardType="default" ref={'addressText'} onChangeText={(e)=>{this.handleSetAddress(e)}} placeholder={this.state.address} placeholderTextColor={'black'} style={{height:40,width:width/1.1,}}/>
+                    <View style={{width:width,alignItems:'center',height:'80%'}}>
+                        <Text style={{fontSize:18,color:'black',margin:5,marginTop:20}}>{"Send Address".toUpperCase()}</Text>
+                        <TextInput keyboardType="default" ref={'addressText'} onChangeText={(e)=>{this.handleSetAddress(e)}} placeholder="Address here"  style={{height:40,width:width/1.1,}}/>
                         {this.handleDivider()}
-                        {this.handlePlatform(()=>this.handleContinue(),'','','Continue',styles.continue,{height:60,width:width/1.2,marginTop:20,})}
+                        <Text style={{fontSize:18,color:'black',margin:5,marginTop:20}}>{"Refund Address".toUpperCase()}</Text>
+                        <TextInput keyboardType="default" ref={'refundAddressText'} onChangeText={(e)=>{this.handleSetAddress(e)}} placeholder="Refund Address here"  style={{height:40,width:width/1.1,}}/>
+                        {this.handleDivider()}
+                        <Text style={{fontSize:18,color:'black',margin:5,marginTop:20}}>{"Extra Id".toUpperCase()}</Text>
+                        <TextInput keyboardType="default" ref={'extraId'} onChangeText={(e)=>{this.handleSetAddress(e)}} placeholder="optional"  style={{height:40,width:width/1.1,}}/>
+                        {this.handleDivider()}
+                        <Text style={{fontSize:18,color:'black',margin:5,marginTop:20}}>{"Refund Extra Id".toUpperCase()}</Text>
+                        <TextInput keyboardType="default" ref={'extraIdRefund'} onChangeText={(e)=>{this.handleSetAddress(e)}} placeholder="optional"  style={{height:40,width:width/1.1,}}/>
+                        {this.handleDivider()}
                     </View>
+                    {this.handlePlatform(()=>this.handleContinue(),'','','Continue',styles.continue)}
                 </KeyboardAvoidingView>
         );
     }
@@ -177,7 +185,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        
+        backgroundColor:'#f1f1f1'
     },
     text: {
         color: '#fff',
@@ -187,12 +195,13 @@ const styles = StyleSheet.create({
     continue:{
         backgroundColor:'orange',//eventually cleanup the repetition
         height:60,
-        width:width/1.2,
+        width:width,
         alignItems:'center',
         justifyContent:'center',
         flexDirection:'row',
         overflow:'hidden',
-        
+        position:'absolute',
+        bottom:0
     },
     qrCode:{
         backgroundColor:'#4eb7ff',

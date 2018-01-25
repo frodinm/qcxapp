@@ -171,10 +171,13 @@ export class BuySellComponent extends Component {
   }
 
   handleUserOrders(){
-    const {quadrigaUserOrders,tradingBook} = this.props.trading;
+    const {quadrigaUserOrders,tradingBook,userOpenOrders,apiKey,clientId,secret} = this.props.trading;
     const {name} = this.props;
     if(quadrigaUserOrders.data.length === 0){
         return <Text style={{textAlign:'center',margin:30}}>{`Buy ${name} now \n and your orders will show here`}</Text>
+    }else if(quadrigaUserOrders.data.hasOwnProperty('error')){
+      let nonce = Date.now();
+      userOpenOrders(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,tradingBook)
     }else{
       return(
           quadrigaUserOrders.data.map((item,index)=>{
