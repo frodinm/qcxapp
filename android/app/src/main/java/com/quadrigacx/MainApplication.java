@@ -1,4 +1,4 @@
-package com.quadrigacx;
+package com.qcx;
 
 import android.app.Application;
 

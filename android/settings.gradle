@@ -1,4 +1,4 @@
-rootProject.name = 'quadrigacx'
+rootProject.name = 'qcx'
 include ':react-native-admob'
 project(':react-native-admob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-admob/android')
 include ':react-native-i18n'

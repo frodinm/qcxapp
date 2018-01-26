@@ -1,4 +1,4 @@
-package com.quadrigacx;
+package com.qcx;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "quadrigacx";
+        return "qcx";
     }
 }

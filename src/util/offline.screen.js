@@ -51,14 +51,17 @@ export class OfflineScreen extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <LottieView
-          style={styles.offlineLogo}
-          ref={animation => {
-          this.animation = animation;}}
-          source={require('../assets/animation/no_internet_connection.json')}  />
-        <Text style={styles.info}>
-            Internet is required to {'\n'} use this app
-        </Text>
+        <View style={{height: height/5,width: width/1.2,}}>
+          <LottieView
+            style={styles.offlineLogo}
+            ref={animation => {
+            this.animation = animation;}}
+            source={require('../assets/animation/no_internet_connection.json')} 
+            />
+            <Text style={styles.info}>
+            Unable to load.{"\n"}No Internet Connection 
+            </Text>
+          </View>
       </View>
 
     );
@@ -68,28 +71,26 @@ export class OfflineScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#686868'
+    backgroundColor: 'white',
+    alignItems:'center',
+    
   },
   info: {
-    fontWeight: 'bold',
-    fontSize: 22,
-    textAlign: 'center',
-    margin: 10,
-    color : '#FF670F'
-
+    textAlign:'center',
+    fontSize:20,
+    color:'orange'
   },
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  
   },
   textInput:{
     color:'#000'
   },
   offlineLogo:{
-    height: height/2.5,
+    height: height/2,
     width: width/1.2,
-    alignSelf:'center'
+   
+    
 
   }
 });

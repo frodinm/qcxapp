@@ -19,7 +19,7 @@ import {encryptAuthenticationQuadriga,resetNavigation} from 'util'
 import {iOSUIKit} from 'react-native-typography'
 import { Isao  } from 'react-native-textinput-effects';
 import {userLogin} from 'users'
-import ChangellyLogo from '../assets/img/logo.png'
+import ChangellyLogo from '../assets/img/quadrigacxlogo.png'
 import DropdownAlert from 'react-native-dropdownalert';
 import {
   postUserQuadrigaBalance,
@@ -118,10 +118,10 @@ class NewUser extends Component {
           />
           <Text style={[iOSUIKit.body,styles.text]}>{`Easily trade, deposit,\n and withdraw on QuadrigaCX`}</Text>
         </View>
-        <View style={styles.slide1}>
+        {/* <View style={styles.slide1}>
           <Image resizeMode="contain" source={ChangellyLogo} style={{height:100,width:250}}/>
           <Text style={[iOSUIKit.body,styles.text]}>{`Easy and fast exchange to any of the supported cryptocurrencies on Changelly `}</Text>
-        </View>
+        </View> */}
         <KeyboardAwareScrollView behavior={'padding'} style={styles.slide2}>
         <View style={{marginTop:20}}>
           <Isao

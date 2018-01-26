@@ -18,6 +18,7 @@ import {
     BuySellBTGScreen,
     BuySellLTCScreen,
     SettingsScreen,
+    SupportScreen
 } from 'account'
 import {
     ChangellyExchangeScreen,
@@ -221,6 +222,15 @@ export const InitialRouting = StackNavigator({
         screen:ExchangeWalletScreen,
         navigationOptions: {
             headerTintColor: 'black', 
+        }
+    },
+    Support:{
+        screen:SupportScreen,
+        navigationOptions: {
+            headerTintColor: 'black', 
+            headerStyle: {
+                backgroundColor: 'orange',
+            },
         }
     }
 },

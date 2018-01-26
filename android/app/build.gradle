@@ -118,7 +118,7 @@ android {
         jumboMode true
     }
     defaultConfig {
-        applicationId "com.quadrigacx"
+        applicationId "com.qcx"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1

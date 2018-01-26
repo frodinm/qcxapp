@@ -21,31 +21,35 @@ PODS:
   - CodePush/SSZipArchive (5.2.1):
     - React
   - Google-Mobile-Ads-SDK (7.27.0)
-  - React (0.51.0):
-    - React/Core (= 0.51.0)
-  - React/BatchedBridge (0.51.0):
+  - React (0.52.1):
+    - React/Core (= 0.52.1)
+  - React/BatchedBridge (0.52.1):
     - React/Core
     - React/cxxreact_legacy
-  - React/Core (0.51.0):
-    - yoga (= 0.51.0.React)
-  - React/cxxreact_legacy (0.51.0):
+  - React/Core (0.52.1):
+    - yoga (= 0.52.1.React)
+  - React/cxxreact_legacy (0.52.1):
     - React/jschelpers_legacy
-  - React/DevSupport (0.51.0):
+    - React/jsinspector_legacy
+  - React/DevSupport (0.52.1):
     - React/Core
     - React/RCTWebSocket
-  - React/fishhook (0.51.0)
-  - React/jschelpers_legacy (0.51.0)
-  - React/RCTBlob (0.51.0):
+  - React/fishhook (0.52.1)
+  - React/jschelpers_legacy (0.52.1)
+  - React/jsinspector_legacy (0.52.1)
+  - React/RCTBlob (0.52.1):
     - React/Core
-  - React/RCTWebSocket (0.51.0):
+  - React/RCTWebSocket (0.52.1):
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - React/tvOS (0.52.1):
+    - React/Core
   - ReactNativePermissions (1.0.6):
     - React
   - RNI18n (2.0.10):
     - React
-  - yoga (0.51.0.React)
+  - yoga (0.52.1.React)
 
 DEPENDENCIES:
   - AppCenter/Analytics (~> 1.1.0)
@@ -56,6 +60,7 @@ DEPENDENCIES:
   - React/BatchedBridge (from `../node_modules/react-native`)
   - React/Core (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
+  - React/tvOS (from `../node_modules/react-native`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -77,11 +82,11 @@ SPEC CHECKSUMS:
   AppCenterReactNativeShared: 76f8034b52ce0a9edcdb67b98f85e9790c813318
   CodePush: 9400969397b340ee26772b79fcadd1a48a0449dc
   Google-Mobile-Ads-SDK: 83f7f890e638ce8f1debd440ea363338c9f6be3b
-  React: 352f02f1db6e4744f9a758527e13e3fdefbbd6ba
+  React: b0beafe77b61535ee9dfc86f9a96c6f2b6904443
   ReactNativePermissions: bf462424ca7823d1b8e6cb463184d6e7f151971b
   RNI18n: cd4ddd958e326a2427b70f5474b3fb04aea793b2
-  yoga: b5d96400ca8b2936965a7a6516da7c1177f432a3
+  yoga: 25daf05f1bbaa33452c4c12640fb0d7bb6f99454
 
-PODFILE CHECKSUM: ffccd1e628800a1662a585e9ed2e9ae529b2472e
+PODFILE CHECKSUM: 9f4cbbab5da9040f4f94f3af3f8a4e1df0d3eef4
 
 COCOAPODS: 1.3.1
