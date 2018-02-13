@@ -50,12 +50,7 @@ export const UserReducer = (state = initialState, action) => {
       }
     case USER_SIGNOUT.SUCCESS:
       return {
-        ...state,
-        isLoggedIn: false,
-        isAuthenticate: false,
-        clientId: '',
-        apiKey: '',
-        privateKey:''
+        ...initialState
       }
     case USER_SIGNOUT.PENDING:
       return {

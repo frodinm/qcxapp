@@ -13,6 +13,7 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Clipboard,
+    Alert,
 } from 'react-native';
 import {connect} from 'react-redux'
 import { NavigationActions } from 'react-navigation'
@@ -20,6 +21,7 @@ import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons'
 import IconSimple from 'react-native-vector-icons/dist/SimpleLineIcons'
 import IconAwsome from 'react-native-vector-icons/dist/FontAwesome'
 import IconIOS from 'react-native-vector-icons/dist/Ionicons'
+import Permissions from 'react-native-permissions'
 import DropdownAlert from 'react-native-dropdownalert';
 
 import {
@@ -333,7 +335,7 @@ class Wallet extends Component {
     }
 
     handleWithdraw(){
-        const {acronym,address,amount} = this.state;
+        const {acronym,withdrawAddress,amount} = this.state;
         const {
             apiKey,
             clientId,
@@ -348,23 +350,23 @@ class Wallet extends Component {
         switch(acronym){
             case 'btc':
                 nonce = Date.now();
-                postUserBitcoinWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+                postUserBitcoinWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,withdrawAddress);
             break;
             case 'eth':
                 nonce = Date.now();
-                postUserEthereumWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+                postUserEthereumWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,withdrawAddress);
             break;
             case 'bch':
                 nonce = Date.now();
-                postUserBitcoinCashWalletWithdrawQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+                postUserBitcoinCashWalletWithdrawQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,withdrawAddress);
             break;
             case 'btg':
                 nonce = Date.now();
-                postUserBitcoinGoldWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+                postUserBitcoinGoldWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,withdrawAddress);
             break;
             case 'ltc':
                 nonce = Date.now();
-                postUserLitecoinWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,address);
+                postUserLitecoinWalletWithdrawQuadrigaDispatch(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,privateKey),nonce,amount,withdrawAddress);
             break;
 
         }
@@ -442,6 +444,48 @@ class Wallet extends Component {
        this.dropdown.alertWithType('info','Info', `Please go to the Quadriga tab to buy some ${name.toUpperCase()} !`)
     }
 
+    handleCamera(){
+        if(Platform.OS === 'ios'){
+            Permissions.check('camera').then(response => {
+                // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+                if(response.toString() !== 'authorized'){
+                    Alert.alert(
+                        'Camera Access',
+                        'Access needed to Scan Qr codes',
+                        [
+                        {
+                            text: 'Cancel',
+                            onPress: () => console.log('Cancel Pressed'),
+                            style: 'cancel',
+                        },
+                        {
+                            text: 'Open Settings',
+                            onPress: () => Permissions.openSettings(),
+                        },
+                        ]
+                    )
+                }else{
+                    this.props.navigation.navigate('Camera',{setAddress:(address)=>{this.setState({withdrawAddress:address})}})
+                }
+            })
+        }else{
+            Permissions.check('camera').then(response => {
+                // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+                if(response.toString() !== 'authorized'){
+                    Permissions.request('camera').then(response => {
+                        if(response.toString() === 'denied'){
+                            alert('Camera access needed for Scanning Qr codes')
+                        }else{
+                            this.props.navigation.navigate('Camera',{setAddress:(address)=>{this.setState({withdrawAddress:address})}})
+                        }
+                      })
+                }else{
+                    this.props.navigation.navigate('Camera',{setAddress:(address)=>{this.setState({withdrawAddress:address})}})
+                }
+            })
+        }
+       
+    }
 
     render() {
         const {quadrigaTickerBTC,quadrigaTickerETH} = this.props;
@@ -533,7 +577,7 @@ class Wallet extends Component {
                     keyboardTopOffset={0} 
                     >
                     <View style={{flexDirection:'column',alignItems:'center',width: width/1.1}}>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Camera',{setAddress:(address)=>{this.setState({withdrawAddress:address})}})} style={{position: 'absolute',top:20,left:30}}>
+                        <TouchableOpacity onPress={()=>this.handleCamera()} style={{position: 'absolute',top:20,left:30}}>
                             <IconIOS name="ios-qr-scanner" size={30}/>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={()=>this.refs.modalWithdraw.close()} style={{position: 'absolute',top:15,right:30}}>
@@ -541,7 +585,7 @@ class Wallet extends Component {
                         </TouchableOpacity>
                         <Text style={[iOSUIKit.title3,{marginTop:22}]}>Withdraw</Text>
                         <Text style={[iOSUIKit.body,{marginTop:22}]}>Address to send your {name}</Text>
-                        <TextInput onChangeText={(text)=>this.setState({address:text})} keyboardType="numeric" placeholder={'Address here'} style={styles.textInput}/>
+                        <TextInput onChangeText={(text)=>this.setState({withdrawAddress:text})} value={this.state.withdrawAddress} placeholder={'Address here'} style={styles.textInput}/>
                         <Text style={[iOSUIKit.body,{marginTop:22}]}>Amount to send</Text>
                         <TextInput onChangeText={(text)=>this.setState({amount:text})} keyboardType="numeric" placeholder={'Amount here'} style={styles.textInput}/>
                         <Button onPress={()=>this.refs.modalConfirmWithdraw.open()} title="Withdraw!" containerViewStyle={{position:'relative',top:25,width:150,height:50,}} buttonStyle={{backgroundColor:'orange'}}/>

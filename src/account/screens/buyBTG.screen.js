@@ -98,9 +98,8 @@ class BuySellBTG extends Component {
 
     
     componentWillMount(){
-      const {getQuadrigaOrdersDispatch,setTradingBookDispatch} = this.props;
+      const {setTradingBookDispatch} = this.props;
       clearQuadrigaTickers();
-      getQuadrigaOrdersDispatch("btg_cad",0)
       setTradingBookDispatch('btg_cad')
     }
   

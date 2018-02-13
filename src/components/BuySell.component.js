@@ -540,22 +540,22 @@ handleFromAvailableAmount(){
         <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalCancelOrder"}>
           <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your cancel</Text>
           <View style={{flexDirection:'row'}}>
-              <Button onPress={()=>this.refs.modalCancelOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
-              <Button onPress={()=>this.confirmCancelOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.refs.modalCancelOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.confirmCancelOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/2.5,opacity:1}}/>
           </View>
         </Modal>
         <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalBuyOrder"}>
           <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your buy order</Text>
           <View style={{flexDirection:'row'}}>
-              <Button onPress={()=>this.refs.modalBuyOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
-              <Button onPress={()=>this.confirmBuyOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.refs.modalBuyOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.confirmBuyOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/2.5,opacity:1}}/>
           </View>
         </Modal>
         <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalSellOrder"}>
           <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your sell order</Text>
           <View style={{flexDirection:'row'}}>
-              <Button onPress={()=>this.refs.modalSellOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
-              <Button onPress={()=>this.confirmSellOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.refs.modalSellOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/2.5,opacity:1}}/>
+              <Button onPress={()=>this.confirmSellOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/2.5,opacity:1}}/>
           </View>
         </Modal>
         <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />

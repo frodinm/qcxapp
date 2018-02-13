@@ -16,6 +16,7 @@ import {connect} from 'react-redux'
 import {resetNavigation} from 'util'
 import {setPin} from 'users'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import SplashScreen from 'react-native-splash-screen';
 
 const {height,width} = Dimensions.get('window')
 const pinRef = null;
@@ -54,7 +55,6 @@ class AuthPincode extends Component {
   }
   componentDidMount(){
    this.refs.pin1.focus();
-  
   }
 
   componentWillUnmount(){
@@ -179,6 +179,7 @@ class AuthPincode extends Component {
   render() {
     return (
       <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"} >
+        <View style={{position:'relative',bottom:50,alignItems:'center'}}>
           <Text style={{fontSize:18,color:'orange',marginBottom:50}}> Please enter your PIN</Text>
           <View style={{flexDirection:'row'}}>
             <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
@@ -186,6 +187,7 @@ class AuthPincode extends Component {
             <Animatable.View  useNativeDriver={true}  ref="view3" style={this.handlePin3Style()} />
             <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
             </View>
+        </View>
           <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
       </KeyboardAwareScrollView>
     );

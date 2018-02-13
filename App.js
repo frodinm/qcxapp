@@ -84,7 +84,7 @@ class App extends Component {
     if(this.state.connection === false){
       return <OfflineScreen/>
     }else if(this.state.isRehydrated === false){
-      return <Text>Loading</Text>
+      return null;
     } else{
       return  <Provider store={configuredStore}>
         <InitialRouting/>

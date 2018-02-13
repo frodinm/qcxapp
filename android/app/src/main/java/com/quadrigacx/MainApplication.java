@@ -1,6 +1,7 @@
 package com.qcx;
 
 import android.app.Application;
+import android.os.Bundle;
 
 import com.facebook.react.ReactApplication;
 import com.sbugert.rnadmob.RNAdMobPackage;

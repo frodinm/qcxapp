@@ -45,7 +45,7 @@ PODS:
     - React/RCTBlob
   - React/tvOS (0.52.1):
     - React/Core
-  - ReactNativePermissions (1.0.6):
+  - ReactNativePermissions (1.1.1):
     - React
   - RNI18n (2.0.10):
     - React
@@ -83,7 +83,7 @@ SPEC CHECKSUMS:
   CodePush: 9400969397b340ee26772b79fcadd1a48a0449dc
   Google-Mobile-Ads-SDK: 83f7f890e638ce8f1debd440ea363338c9f6be3b
   React: b0beafe77b61535ee9dfc86f9a96c6f2b6904443
-  ReactNativePermissions: bf462424ca7823d1b8e6cb463184d6e7f151971b
+  ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNI18n: cd4ddd958e326a2427b70f5474b3fb04aea793b2
   yoga: 25daf05f1bbaa33452c4c12640fb0d7bb6f99454
 

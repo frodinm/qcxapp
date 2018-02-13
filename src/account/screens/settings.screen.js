@@ -22,6 +22,7 @@ import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons'
 import IconAwsome from 'react-native-vector-icons/dist/FontAwesome'
 import IconIOS from 'react-native-vector-icons/dist/Ionicons'
 import DropdownAlert from 'react-native-dropdownalert';
+import Modal from 'react-native-modalbox';
 import {
     AdMobBanner,
   } from 'react-native-admob'
@@ -36,8 +37,8 @@ import {
     postChangellyAddressPair
 } from 'exchange'
 import {
+    signOutAcccount,
     getQuadrigaTickers,
-    clearQuadrigaTickers,
     postUserQuadrigaTransactions,
     postUserLookupOrderQuadriga,
     postUserBitcoinWalletWithdrawQuadriga,
@@ -47,12 +48,14 @@ import {
     postUserBitcoinCashWalletWithdrawQuadriga,
     postUserQuadrigaBalanceAndTransactions
 } from 'account';
+import {
+    userLogOut
+} from 'users'
 import i18n from 'i18n'
 import {resetNavigation} from 'util'
 import QRCode from 'react-native-qrcode';
 import { iOSUIKit } from 'react-native-typography'
 import {Divider,Button} from 'react-native-elements'
-import Modal from 'react-native-modalbox';
 import {encryptAuthenticationQuadriga} from 'util';
 
 const {height, width} = Dimensions.get('window');
@@ -70,8 +73,14 @@ const mapStateToProps = (state) => ({
     
 })
 const mapDispatchToProps = (dispatch) => ({
-    
+    userLogOutDispatch: ()=>dispatch(userLogOut()),
+    signOutAcccountDispatch: ()=>dispatch(signOutAcccount()),
 })
+
+const resetAction = NavigationActions.reset({
+    index: 0,
+    actions: [NavigationActions.navigate({ routeName: 'App' })],
+  });
 
 
 class Settings extends Component {
@@ -171,6 +180,25 @@ class Settings extends Component {
         )
         
     }
+
+     handleResetNav = {
+       resetNav:()=>{return new Promise((resolve,reject)=>{
+            resolve(this.props.navigation.dispatch(resetAction));
+        })},
+        userLogOut: ()=>{return new Promise((resolve,reject)=>{
+            resolve(this.props.userLogOutDispatch());
+        })}
+    }
+
+    handleSignOut(){
+        const {signOutAcccountDispatch} = this.props;
+        
+        this.handleResetNav.userLogOut().then(()=>{
+            this.handleResetNav.resetNav().then(()=>{
+                signOutAcccountDispatch();
+            });
+        });
+    }
    
 
     handleWithdrawAlert(){
@@ -179,21 +207,19 @@ class Settings extends Component {
 
     handleShare(){
         Share.share({
-         message: "Check out this free app called Qcx, it lets you conveniently trade on your QuadrigaCX account.",
-         title: "Qcx - Trade, deposit and withdraw securely on QuadrigaCX"   
+         message: "Check out this free app called Qcx : https://play.google.com/store/apps/details?id=com.qcx&hl=en, it lets you conveniently trade on your QuadrigaCX account.",
+         title: "Qcx - Trade, deposit and withdraw securely on QuadrigaCX",
         })
     }
 
     render() {
-        
         return(
             <View style={styles.container}>
                     <Text style={{color:'black',margin:15,marginTop:25}}>APP</Text>
                     <Divider style={{height:1,backgroundColor:'orange',width:width/1.1,alignSelf:'center'}}/>
-                    {this.handlePlatform('Reset pin code')}
                     {this.handlePlatform('Support',()=>{this.props.navigation.navigate('Support')})}
                     {this.handlePlatform('Share Qcx',()=>this.handleShare(),{})}
-                    {this.handlePlatform('Sign Out',()=>{},{color:'red'})}
+                    {this.handlePlatform('Sign Out',()=>this.refs.modalSignout.open(),{color:'red'})}
                     <View style={{position:'absolute',bottom:0,width:width}}>
                         <AdMobBanner
                     adSize="smartBannerLandscape"
@@ -202,6 +228,13 @@ class Settings extends Component {
                     onAdFailedToLoad={error => console.error(error)} 
                     />
                     </View>
+                    <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalSignout"}>
+                        <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Are you sure you want to sign out?</Text>
+                        <View style={{flexDirection:'row'}}>
+                            <Button onPress={()=>this.refs.modalSignout.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/3,opacity:1}}/>
+                            <Button onPress={()=>this.handleSignOut()} title="SignOut" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/3,opacity:1}}/>
+                        </View>
+                    </Modal>
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
             </View>
             )
@@ -217,8 +250,9 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#000',
-        fontSize: 30,
+        fontSize: 16,
         fontWeight: 'bold',
+        marginBottom:10
     },
     modal: {
         justifyContent: 'center',
@@ -270,7 +304,7 @@ const styles = StyleSheet.create({
         marginTop:15,
       },
     modalConfirm: {
-        height: height/7,
+        height: height/8,
         backgroundColor: '#007aff',
         opacity:0.95
       },

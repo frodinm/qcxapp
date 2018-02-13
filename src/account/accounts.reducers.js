@@ -1,4 +1,5 @@
 import {
+  SIGN_OUT_ACCOUNT,
   SET_TRADING_BOOK,
   GET_QUADRIGA_TICKER_BTC,
   GET_QUADRIGA_TICKER_ETH,
@@ -576,6 +577,10 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         tradingBook: action.payload,
+      }
+    case SIGN_OUT_ACCOUNT.SUCCESS:
+      return{
+        ...initialState
       }
     default:
       return state

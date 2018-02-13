@@ -93,9 +93,8 @@ class BuySellBTC extends Component {
         }
     };
     componentWillMount(){
-      const {getQuadrigaOrdersDispatch,setTradingBookDispatch} = this.props;
+      const {setTradingBookDispatch} = this.props;
       clearQuadrigaTickers();
-      getQuadrigaOrdersDispatch("btc_cad",0)
       setTradingBookDispatch('btc_cad')
     }
   

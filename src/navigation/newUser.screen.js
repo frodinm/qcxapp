@@ -21,6 +21,7 @@ import { Isao  } from 'react-native-textinput-effects';
 import {userLogin} from 'users'
 import ChangellyLogo from '../assets/img/quadrigacxlogo.png'
 import DropdownAlert from 'react-native-dropdownalert';
+import SplashScreen from 'react-native-splash-screen';
 import {
   postUserQuadrigaBalance,
 } from 'account'
@@ -62,6 +63,7 @@ class NewUser extends Component {
         }else if(pin != ''){
           resetNavigation( 'AuthPin',navigation)
         }
+        SplashScreen.hide();
       }
 
     handleLoginAlert(){

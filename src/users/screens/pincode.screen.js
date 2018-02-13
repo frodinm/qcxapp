@@ -8,7 +8,9 @@ import {
   TextInput,
   ScrollView,
   Dimensions,
-  Switch
+  Switch,
+  TouchableNativeFeedback,
+  TouchableHighlight
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {Button} from 'react-native-elements'
@@ -17,6 +19,7 @@ import {setTempPin} from 'users'
 import {resetNavigation} from 'util'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import DropdownAlert from 'react-native-dropdownalert';
+import SplashScreen from 'react-native-splash-screen';
 import {
   getQuadrigaTickerBTC,
   getQuadrigaTickerETH,
@@ -73,6 +76,37 @@ class Pincode extends Component {
   componentWillUnmount(){
     
   }
+
+  handlePlatform(onPressAction,buttonStyle,text){
+    if(Platform.OS === 'android'){
+        if(TouchableNativeFeedback.canUseNativeForeground()){
+            return(
+                <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0} style={{height:40,width:width/2.3,margin:5,marginBottom:10,borderRadius:buttonStyle.borderRadius}}>
+                <View style={{...buttonStyle,justifyContent:'center'}} pointerEvents='box-only' >
+                <Text style={{textAlign:'center',fontSize:17,color:'white'}}>{text}</Text>
+                </View>
+            </TouchableNativeFeedback>
+            )
+        }else{
+            return(
+                <TouchableHighlight style={{...buttonStyle,borderRadius:buttonStyle.borderRadius}} onPress={onPressAction} >
+                  <View style={{...buttonStyle,justifyContent:'center'}} pointerEvents='box-only' >
+                  <Text style={{textAlign:'center',fontSize:17,color:'white'}}>{text}</Text>
+                  </View>
+              </TouchableHighlight>
+              )
+        }
+    }else{
+      return(
+        <TouchableHighlight style={{...buttonStyle,borderRadius:buttonStyle.borderRadius}} onPress={onPressAction} >
+          <View style={{...buttonStyle,justifyContent:'center'}} pointerEvents='box-only' >
+          <Text style={{textAlign:'center',fontSize:17,color:'white'}}>{text}</Text>
+          </View>
+        </TouchableHighlight>
+      )
+    }
+  }
+
   handleClick(){
     const {navigation,setPinDispatch} = this.props;
     if(this.state.pinAuth.length === 4) {
@@ -184,15 +218,7 @@ class Pincode extends Component {
             <Animatable.View  useNativeDriver={true}  ref="view3" style={this.handlePin3Style()} />
             <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
       </View>
-      <Button
-      raised
-      large
-      buttonStyle={{backgroundColor:'black',zIndex:5}}
-      borderRadius={30}
-    
-      color={'orange'}
-      title='   Confirm   '
-      onPress={()=>this.handleClick()}/>
+      {this.handlePlatform(()=>this.handleClick(),{backgroundColor:'orange',zIndex:5,borderRadius:5,height:60,width:120},'  Confirm   ')}
       <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
       <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
   </KeyboardAwareScrollView>

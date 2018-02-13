@@ -102,7 +102,7 @@ class QuadrigaExchange extends Component {
 
     }
 
-
+    
     handleGetBalance() {
         const {postUserQuadrigaBalanceDispatch,apiKey,clientId,privateKey} = this.props;
         const nonce = Date.now();

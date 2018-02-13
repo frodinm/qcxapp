@@ -1,5 +1,6 @@
 import { 
   USER_AUTH,
+  USER_SIGNOUT,
   USER_SETPIN,
   USER_SET_TEMP_PIN,
   USER_SET_FIRST_TIME
@@ -36,6 +37,13 @@ export const userLogin = (clientId,apiKey,privateKey) => {
         apikey:apiKey,
         privateKey:privateKey
       }})
+  }
+}
+
+export const userLogOut = () => {
+  return dispatch => {
+      dispatch({type:USER_SIGNOUT.PENDING})
+      dispatch({type:USER_SIGNOUT.SUCCESS})
   }
 }
 

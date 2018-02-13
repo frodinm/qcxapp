@@ -1,4 +1,5 @@
 import {
+  SIGN_OUT_ACCOUNT,
   SET_TRADING_BOOK,
   GET_QUADRIGA_TICKER_BTC,
   GET_QUADRIGA_TICKER_ETH,
@@ -57,6 +58,13 @@ import {
 import {encryptAuthenticationQuadriga} from 'util'
 
 let interval;
+
+export const signOutAcccount = () =>{
+  clearQuadrigaTickers();
+  return dispatch=>{
+    dispatch({type:SIGN_OUT_ACCOUNT.SUCCESS})
+  }
+}
 
 export const setTradingBook = (tradingBook) =>{
     return dispatch =>{
@@ -190,20 +198,26 @@ export const clearQuadrigaTickers = ()=>{
 export const postUserQuadrigaBalanceAndOpenOrders = (apiKey,clientId,secret,tradingBook) =>{
     let nonce;
      return dispatch => {
-    dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
-    nonce = Date.now();
-    postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response) => {
-      dispatch({type: POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
-      dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
-      nonce = Date.now();
-      postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,tradingBook).then((response) => {
-        dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+      dispatch({type: GET_QUADRIGA_ORDERS.PENDING})
+      getOrderBookQuadriga(tradingBook,0).then((response) => {
+        dispatch({type: GET_QUADRIGA_ORDERS.SUCCESS, payload: response})
+        dispatch({type: POST_USER_QUADRIGA_BALANCE.PENDING})
+        nonce = Date.now();
+        postBalanceQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce).then((response) => {
+          dispatch({type: POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response})
+          dispatch({type: POST_USER_QUADRIGA_ORDERS.PENDING})
+          nonce = Date.now();
+          postOpenOrdersQuadriga(apiKey,encryptAuthenticationQuadriga(nonce,clientId,apiKey,secret),nonce,tradingBook).then((response) => {
+            dispatch({type: POST_USER_QUADRIGA_ORDERS.SUCCESS, payload: response})
+          }).catch((error) => {
+            dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+          })
+        }).catch((error) => {
+          dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
+        })
       }).catch((error) => {
-        dispatch({type: POST_USER_QUADRIGA_ORDERS.ERROR, payload: error})
+        dispatch({type: GET_QUADRIGA_ORDERS.ERROR, payload: error})
       })
-    }).catch((error) => {
-      dispatch({type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error})
-    })
   }
 }
 
