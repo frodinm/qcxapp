@@ -25,11 +25,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>5</string>
 	<key>CodePushDeploymentKey</key>
 	<string>x-E1r9067dGUqu9SSSWsY4IOOZL-rkfsuIN7f</string>
 	<key>LSApplicationCategoryType</key>
@@ -47,10 +47,20 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Reason for accessing</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Reason for accessing</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Reason for accessing</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access needed to scan qr codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Reason for accessing</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Reason for accessing</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Reason for accessing</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -66,8 +76,6 @@
 		<string>Zocial.ttf</string>
 		<string>fontello.ttf</string>
 	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

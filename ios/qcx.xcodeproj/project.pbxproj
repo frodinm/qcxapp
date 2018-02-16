@@ -13,12 +13,13 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* qcxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* qcxTests.m */; };
-		078071D42018C78300CF02C3 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
-		078072072018C78C00CF02C3 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 078072082018C78C00CF02C3 /* libReact.a */; };
 		07894F36202F84D300D401F4 /* Asset 13xxxhdpi.png in Resources */ = {isa = PBXBuildFile; fileRef = 07894F35202F84D300D401F4 /* Asset 13xxxhdpi.png */; };
 		07894F37202F84D300D401F4 /* Asset 13xxxhdpi.png in Resources */ = {isa = PBXBuildFile; fileRef = 07894F35202F84D300D401F4 /* Asset 13xxxhdpi.png */; };
 		079F1A741FF65747008C850A /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; };
 		079F1A751FF65747008C850A /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		07FC4C2D20365602007BA52E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		07FC4C3220369503007BA52E /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07FC4C3320369503007BA52E /* libReact.a */; };
+		07FC4C342036950A007BA52E /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -29,7 +30,6 @@
 		17445160850F4257A1E1B8C3 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4836CEFC2814C6EA97B5FFD /* Feather.ttf */; };
 		2A80BCE4F1764B79A0650A73 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71158AA777E94A42B8C4A27B /* libReactNativePermissions.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4C21E0B4AEC006451C7 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		2D02E4C31E0B4AEC006451C7 /* libRCTImage-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */; };
@@ -527,6 +527,8 @@
 		079F1A2B1FF6573C008C850A /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
 		07DF2E8C2005924800138CCF /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNI18n.xcodeproj; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; };
+		07FC4C3020367EF7007BA52E /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		07FC4C3320369503007BA52E /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AD0F8CC1A794024889E0E64 /* AppCenter-Config.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "qcx/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		0C01DB47BEC34412B4507831 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -611,8 +613,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				078072072018C78C00CF02C3 /* libReact.a in Frameworks */,
-				078071D42018C78300CF02C3 /* libRCTWebSocket.a in Frameworks */,
+				07FC4C342036950A007BA52E /* libRCTWebSocket.a in Frameworks */,
+				07FC4C3220369503007BA52E /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				079F1A741FF65747008C850A /* Lottie.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -1057,6 +1059,8 @@
 		F3567FD9401C545F8300BC19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07FC4C3320369503007BA52E /* libReact.a */,
+				07FC4C3020367EF7007BA52E /* libReact.a */,
 				078072082018C78C00CF02C3 /* libReact.a */,
 				07DF2E8C2005924800138CCF /* libReact.a */,
 				07ED04A31FF7543400A9D959 /* RNI18n.xcodeproj */,
@@ -1746,6 +1750,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				07894F37202F84D300D401F4 /* Asset 13xxxhdpi.png in Resources */,
+				07FC4C2D20365602007BA52E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1776,7 +1781,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2166,6 +2170,7 @@
 			baseConfigurationReference = 51D2DB81AADBD9BED310E87B /* Pods-qcx.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = DXVK95TC7H;
@@ -2187,7 +2192,7 @@
 					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = qcx/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2205,6 +2210,7 @@
 			baseConfigurationReference = B52BEED6AC3A5051466559EB /* Pods-qcx.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DXVK95TC7H;
@@ -2226,7 +2232,7 @@
 					"$(SRCROOT)/../node_modules/react-native-admob/ios",
 				);
 				INFOPLIST_FILE = qcx/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
