@@ -33,10 +33,10 @@ export class ButtonComponent extends Component {
                     <Text>Vmap </Text>
                   </View>
                   <View style={{flexDirection:'column'}}>
-                    <Text style={iOSUIKit.caption}>{tokenData.data.high}</Text>
-                    <Text style={iOSUIKit.caption}>{tokenData.data.low}</Text>
-                    <Text style={iOSUIKit.caption}>{tokenData.data.last}</Text>
-                    <Text style={iOSUIKit.caption}>{parseFloat(tokenData.data.vwap).toFixed(2)}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
+                    <Text style={iOSUIKit.caption}>{parseFloat(tokenData.vwap).toFixed(2)}</Text>
                   </View>
                 </View>
               </View>
@@ -56,10 +56,10 @@ export class ButtonComponent extends Component {
                     <Text>Vmap </Text>
                   </View>
                   <View style={{flexDirection:'column'}}>
-                    <Text style={iOSUIKit.caption}>{tokenData.data.high}</Text>
-                    <Text style={iOSUIKit.caption}>{tokenData.data.low}</Text>
-                    <Text style={iOSUIKit.caption}>{tokenData.data.last}</Text>
-                    <Text style={iOSUIKit.caption}>{parseFloat(tokenData.data.vwap).toFixed(2)}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
+                    <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
+                    <Text style={iOSUIKit.caption}>{parseFloat(tokenData.vwap).toFixed(2)}</Text>
                   </View>
                 </View>
               </View>
@@ -81,10 +81,10 @@ export class ButtonComponent extends Component {
                 <Text>Vmap </Text>
               </View>
               <View style={{flexDirection:'column'}}>
-                <Text style={iOSUIKit.caption}>{tokenData.data.high}</Text>
-                <Text style={iOSUIKit.caption}>{tokenData.data.low}</Text>
-                <Text style={iOSUIKit.caption}>{tokenData.data.last}</Text>
-                <Text style={iOSUIKit.caption}>{parseFloat(tokenData.data.vwap).toFixed(2)}</Text>
+                <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
+                <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
+                <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
+                <Text style={iOSUIKit.caption}>{parseFloat(tokenData.vwap).toFixed(2)}</Text>
               </View>
             </View>
           </View>

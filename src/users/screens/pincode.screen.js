@@ -21,11 +21,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import DropdownAlert from 'react-native-dropdownalert';
 import SplashScreen from 'react-native-splash-screen';
 import {
-  getQuadrigaTickerBTC,
-  getQuadrigaTickerETH,
-  getQuadrigaTickerBCH,
-  getQuadrigaTickerBTG,
-  getQuadrigaTickerLTC,
+  getQuadrigaTickersAllAtPin,
   getQuadrigaTransactions
 } from 'account'
 import {setPin} from 'users'
@@ -49,7 +45,7 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = (dispatch) => ({
   setPinDispatch : (pin) => dispatch(setPin(pin)),
-  getQuadrigaTickerDispatch: (ticker) =>{dispatch(getQuadrigaTickerBTC());dispatch(getQuadrigaTickerETH());dispatch(getQuadrigaTickerBCH());dispatch(getQuadrigaTickerBTG());dispatch(getQuadrigaTickerLTC())},
+  getQuadrigaTickersDispatch: () =>dispatch(getQuadrigaTickersAllAtPin()),
   getQuadrigaTransactionsDispatch: (book,time)=>{dispatch(getQuadrigaTransactions(book,time))},
 })
 
@@ -67,9 +63,9 @@ class Pincode extends Component {
     this.handlePinReference = this.handlePinReference.bind(this);
   }
   componentDidMount(){
-    const {getQuadrigaTickerDispatch,getQuadrigaTransactionsDispatch} = this.props;
+    const {getQuadrigaTickersDispatch,getQuadrigaTransactionsDispatch} = this.props;
     this.refs.pin1.focus();
-    getQuadrigaTickerDispatch();
+    getQuadrigaTickersDispatch();
     getQuadrigaTransactionsDispatch("btc_cad","hour");
   }
 

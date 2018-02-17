@@ -17,7 +17,7 @@ import fontelloConfig from '../../assets/config';
 const Icon = createIconSetFromFontello(fontelloConfig);
 
 import {
-  getQuadrigaTickers,
+  getQuadrigaTickersAll,
   clearQuadrigaTickers,
   setTradingBook,
   getQuadrigaOrders,
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => ({
   quadrigaUserOrdersLookup: state.account.quadrigaUserOrdersLookup,
 })
 const mapDispatchToProps = (dispatch) => ({
-  getQuadrigaTickersDispatch: ()=>{dispatch(getQuadrigaTickers())},
+  getQuadrigaTickersDispatch: ()=>{dispatch( getQuadrigaTickersAll())},
   setTradingBookDispatch:(book)=>{dispatch(setTradingBook(book))},
   getQuadrigaOrdersDispatch:(book,group)=>{dispatch(getQuadrigaOrders(book,group))},
   postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))},

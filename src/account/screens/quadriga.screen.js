@@ -15,7 +15,7 @@ import {connect} from 'react-redux'
 import {encryptAuthenticationQuadriga} from 'util'
 
 import {
-    getQuadrigaTickers,
+    getQuadrigaTickersAll,
     postUserQuadrigaBalance,
     postUserOpenOrdersQuadriga
 } from 'account'
@@ -32,11 +32,7 @@ const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
     clientId:state.user.clientId,
     privateKey:state.user.privateKey,
-    quadrigaTickerBTC: state.account.quadrigaTickerBTC,
-    quadrigaTickerETH: state.account.quadrigaTickerETH,
-    quadrigaTickerBCH: state.account.quadrigaTickerBCH,
-    quadrigaTickerBTG: state.account.quadrigaTickerBTG,
-    quadrigaTickerLTC: state.account.quadrigaTickerLTC,
+    quadrigaTickers: state.account.quadrigaTickers,
     quadrigaTransactions: state.account.quadrigaTransactions,
     quadrigaUserBalance: state.account.quadrigaUserBalance
 })
@@ -47,7 +43,8 @@ const mapDispatchToProps = (dispatch) => ({
     },
     postUserOpenOrdersQuadrigaDispatch: (key, sign, nonce) => {
         dispatch(postUserOpenOrdersQuadriga(key, sign, nonce))
-    }
+    },
+    getQuadrigaTickersAllDispatch: ()=>{dispatch(getQuadrigaTickersAll())}
 })
 
 
@@ -64,39 +61,40 @@ class QuadrigaExchange extends Component {
 
     }
     componentWillMount() {
-        const {getQuadrigaTickersDispatch} = this.props;
-        getQuadrigaTickersDispatch();
+        const {getQuadrigaTickersAllDispatch} = this.props;
+        getQuadrigaTickersAllDispatch();
+        console.log(this.props.quadrigaTickers)
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.quadrigaTickerBTC.data.last != this.props.quadrigaTickerBTC.data.last) {
-            this.props.navigation.setParams({btcTicker: `${Math.round(nextProps.quadrigaTickerBTC.data.last)} `});
+        if (nextProps.quadrigaTickers.data.btc_cad.last != this.props.quadrigaTickers.data.btc_cad.last) {
+            this.props.navigation.setParams({btcTicker: `${Math.round(nextProps.quadrigaTickers.data.btc_cad.last)} `});
         }
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if (nextProps.quadrigaTickerBTC.data.last > this.props.quadrigaTickerBTC.data.last) {
+        if (nextProps.quadrigaTickers.data.btc_cad.last > this.props.quadrigaTickers.data.btc_cad.last) {
             colorChangeBTC = '#b2d8b2'
-        } else if (nextProps.quadrigaTickerBTC.data.last < this.props.quadrigaTickerBTC.data.last) {
+        } else if (nextProps.quadrigaTickers.data.btc_cad.last < this.props.quadrigaTickers.data.btc_cad.last) {
             colorChangeBTC = '#ff9999'
         }
-        if (nextProps.quadrigaTickerETH.data.last > this.props.quadrigaTickerETH.data.last) {
+        if (nextProps.quadrigaTickers.data.eth_cad.last > this.props.quadrigaTickers.data.eth_cad.last) {
             colorChangeETH = '#b2d8b2'
-        } else if (nextProps.quadrigaTickerETH.data.last < this.props.quadrigaTickerETH.data.last) {
+        } else if (nextProps.quadrigaTickers.data.eth_cad.last < this.props.quadrigaTickers.data.eth_cad.last) {
             colorChangeETH = '#ff9999'
         }
-        if (nextProps.quadrigaTickerBCH.data.last > this.props.quadrigaTickerBCH.data.last) {
+        if (nextProps.quadrigaTickers.data.bch_cad.last > this.props.quadrigaTickers.data.bch_cad.last) {
             colorChangeBCH = '#b2d8b2'
-        } else if (nextProps.quadrigaTickerBCH.data.last < this.props.quadrigaTickerBCH.data.last) {
+        } else if (nextProps.quadrigaTickers.data.bch_cad.last < this.props.quadrigaTickers.data.bch_cad.last) {
             colorChangeBCH = '#ff9999'
         }
-        if (nextProps.quadrigaTickerBTG.data.last > this.props.quadrigaTickerBTG.data.last) {
+        if (nextProps.quadrigaTickers.data.btg_cad.last > this.props.quadrigaTickers.data.btg_cad.last) {
             colorChangeBTG = '#b2d8b2'
-        } else if (nextProps.quadrigaTickerBTG.data.last < this.props.quadrigaTickerBTG.data.last) {
+        } else if (nextProps.quadrigaTickers.data.btg_cad.last < this.props.quadrigaTickers.data.btg_cad.last) {
             colorChangeBTG = '#ff9999'
         }
-        if (nextProps.quadrigaTickerLTC.data.last > this.props.quadrigaTickerLTC.data.last) {
+        if (nextProps.quadrigaTickers.data.ltc_cad.last > this.props.quadrigaTickers.data.ltc_cad.last) {
             colorChangeLTC = '#b2d8b2'
-        } else if (nextProps.quadrigaTickerLTC.data.last < this.props.quadrigaTickerLTC.data.last) {
+        } else if (nextProps.quadrigaTickers.data.ltc_cad.last < this.props.quadrigaTickers.data.ltc_cad.last) {
             colorChangeLTC = '#ff9999'
         }
 
@@ -174,7 +172,7 @@ class QuadrigaExchange extends Component {
     };
 
     render() {
-        const {quadrigaTransactions, quadrigaTickerBTC, quadrigaTickerETH, quadrigaTickerBCH, quadrigaTickerBTG, quadrigaTickerLTC} = this.props;
+        const {quadrigaTransactions,quadrigaTickers} = this.props;
         return (
             <ScrollView style={{height: height, width: width, backgroundColor: '#fff', flex: 1}}>
                 <StatusBar
@@ -184,8 +182,8 @@ class QuadrigaExchange extends Component {
                 <ScrollView contentContainerStyle={styles.container}>
                     <Modules colorBTC={colorChangeBTC} colorETH={colorChangeETH} colorBCH={colorChangeBCH}
                              colorBTG={colorChangeBTG} colorLTC={colorChangeLTC} navigation={this.props.navigation}
-                             dataBTC={quadrigaTickerBTC} dataETH={quadrigaTickerETH} dataBCH={quadrigaTickerBCH}
-                             dataBTG={quadrigaTickerBTG} dataLTC={quadrigaTickerLTC}
+                             dataBTC={quadrigaTickers.data.btc_cad} dataETH={quadrigaTickers.data.eth_cad} dataBCH={quadrigaTickers.data.bch_cad}
+                             dataBTG={quadrigaTickers.data.btg_cad} dataLTC={quadrigaTickers.data.ltc_cad}
                              />
                     <TransactionView data={quadrigaTransactions}/>
                 </ScrollView>

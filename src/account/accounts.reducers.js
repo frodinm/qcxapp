@@ -1,6 +1,7 @@
 import {
   SIGN_OUT_ACCOUNT,
   SET_TRADING_BOOK,
+  GET_QUADRIGA_TICKERS,
   GET_QUADRIGA_TICKER_BTC,
   GET_QUADRIGA_TICKER_ETH,
   GET_QUADRIGA_TICKER_BCH,
@@ -84,97 +85,25 @@ const initialState = {
   quadrigaUserBitcoinGoldWallet:null,
   quadrigaUserLitecoinWallet:null,
   userWallets:[],
-  quadrigaTickerBTC: null,
-  quadrigaTickerLTC:null,
-  quadrigaTickerBCH:null,
-  quadrigaTickerETH:null,
-  quadrigaTickerBTG:null,
+  quadrigaTickers: null,
   tradingBook: '',
   error: null,
 }
 
 export const AccountReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_QUADRIGA_TICKER_BTC.PENDING:
+      case GET_QUADRIGA_TICKERS.PENDING:
       return {
         ...state,
         isGettingQuadrigaTicker: true,
       }
-    case GET_QUADRIGA_TICKER_BTC.SUCCESS:
+    case GET_QUADRIGA_TICKERS.SUCCESS:
       return {
         ...state,
         isGettingQuadrigaTicker: false,
-        quadrigaTickerBTC: action.payload,
+        quadrigaTickers: action.payload,
       }
-    case GET_QUADRIGA_TICKER_BTC.ERROR:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        error: action.payload,
-      }
-      case GET_QUADRIGA_TICKER_ETH.PENDING:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: true,
-      }
-    case GET_QUADRIGA_TICKER_ETH.SUCCESS:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        quadrigaTickerETH: action.payload,
-      }
-    case GET_QUADRIGA_TICKER_ETH.ERROR:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        error: action.payload,
-      }
-      case GET_QUADRIGA_TICKER_BCH.PENDING:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: true,
-      }
-    case GET_QUADRIGA_TICKER_BCH.SUCCESS:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        quadrigaTickerBCH: action.payload,
-      }
-    case GET_QUADRIGA_TICKER_BCH.ERROR:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        error: action.payload,
-      }
-      case GET_QUADRIGA_TICKER_BTG.PENDING:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: true,
-      }
-    case GET_QUADRIGA_TICKER_BTG.SUCCESS:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        quadrigaTickerBTG: action.payload,
-      }
-    case GET_QUADRIGA_TICKER_BTG.ERROR:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        error: action.payload,
-      }
-      case GET_QUADRIGA_TICKER_LTC.PENDING:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: true,
-      }
-    case GET_QUADRIGA_TICKER_LTC.SUCCESS:
-      return {
-        ...state,
-        isGettingQuadrigaTicker: false,
-        quadrigaTickerLTC: action.payload,
-      }
-    case GET_QUADRIGA_TICKER_LTC.ERROR:
+    case GET_QUADRIGA_TICKERS.ERROR:
       return {
         ...state,
         isGettingQuadrigaTicker: false,

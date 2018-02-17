@@ -9,6 +9,13 @@ export const getTicketsQuadriga = (ticket) => {
   })
 }
 
+export const getTicketsQuadrigaAll = () => {
+  return axios.request({
+    baseURL: `${rootEndpoint}`,
+    url:`/ticker?book=all`
+  })
+}
+
 export const getOrderBookQuadriga = (book,group) => {
   return axios.request({
     baseURL: `${rootEndpoint}`,

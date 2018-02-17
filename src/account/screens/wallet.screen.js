@@ -34,7 +34,7 @@ import {
     postChangellyAddressPair
 } from 'exchange'
 import {
-    getQuadrigaTickers,
+    getQuadrigaTickersAll,
     clearQuadrigaTickers,
     postUserQuadrigaTransactions,
     postUserLookupOrderQuadriga,
@@ -67,17 +67,13 @@ const mapStateToProps = (state) => ({
     clientId:state.user.clientId,
     privateKey:state.user.privateKey,
     quadrigaUserWalletWithdraw: state.account.quadrigaUserWalletWithdraw,
-    quadrigaTickerBTC: state.account.quadrigaTickerBTC,
-    quadrigaTickerETH: state.account.quadrigaTickerETH,
-    quadrigaTickerBCH: state.account.quadrigaTickerBCH,
-    quadrigaTickerBTG: state.account.quadrigaTickerBTG,
-    quadrigaTickerLTC: state.account.quadrigaTickerLTC,
+    quadrigaTickers: state.account.quadrigaTickers,
     quadrigaUserBalance: state.account.quadrigaUserBalance,
     quadrigaUserTransactions: state.account.quadrigaUserTransactions,
     quadrigaUserOrdersLookup: state.account.quadrigaUserOrdersLookup,
 })
 const mapDispatchToProps = (dispatch) => ({
-    getQuadrigaTickersDispatch: ()=>{dispatch(getQuadrigaTickers())},
+    getQuadrigaTickersDispatch: ()=>{dispatch(getQuadrigaTickersAll())},
     postUserQuadrigaBalanceDispatch:(key,sign,nonce)=>{dispatch(postUserQuadrigaBalance(key,sign,nonce))},
     postUserQuadrigaTransactionsDispatch:(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo)=>{dispatch(postUserQuadrigaTransactions(apiKey,clientId,privateKey,offset,limit,sort,book,bookTwo))},
     postUserLookupOrderQuadrigaDispatch:(key,sign,nonce,id)=>{dispatch(postUserLookupOrderQuadriga(key,sign,nonce,id))},
@@ -202,7 +198,7 @@ class Wallet extends Component {
         
     }
     handleData(acronym){
-        const {quadrigaTickerBTC,quadrigaTickerETH,quadrigaTickerBCH,quadrigaTickerBTG,quadrigaTickerLTC,quadrigaUserBalance,postUserQuadrigaBalanceDispatch,apiKey,clientId,privateKey} = this.props;
+        const {quadrigaTickers,quadrigaUserBalance,postUserQuadrigaBalanceDispatch,apiKey,clientId,privateKey} = this.props;
         
         if(quadrigaUserBalance.data.hasOwnProperty('error')){
             setTimeout(()=>{
@@ -215,35 +211,35 @@ class Wallet extends Component {
                 return (
                     <View>
                         <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.btc_balance === "0.00000000" ? "0": quadrigaUserBalance.data.btc_balance} BTC</Text>
-                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBTC.data.last*quadrigaUserBalance.data.btc_balance).toFixed(2)} CAD</Text>
+                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickers.data.btc_cad.last*quadrigaUserBalance.data.btc_balance).toFixed(2)} CAD</Text>
                     </View>
                 )
             }else if(acronym === 'eth'){
                 return (
                     <View>
                         <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.eth_balance === "0.00000000" ? "0": quadrigaUserBalance.data.eth_balance} ETH</Text>
-                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerETH.data.last*quadrigaUserBalance.data.eth_balance).toFixed(2)} CAD</Text>
+                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickers.data.eth_cad.last*quadrigaUserBalance.data.eth_balance).toFixed(2)} CAD</Text>
                     </View>
                 )
             }else if(acronym === 'bch'){
                 return (
                     <View>
                         <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.bch_balance === "0.00000000" ? "0": quadrigaUserBalance.data.bch_balance} BCH</Text>
-                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerBCH.data.last*quadrigaUserBalance.data.bch_balance).toFixed(2)} CAD</Text>
+                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickers.data.bch_cad.last*quadrigaUserBalance.data.bch_balance).toFixed(2)} CAD</Text>
                     </View>
                 )
             }else if(acronym === 'btg'){
                 return (
                     <View>
                         <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.btg_balance === "0.00000000" ? "0": quadrigaUserBalance.data.btg_balance} BTG</Text>
-                        <Text style={[textStyle,{marginBottom:30}]}>${(quadrigaTickerBTG.data.last*quadrigaUserBalance.data.btg_balance).toFixed(2)} CAD</Text>
+                        <Text style={[textStyle,{marginBottom:30}]}>${(quadrigaTickers.data.btg_cad_last*quadrigaUserBalance.data.btg_balance).toFixed(2)} CAD</Text>
                     </View>
                 )
             }else if(acronym === 'ltc'){
                 return (
                     <View>
                         <Text style={[textStyle,{fontSize:19}]}>{quadrigaUserBalance.data.ltc_balance === "0.00000000" ? "0": quadrigaUserBalance.data.ltc_balance} LTC</Text>
-                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickerLTC.data.last*quadrigaUserBalance.data.ltc_balance).toFixed(2)} CAD</Text>
+                        <Text style={[textStyle,{marginBottom:20}]}>${(quadrigaTickers.data.ltc_cad.last*quadrigaUserBalance.data.ltc_balance).toFixed(2)} CAD</Text>
                     </View>
                 )
             }

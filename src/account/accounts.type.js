@@ -1,10 +1,6 @@
 import {createAction} from 'util'
 
-export const GET_QUADRIGA_TICKER_BTC = createAction('GET_QUADRIGA_TICKER_BTC');
-export const GET_QUADRIGA_TICKER_ETH = createAction('GET_QUADRIGA_TICKER_ETH');
-export const GET_QUADRIGA_TICKER_BCH = createAction('GET_QUADRIGA_TICKER_BCH');
-export const GET_QUADRIGA_TICKER_BTG = createAction('GET_QUADRIGA_TICKER_BTG');
-export const GET_QUADRIGA_TICKER_LTC = createAction('GET_QUADRIGA_TICKER_LTC');
+export const GET_QUADRIGA_TICKERS = createAction('GET_QUADRIGA_TICKERS');
 export const GET_QUADRIGA_ORDERS = createAction('GET_QUADRIGA_ORDERS');
 export const GET_QUADRIGA_TRANSACTIONS = createAction('GET_QUADRIGA_TRANSACTIONS');
 export const POST_USER_QUADRIGA_BALANCE = createAction('POST_USER_QUADRIGA_BALANCE');

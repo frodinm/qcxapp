@@ -60,15 +60,9 @@ export class BuySellComponent extends Component {
   }
 
   handleAmount(text){
-    if(text !== ""){
-      this.setState({
-        amount: text
-      })
-    }else{
-      this.setState({
-        amount: "0"
-      })
-    }
+    this.setState({
+       amount: text 
+    })
   }
 
   handleCloseButtonIcon(){
@@ -84,15 +78,15 @@ export class BuySellComponent extends Component {
     const {tradingBook} = this.props.trading
     if(this.state.price === ""){
       if(tradingBook.slice(4,7) !== 'btc'){
-        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(2)} {tradingBook.slice(4,7).toUpperCase()}</Text>
+        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(2)} {tradingBook.slice(4,7).toUpperCase()}</Text>
       }else{
-        return <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(6)} BTC</Text>
+        return <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(6)} BTC</Text>
       }
     }else{
       if(tradingBook.slice(4,7) !== 'btc'){
-        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: {parseFloat(this.state.amount)*parseFloat(this.state.price)} {tradingBook.slice(4,7).toUpperCase()}</Text>
+        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: {parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(this.state.price)} {tradingBook.slice(4,7).toUpperCase()}</Text>
       }else{
-        return <Text style={[iOSUIKit.caption,styles.text]}>Total: {parseFloat(this.state.amount)*parseFloat(this.state.price)} BTC</Text>
+        return <Text style={[iOSUIKit.caption,styles.text]}>Total: {parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(this.state.price)} BTC</Text>
       }
     }
   }
@@ -142,7 +136,7 @@ export class BuySellComponent extends Component {
     return btcBids.map((item,index)=>{
       return <View key={index} style={{flexDirection:'column',alignSelf:'flex-start',marginTop:2}}>
         <View style={{flexDirection:'row'}}>
-          <Text style={{width:width/4+15,alignSelf:'center',textAlign:'center'}}>{this.handleToFixed(parseFloat(item[0]))}</Text>
+          <TouchableOpacity onPress={()=>this.setState({price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{width:width/4+15,alignSelf:'center',textAlign:'center'}}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
           <Text style={{width:width/4-25,alignSelf:'center',textAlign:'left'}}>{parseFloat(item[1]).toFixed(3)}</Text>
         </View>
       </View>
@@ -155,7 +149,7 @@ export class BuySellComponent extends Component {
     return btcAsks.map((item,index)=>{
       return <View key={index} style={{flexDirection:'column',alignSelf:'flex-start',marginTop:2}}>
         <View style={{flexDirection:'row'}}>
-          <Text style={{width:width/4+15,alignSelf:'center',textAlign:'center'}}>{this.handleToFixed(parseFloat(item[0]))}</Text>
+          <TouchableOpacity onPress={()=>this.setState({price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{width:width/4+15,alignSelf:'center',textAlign:'center'}}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
           <Text style={{width:width/4-25,alignSelf:'center',textAlign:'center'}}>{parseFloat(item[1]).toFixed(3)}</Text>
         </View>
       </View>
@@ -414,6 +408,10 @@ handleFromAvailableAmount(){
     this.refs.modalSellOrder.close();
   }
 
+  handleSetAmountValue(){
+    this.setState({amount: this.handleTokenAvailable()})
+  }
+
 
   render() {
     const {acronym,quadrigaOrders,trading} = this.props;
@@ -421,18 +419,18 @@ handleFromAvailableAmount(){
     return (
       <View style={styles.container}>
         <ScrollView>
-          <View style={{flexDirection:'row',alignSelf:'center',alignItems:'center',justifyContent:'center',backgroundColor:'white',width:width/1.03,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,marginTop:5}}>
+          <View style={{flexDirection:'row',alignSelf:'center',alignItems:'center',justifyContent:'center',backgroundColor:'white',width:width/1.045,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,marginTop:5}}>
             <View style={{flexDirection:'column', marginTop:15,marginBottom:15,width:width/2.2}}>
               <Text style={[iOSUIKit.body,{}]}>Amount</Text>
-              <TextInput onChangeText={(text)=>this.handleAmount(text)} keyboardType="numeric" placeholder={`Amount ${acronym}`} style={styles.textInput}/>
+              <TextInput onChangeText={(text)=>this.handleAmount(text)} value={this.state.amount} keyboardType="numeric" placeholder={`Amount ${acronym}`} style={styles.textInput}/>
               <Text style={[iOSUIKit.body,{}]}>Price</Text>
-              <TextInput onChangeText={(text)=>this.handlePrice(text)} keyboardType="numeric" placeholder={`${trading.tradingBook.slice(4,7).toUpperCase()} per ${acronym} at MP`} style={styles.textInput}/>
+              <TextInput onChangeText={(text)=>this.handlePrice(text)} value={this.state.price} keyboardType="numeric" placeholder={`${trading.tradingBook.slice(4,7).toUpperCase()} per ${acronym} at MP`} style={styles.textInput}/>
             </View>
             <View style={{flexDirection:'row',justifyContent:'flex-end',width:width/2.2,alignItems:'center'}}>
                 <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
                   <Text style={[iOSUIKit.title3,styles.text]}>Available</Text>
                   <Text style={[iOSUIKit.caption,styles.text]}>${this.handleFromAvailableAmount()}</Text>
-                  <Text style={[iOSUIKit.caption,styles.text]}>{this.handleTokenAvailable()} {acronym}</Text>
+                  <TouchableOpacity  onPress={()=>this.handleSetAmountValue()}><Text style={[iOSUIKit.caption,styles.text]}>{this.handleTokenAvailable()} {acronym}</Text></TouchableOpacity>
                   {this.handleTotalPrice()}
                 </View>
                 <View style={{marginTop:30}}>
@@ -455,7 +453,7 @@ handleFromAvailableAmount(){
           </View>
           <View style={{flexDirection:'row'}}>
             <View style={{backgroundColor:'white',marginLeft:5,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,alignItems:'center',justifyContent:'center'}}>
-              <Text style={{width:width/2.1,alignSelf:'flex-start',textAlign:'center',backgroundColor:'transparent'}}>Top 10 Bids</Text>
+              <Text style={{width:width/2.2,alignSelf:'flex-start',textAlign:'center',backgroundColor:'transparent'}}>Top 10 Bids</Text>
                 <View style={{flexDirection:'row',alignSelf:'flex-start'}}>
                 <Text style={[iOSUIKit.body,{width:width/4-5,textAlign:'center',alignSelf:'center'}]}>Price</Text>
                 <Text style={[iOSUIKit.body,{width:width/4-5,textAlign:'center',alignSelf:'center'}]}>Amount</Text>
@@ -463,7 +461,7 @@ handleFromAvailableAmount(){
               {this.handleBidOrderView()}
             </View>
             <View style={{height:250,marginLeft:5,backgroundColor:'white',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,alignItems:'center',justifyContent:'center'}}>
-              <Text style={{width:width/2.1,alignSelf:'center',textAlign:'center',backgroundColor:'transparent'}}>Top 10 Asks</Text>
+              <Text style={{width:width/2.2,alignSelf:'center',textAlign:'center',backgroundColor:'transparent'}}>Top 10 Asks</Text>
               <View style={{flexDirection:'row',alignSelf:'center'}}>
                 <Text style={[iOSUIKit.body,{width:width/4-5,textAlign:'center',alignSelf:'center'}]}>Price</Text>
                 <Text style={[iOSUIKit.body,{width:width/4-5,alignSelf:'center',textAlign:'center'}]}>Amount</Text>

@@ -1,11 +1,7 @@
 import {
   SIGN_OUT_ACCOUNT,
   SET_TRADING_BOOK,
-  GET_QUADRIGA_TICKER_BTC,
-  GET_QUADRIGA_TICKER_ETH,
-  GET_QUADRIGA_TICKER_BCH,
-  GET_QUADRIGA_TICKER_BTG,
-  GET_QUADRIGA_TICKER_LTC,
+  GET_QUADRIGA_TICKERS,
   GET_QUADRIGA_ORDERS,
   GET_QUADRIGA_TRANSACTIONS,
   POST_USER_QUADRIGA_TRANSACTIONS,
@@ -32,7 +28,7 @@ import {
 
 } from 'account'
 import {
-  getTicketsQuadriga,
+  getTicketsQuadrigaAll,
   getOrderBookQuadriga,
   getTransactionsQuadriga,
   postBalanceQuadriga,
@@ -146,46 +142,27 @@ export const getQuadrigaTransactions = (book,time) => {
   }
 }
 
-export const getQuadrigaTickers = () =>{
+export const getQuadrigaTickersAll = () =>{
   return dispatch =>{
     interval = setInterval(()=>{
-      dispatch({type: GET_QUADRIGA_TICKER_BTC.PENDING})
-      getTicketsQuadriga("btc_cad").then((response) => {
-        dispatch({type: GET_QUADRIGA_TICKER_BTC.SUCCESS, payload: response})
-        dispatch({type: GET_QUADRIGA_TICKER_ETH.PENDING})
-        getTicketsQuadriga("eth_cad").then((response) => {
-          dispatch({type: GET_QUADRIGA_TICKER_ETH.SUCCESS, payload: response})
-          dispatch({type: GET_QUADRIGA_TICKER_BCH.PENDING})
-          getTicketsQuadriga("bch_cad").then((response) => {
-            dispatch({type: GET_QUADRIGA_TICKER_BCH.SUCCESS, payload: response})
-            dispatch({type: GET_QUADRIGA_TICKER_BTG.PENDING})
-            getTicketsQuadriga("btg_cad").then((response) => {
-              dispatch({type: GET_QUADRIGA_TICKER_BTG.SUCCESS, payload: response})
-              dispatch({type: GET_QUADRIGA_TICKER_LTC.PENDING})
-              getTicketsQuadriga("ltc_cad").then((response) => {
-                dispatch({type: GET_QUADRIGA_TICKER_LTC.SUCCESS, payload: response})
-                dispatch({type: GET_QUADRIGA_TRANSACTIONS.PENDING})
-                getTransactionsQuadriga("btc_cad","hour").then((response) => {
-                  dispatch({type: GET_QUADRIGA_TRANSACTIONS.SUCCESS, payload: response})
-                }).catch((error) => {
-                  dispatch({type: GET_QUADRIGA_TRANSACTIONS.ERROR, payload: error})
-                })
-              }).catch((error) => {
-                dispatch({type: GET_QUADRIGA_TICKER_LTC.ERROR, payload: error})
-              })
-            }).catch((error) => {
-              dispatch({type: GET_QUADRIGA_TICKER_BTG.ERROR, payload: error})
-            })
-          }).catch((error) => {
-            dispatch({type: GET_QUADRIGA_TICKER_BCH.ERROR, payload: error})
-          })
-        }).catch((error) => {
-          dispatch({type: GET_QUADRIGA_TICKER_ETH.ERROR, payload: error})
-        })
-      }).catch((error) => {
-        dispatch({type: GET_QUADRIGA_TICKER_BTC.ERROR, payload: error})
+      dispatch({type: GET_QUADRIGA_TICKERS.PENDING})
+      getTicketsQuadrigaAll().then((response)=>{
+        dispatch({type: GET_QUADRIGA_TICKERS.SUCCESS, payload: response})
+      }).catch((err)=>{
+        dispatch({type: GET_QUADRIGA_TICKERS.ERROR, payload: error})
       })
-    },15000)
+    },5000)
+  } 
+}
+
+export const getQuadrigaTickersAllAtPin = () =>{
+  return dispatch =>{
+      dispatch({type: GET_QUADRIGA_TICKERS.PENDING})
+      getTicketsQuadrigaAll().then((response)=>{
+        dispatch({type: GET_QUADRIGA_TICKERS.SUCCESS, payload: response})
+      }).catch((err)=>{
+        dispatch({type: GET_QUADRIGA_TICKERS.ERROR, payload: error})
+      })
   } 
 }
 
