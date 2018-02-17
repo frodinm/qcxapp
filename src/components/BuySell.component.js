@@ -27,7 +27,7 @@ export class BuySellComponent extends Component {
   constructor(){
     super();
     this.state={
-      amount:"0",
+      amount:"",
       price: "",
       interval:null,
       tokenAmountAvailable:"0",
@@ -137,7 +137,7 @@ export class BuySellComponent extends Component {
       return <View key={index} style={{flexDirection:'column',alignSelf:'flex-start',marginTop:2}}>
         <View style={{flexDirection:'row'}}>
           <TouchableOpacity onPress={()=>this.setState({price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{width:width/4+15,alignSelf:'center',textAlign:'center'}}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
-          <Text style={{width:width/4-25,alignSelf:'center',textAlign:'left'}}>{parseFloat(item[1]).toFixed(3)}</Text>
+          <Text style={{width:width/4-30,alignSelf:'center',textAlign:'left'}}>{parseFloat(item[1]).toFixed(3)}</Text>
         </View>
       </View>
     })
@@ -149,8 +149,8 @@ export class BuySellComponent extends Component {
     return btcAsks.map((item,index)=>{
       return <View key={index} style={{flexDirection:'column',alignSelf:'flex-start',marginTop:2}}>
         <View style={{flexDirection:'row'}}>
-          <TouchableOpacity onPress={()=>this.setState({price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{width:width/4+15,alignSelf:'center',textAlign:'center'}}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
-          <Text style={{width:width/4-25,alignSelf:'center',textAlign:'center'}}>{parseFloat(item[1]).toFixed(3)}</Text>
+          <TouchableOpacity onPress={()=>this.setState({price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{width:width/4+5,alignSelf:'center',textAlign:'center'}}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
+          <Text style={{width:width/4-35,alignSelf:'center',textAlign:'center'}}>{parseFloat(item[1]).toFixed(3)}</Text>
         </View>
       </View>
     })
@@ -455,16 +455,16 @@ handleFromAvailableAmount(){
             <View style={{backgroundColor:'white',marginLeft:5,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,alignItems:'center',justifyContent:'center'}}>
               <Text style={{width:width/2.2,alignSelf:'flex-start',textAlign:'center',backgroundColor:'transparent'}}>Top 10 Bids</Text>
                 <View style={{flexDirection:'row',alignSelf:'flex-start'}}>
-                <Text style={[iOSUIKit.body,{width:width/4-5,textAlign:'center',alignSelf:'center'}]}>Price</Text>
-                <Text style={[iOSUIKit.body,{width:width/4-5,textAlign:'center',alignSelf:'center'}]}>Amount</Text>
+                <Text style={[iOSUIKit.body,{width:width/4-20,textAlign:'right',alignSelf:'flex-end'}]}>Price</Text>
+                <Text style={[iOSUIKit.body,{width:width/4,textAlign:'center',alignSelf:'center'}]}>Amount</Text>
                 </View>
               {this.handleBidOrderView()}
             </View>
             <View style={{height:250,marginLeft:5,backgroundColor:'white',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,alignItems:'center',justifyContent:'center'}}>
               <Text style={{width:width/2.2,alignSelf:'center',textAlign:'center',backgroundColor:'transparent'}}>Top 10 Asks</Text>
               <View style={{flexDirection:'row',alignSelf:'center'}}>
-                <Text style={[iOSUIKit.body,{width:width/4-5,textAlign:'center',alignSelf:'center'}]}>Price</Text>
-                <Text style={[iOSUIKit.body,{width:width/4-5,alignSelf:'center',textAlign:'center'}]}>Amount</Text>
+                <Text style={[iOSUIKit.body,{width:width/4+5,textAlign:'center',alignSelf:'center'}]}>Price</Text>
+                <Text style={[iOSUIKit.body,{width:width/4-12,alignSelf:'center',textAlign:'left'}]}>Amount</Text>
               </View>
               {this.handleAskOrderView()}
           </View>
@@ -498,7 +498,7 @@ handleFromAvailableAmount(){
                 </View> 
                 <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
                 <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
-                <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Price</Text>
+                <Text style={{width:width/1.21/2.2,paddingLeft:10}}>Price</Text>
                 <Text style={{width:width/1.2/1.9,textAlign:'center'}}>{quadrigaUserOrdersLookup.data[0].price} {quadrigaUserOrdersLookup.data[0].book.slice(4,7).toUpperCase()}</Text>
                 </View> 
                 <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>

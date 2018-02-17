@@ -151,7 +151,7 @@ export const getQuadrigaTickersAll = () =>{
       }).catch((err)=>{
         dispatch({type: GET_QUADRIGA_TICKERS.ERROR, payload: error})
       })
-    },5000)
+    },10000)
   } 
 }
 
