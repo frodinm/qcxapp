@@ -518,16 +518,13 @@ class Wallet extends Component {
                         <Text style={[iOSUIKit.title3,{fontSize:22,marginTop:20}]}>Transactions</Text>
                     </View>
                     {this.handleTransactions(name)}
-                   
-
-                </View>
-                <View style={{position:'absolute',bottom:0,width:width}}>
-                <AdMobBanner
+                    <AdMobBanner
                     adSize="smartBannerLandscape"
-                    adUnitID="ca-app-pub-8321262189259728/7581255596"
+                    adUnitID="ca-app-pub-8321262189259728/7083427459"
                     testDevices={[AdMobBanner.simulatorId]}
                     onAdFailedToLoad={error => console.error(error)} 
                     />
+
                 </View>
                 <Modal 
                 style={styles.modalLookUp}

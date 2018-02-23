@@ -415,7 +415,7 @@ handleFromAvailableAmount(){
     const {quadrigaOrders} = this.props;
     Alert.alert(
        price === "" ? "Buy at Market price"  : "Buy at Limit price",
-       price !== "" ? `Please confirm your buy order \n of ${this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your buy order \n of ${this.state.amount} ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7,8)[0]).toFixed(2)} each`,
+       price !== "" ? `Please confirm your buy order \n of ${this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your buy order \n of 0 ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7,8)[0]).toFixed(2)} each`,
       [
         {text: 'Cancel', onPress: () => {}, style: 'cancel'},
         {text: 'Confirm', onPress: () => this.confirmBuyOrder()},
@@ -429,7 +429,7 @@ handleFromAvailableAmount(){
     const {quadrigaOrders} = this.props;
     Alert.alert(
        price === "" ? "Sell at Market price"  : "Sell at Limit price",
-       price !== "" ? `Please confirm your sell order \n of ${this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your sell order \n of ${this.state.amount} ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7,8)[0]).toFixed(2)} each`,
+       price !== "" ? `Please confirm your sell order \n of ${this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your sell order \n of 0 ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7,8)[0]).toFixed(2)} each`,
       [
         {text: 'Cancel', onPress: () => {}, style: 'cancel'},
         {text: 'Confirm', onPress: () => this.confirmSellOrder()},
@@ -515,6 +515,12 @@ handleFromAvailableAmount(){
             </View>
             {this.handleUserOrders()}
           </View>
+          <AdMobBanner
+              adSize="smartBannerLandscape"
+              adUnitID="ca-app-pub-8321262189259728/1335017575"
+              testDevices={[AdMobBanner.simulatorId]}
+              onAdFailedToLoad={error => console.error(error)} 
+            />
         </ScrollView>
         <Modal 
           style={styles.modalOrderInfo}
@@ -571,14 +577,6 @@ handleFromAvailableAmount(){
                 </View>
             </View>
         </Modal>
-        <View style={{position:'absolute',bottom:0,width:width}}>
-        <AdMobBanner
-            adSize="smartBannerLandscape"
-            adUnitID="ca-app-pub-8321262189259728/7581255596"
-            testDevices={[AdMobBanner.simulatorId]}
-            onAdFailedToLoad={error => console.error(error)} 
-            />
-        </View>
         <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
         </View>
     );

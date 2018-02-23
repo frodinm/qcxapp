@@ -223,7 +223,7 @@ class Settings extends Component {
                     <View style={{position:'absolute',bottom:0,width:width}}>
                         <AdMobBanner
                     adSize="smartBannerLandscape"
-                    adUnitID="ca-app-pub-8321262189259728/7581255596"
+                    adUnitID="ca-app-pub-8321262189259728/9817402008"
                     testDevices={[AdMobBanner.simulatorId]}
                     onAdFailedToLoad={error => console.error(error)} 
                     />
