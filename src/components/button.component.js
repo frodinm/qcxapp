@@ -16,13 +16,26 @@ const {height,width} = Dimensions.get('window');
 export class ButtonComponent extends Component {
   constructor(){
     super();
+
+    this.state = {
+      isDisabled: false
+    }
   }
+
+  handleDisable(onPressAction){
+    this.setState({isDisabled:true})
+    onPressAction();
+    setTimeout(()=>{
+      this.setState({isDisabled:false})
+    },1000)
+  }
+
 
   handlePlatform(tokenData,imageSource,color,onPressAction,buttonStyle){
     if(Platform.OS === 'android'){
         if(TouchableNativeFeedback.canUseNativeForeground()){
           return(
-            <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+            <TouchableNativeFeedback disabled={this.state.isDisabled} onPress={()=>this.handleDisable(onPressAction)} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
               <View style={{...buttonStyle,marginTop:10,backgroundColor:color}} pointerEvents='box-only' >
               <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
                 <View style={{flexDirection:'row'}}>
@@ -45,7 +58,7 @@ export class ButtonComponent extends Component {
       }else{
         return(
             <View style={{margin:5,marginTop:10}}>
-            <TouchableHighlight onPress={onPressAction}>
+            <TouchableHighlight disabled={this.state.isDisabled} onPress={()=>this.handleDisable(onPressAction)}>
               <View style={{...buttonStyle,backgroundColor:color}} pointerEvents='box-only' >
               <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
                 <View style={{flexDirection:'row'}}>
@@ -70,7 +83,7 @@ export class ButtonComponent extends Component {
     }else{
       return(
         <View style={{margin:5,marginTop:10}}>
-        <TouchableHighlight onPress={onPressAction}>
+        <TouchableHighlight disabled={this.state.isDisabled} onPress={()=>this.handleDisable(onPressAction)}>
           <View style={{...buttonStyle,backgroundColor:color}} pointerEvents='box-only' >
           <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
             <View style={{flexDirection:'row'}}>

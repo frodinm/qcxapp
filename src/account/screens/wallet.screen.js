@@ -23,6 +23,9 @@ import IconAwsome from 'react-native-vector-icons/dist/FontAwesome'
 import IconIOS from 'react-native-vector-icons/dist/Ionicons'
 import Permissions from 'react-native-permissions'
 import DropdownAlert from 'react-native-dropdownalert';
+import {
+    AdMobBanner,
+  } from 'react-native-admob'
 
 import {
     setFromTokenLogo,
@@ -366,7 +369,6 @@ class Wallet extends Component {
             break;
 
         }
-        this.refs.modalConfirmWithdraw.close();
         this.refs.modalWithdraw.close();
         setTimeout(()=>{
             this.handleWithdrawAlert();
@@ -483,6 +485,18 @@ class Wallet extends Component {
        
     }
 
+    confirmWithdraw(){
+        const {acronym,withdrawAddress,amount} = this.state;
+        Alert.alert(
+           'Withdraw',
+           `Please confirm your withdraw\n Address:${withdrawAddress} \n Amount : ${amount === "" ? "0":amount} ${acronym.toUpperCase()}`,
+          [
+            {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+            {text: 'Confirm', onPress: () =>this.handleWithdraw()},
+          ]
+        )
+      }
+
     render() {
         const {quadrigaTickerBTC,quadrigaTickerETH} = this.props;
         const {type,acronym,name,address} = this.props.navigation.state.params;
@@ -506,6 +520,14 @@ class Wallet extends Component {
                     {this.handleTransactions(name)}
                    
 
+                </View>
+                <View style={{position:'absolute',bottom:0,width:width}}>
+                <AdMobBanner
+                    adSize="smartBannerLandscape"
+                    adUnitID="ca-app-pub-8321262189259728/7581255596"
+                    testDevices={[AdMobBanner.simulatorId]}
+                    onAdFailedToLoad={error => console.error(error)} 
+                    />
                 </View>
                 <Modal 
                 style={styles.modalLookUp}
@@ -584,14 +606,7 @@ class Wallet extends Component {
                         <TextInput onChangeText={(text)=>this.setState({withdrawAddress:text})} value={this.state.withdrawAddress} placeholder={'Address here'} style={styles.textInput}/>
                         <Text style={[iOSUIKit.body,{marginTop:22}]}>Amount to send</Text>
                         <TextInput onChangeText={(text)=>this.setState({amount:text})} keyboardType="numeric" placeholder={'Amount here'} style={styles.textInput}/>
-                        <Button onPress={()=>this.refs.modalConfirmWithdraw.open()} title="Withdraw!" containerViewStyle={{position:'relative',top:25,width:150,height:50,}} buttonStyle={{backgroundColor:'orange'}}/>
-                    </View>
-                </Modal>
-                <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalConfirmWithdraw"}>
-                    <Text style={[iOSUIKit.body, {color: "white",marginBottom:5}]}>Please confirm your withdraw</Text>
-                    <View style={{flexDirection:'row'}}>
-                        <Button onPress={()=>this.refs.modalConfirmWithdraw.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/16,width:width/2.5,opacity:1}}/>
-                        <Button onPress={()=>this.handleWithdraw()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/16,width:width/2.5,opacity:1}}/>
+                        <Button onPress={()=>this.confirmWithdraw()} title="Withdraw!" containerViewStyle={{position:'relative',top:25,width:150,height:50,}} buttonStyle={{backgroundColor:'orange'}}/>
                     </View>
                 </Modal>
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />

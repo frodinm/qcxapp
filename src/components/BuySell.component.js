@@ -9,7 +9,8 @@ import {
   ScrollView,
   Text,
   TextInput,
-  Animated
+  Animated,
+  Alert
 } from 'react-native'
 import LottieView from 'lottie-react-native'
 import DropdownAlert from 'react-native-dropdownalert';
@@ -18,7 +19,10 @@ import { iOSUIKit } from 'react-native-typography'
 import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons'
 import IconIOS from 'react-native-vector-icons/dist/Ionicons';
-import Modal from 'react-native-modalbox';
+import Modal from 'react-native-modalbox'
+import {
+  AdMobBanner,
+} from 'react-native-admob'
 import {encryptAuthenticationQuadriga} from 'util'
 
 const {width,height} = Dimensions.get('window')
@@ -31,7 +35,8 @@ export class BuySellComponent extends Component {
       price: "",
       interval:null,
       tokenAmountAvailable:"0",
-      refreshProgress: new Animated.Value(0)
+      refreshProgress: new Animated.Value(0),
+      isDisabled: false
     }
     this.handleBidOrderView = this.handleBidOrderView.bind(this);
     this.handleAskOrderView = this.handleAskOrderView.bind(this);
@@ -78,9 +83,9 @@ export class BuySellComponent extends Component {
     const {tradingBook} = this.props.trading
     if(this.state.price === ""){
       if(tradingBook.slice(4,7) !== 'btc'){
-        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(2)} {tradingBook.slice(4,7).toUpperCase()}</Text>
+        return  <Text style={[iOSUIKit.caption,styles.text]}>Total: ~{(parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(quadrigaOrders.asks.slice(7,8)[0])).toFixed(2)} {tradingBook.slice(4,7).toUpperCase()}</Text>
       }else{
-        return <Text style={[iOSUIKit.caption,styles.text]}>Total: {(parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(6)} BTC</Text>
+        return <Text style={[iOSUIKit.caption,styles.text]}>Total: ~{(parseFloat(this.state.amount === "" ? 0:this.state.amount)*parseFloat(quadrigaOrders.asks.slice(0,1)[0])).toFixed(6)} BTC</Text>
       }
     }else{
       if(tradingBook.slice(4,7) !== 'btc'){
@@ -386,30 +391,61 @@ handleFromAvailableAmount(){
     }
   }
 
-  handleErrorUnicodeText(){
-  
-  }
-
   confirmCancelOrder(){
     const {quadrigaUserOrdersLookup,userCancelOrder,apiKey,clientId,secret,tradingBook} = this.props.trading;
     userCancelOrder(apiKey,clientId,secret,quadrigaUserOrdersLookup.data[0].id,tradingBook);
-    this.refs.modalCancelOrder.close();
     this.refs.modalOrderInfo.close();
     this.dropdown.alertWithType('info', 'Info', 'Your order has been canceled!');
   }
 
   confirmBuyOrder(){
     this.handleBuyToken();
-    this.refs.modalBuyOrder.close();
   }
 
   confirmSellOrder(){
     this.handleSellToken()
-    this.refs.modalSellOrder.close();
   }
 
   handleSetAmountValue(){
     this.setState({amount: this.handleTokenAvailable()})
+  }
+
+  handleBuyOrder(){
+    const {price} = this.state;
+    const {quadrigaOrders} = this.props;
+    Alert.alert(
+       price === "" ? "Buy at Market price"  : "Buy at Limit price",
+       price !== "" ? `Please confirm your buy order \n of ${this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your buy order \n of ${this.state.amount} ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7,8)[0]).toFixed(2)} each`,
+      [
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+        {text: 'Confirm', onPress: () => this.confirmBuyOrder()},
+      ]
+    )
+  }
+
+
+  handleSellOrder(){
+    const {price} = this.state;
+    const {quadrigaOrders} = this.props;
+    Alert.alert(
+       price === "" ? "Sell at Market price"  : "Sell at Limit price",
+       price !== "" ? `Please confirm your sell order \n of ${this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your sell order \n of ${this.state.amount} ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7,8)[0]).toFixed(2)} each`,
+      [
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+        {text: 'Confirm', onPress: () => this.confirmSellOrder()},
+      ]
+    )
+  }
+
+  handleCancelOrder(){
+    Alert.alert(
+       'Cancel order',
+       'Please confrim your order cancel',
+      [
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+        {text: 'Confirm', onPress: () => this.confirmCancelOrder()},
+      ]
+    )
   }
 
 
@@ -448,8 +484,8 @@ handleFromAvailableAmount(){
             </View>
           </View>
           <View style={{flexDirection:'row',width:width/1.03-5,height:height/8,alignItems:'center',backgroundColor:'white',marginBottom:5,marginLeft:5,marginTop:5,justifyContent:'center',elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2}}>
-              <Button onPress={()=>this.refs.modalBuyOrder.open()} title="BUY" buttonStyle={{backgroundColor:'#4ca64c',height:height/15,width:width/2.5}}/>
-              <Button onPress={()=>this.refs.modalSellOrder.open()} title="SELL" buttonStyle={{backgroundColor:'#ffb732',height:height/15,width:width/2.5}}/>
+              <Button onPress={()=>this.handleBuyOrder()} title="BUY" buttonStyle={{backgroundColor:'#4ca64c',height:height/15,width:width/2.5}}/>
+              <Button onPress={()=>this.handleSellOrder()} title="SELL" buttonStyle={{backgroundColor:'#ffb732',height:height/15,width:width/2.5}}/>
           </View>
           <View style={{flexDirection:'row'}}>
             <View style={{backgroundColor:'white',marginLeft:5,elevation:2,shadowColor:'black',shadowOffset:{width:0,height:2},shadowOpacity:0.2,shadowRadius:2,alignItems:'center',justifyContent:'center'}}>
@@ -510,10 +546,10 @@ handleFromAvailableAmount(){
                 <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
                 <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
                 <Text style={{width:width/1.21/2.1,paddingLeft:10}}>Status</Text>
-                <View style={{width:width/1.21/1.9/2,justifyContent:'center',alignItems:'flex-end'}}>
+                <View style={{width:width/1.21/1.9,justifyContent:'center',alignItems:'flex-end' ,display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                   {this.handleStatusColor(quadrigaUserOrdersLookup.data[0].status)}
+                  <Text style={{width:width/1.21/1.9/2,textAlign:'center'}}> {this.handleStatusText(quadrigaUserOrdersLookup.data[0].status)}</Text>
                 </View>
-                <Text style={{width:width/1.21/1.9/2,textAlign:'center'}}> {this.handleStatusText(quadrigaUserOrdersLookup.data[0].status)}</Text>
                 </View> 
                 <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
                 <View style={{flexDirection:'row',marginBottom:10,marginTop:10}}>
@@ -523,7 +559,7 @@ handleFromAvailableAmount(){
                 <Divider style={{height:1,width:width/1.2-22,backgroundColor:'orange'}}/>
                 <View style={{flexDirection:'row'}}>
                    <View style={{height:height/7.8,width:width/1.2/1.66}}>
-                      <TouchableOpacity onPress={()=>this.refs.modalCancelOrder.open()} style={{margin:20,marginBottom:10,position:'absolute',bottom:15,right:0}}>
+                      <TouchableOpacity onPress={()=>this.handleCancelOrder()} style={{margin:20,marginBottom:10,position:'absolute',bottom:15,right:0}}>
                           <Text style={{fontSize:15,color:'#ff3b30'}}>Cancel Order</Text>
                       </TouchableOpacity>
                    </View>
@@ -535,27 +571,14 @@ handleFromAvailableAmount(){
                 </View>
             </View>
         </Modal>
-        <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalCancelOrder"}>
-          <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your cancel</Text>
-          <View style={{flexDirection:'row'}}>
-              <Button onPress={()=>this.refs.modalCancelOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/2.5,opacity:1}}/>
-              <Button onPress={()=>this.confirmCancelOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/2.5,opacity:1}}/>
-          </View>
-        </Modal>
-        <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalBuyOrder"}>
-          <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your buy order</Text>
-          <View style={{flexDirection:'row'}}>
-              <Button onPress={()=>this.refs.modalBuyOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/2.5,opacity:1}}/>
-              <Button onPress={()=>this.confirmBuyOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/2.5,opacity:1}}/>
-          </View>
-        </Modal>
-        <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalSellOrder"}>
-          <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Please confirm your sell order</Text>
-          <View style={{flexDirection:'row'}}>
-              <Button onPress={()=>this.refs.modalSellOrder.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/2.5,opacity:1}}/>
-              <Button onPress={()=>this.confirmSellOrder()} title="Confirm" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/2.5,opacity:1}}/>
-          </View>
-        </Modal>
+        <View style={{position:'absolute',bottom:0,width:width}}>
+        <AdMobBanner
+            adSize="smartBannerLandscape"
+            adUnitID="ca-app-pub-8321262189259728/7581255596"
+            testDevices={[AdMobBanner.simulatorId]}
+            onAdFailedToLoad={error => console.error(error)} 
+            />
+        </View>
         <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
         </View>
     );

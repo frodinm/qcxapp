@@ -2,14 +2,9 @@
 
 
 export default {  
-    bitcoin:'Bitcoin', //If a transaction exists
-    bitcoinGold:'Bitcoin Gold',
-    bitcoinCash:'Bitcoin Cash',
-    ethereum: 'Ethereum',
-    litecoin:'Litecoin',
-    account: 'Account',
+    account: 'Compte',
     exchange: 'Exchange',
-    wallet: 'wallet',
+    wallet: 'Portefeuille',
     available: 'available',
     balance: 'balance',
     buyLower:'buy',// if its different then upper

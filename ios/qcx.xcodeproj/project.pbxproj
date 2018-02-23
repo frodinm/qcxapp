@@ -13,13 +13,13 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* qcxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* qcxTests.m */; };
+		0728278420407E1400460995 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0728278520407E1400460995 /* libReact.a */; };
+		072827BE20407E1B00460995 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		07894F36202F84D300D401F4 /* Asset 13xxxhdpi.png in Resources */ = {isa = PBXBuildFile; fileRef = 07894F35202F84D300D401F4 /* Asset 13xxxhdpi.png */; };
 		07894F37202F84D300D401F4 /* Asset 13xxxhdpi.png in Resources */ = {isa = PBXBuildFile; fileRef = 07894F35202F84D300D401F4 /* Asset 13xxxhdpi.png */; };
 		079F1A741FF65747008C850A /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; };
 		079F1A751FF65747008C850A /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 079F1A351FF6573C008C850A /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		07FC4C2D20365602007BA52E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		07FC4C3220369503007BA52E /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07FC4C3320369503007BA52E /* libReact.a */; };
-		07FC4C342036950A007BA52E /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -522,6 +522,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* qcxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = qcxTests.m; sourceTree = "<group>"; };
 		05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		0728278520407E1400460995 /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		078072082018C78C00CF02C3 /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		07894F35202F84D300D401F4 /* Asset 13xxxhdpi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Asset 13xxxhdpi.png"; path = "../../android logo/4x/Asset 13xxxhdpi.png"; sourceTree = "<group>"; };
 		079F1A2B1FF6573C008C850A /* Lottie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Lottie.xcodeproj; path = "../node_modules/lottie-ios/Lottie.xcodeproj"; sourceTree = "<group>"; };
@@ -613,8 +614,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07FC4C342036950A007BA52E /* libRCTWebSocket.a in Frameworks */,
-				07FC4C3220369503007BA52E /* libReact.a in Frameworks */,
+				072827BE20407E1B00460995 /* libRCTWebSocket.a in Frameworks */,
+				0728278420407E1400460995 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				079F1A741FF65747008C850A /* Lottie.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -1059,6 +1060,7 @@
 		F3567FD9401C545F8300BC19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0728278520407E1400460995 /* libReact.a */,
 				07FC4C3320369503007BA52E /* libReact.a */,
 				07FC4C3020367EF7007BA52E /* libReact.a */,
 				078072082018C78C00CF02C3 /* libReact.a */,

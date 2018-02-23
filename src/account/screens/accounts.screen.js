@@ -60,6 +60,11 @@ const mapDispatchToProps = (dispatch) => ({
 class AccountsWallets extends Component {
   constructor(props) {
     super(props);
+
+    this.state={
+      isDisabled: false
+    }
+    
     this.handlePlatform = this.handlePlatform.bind(this);
     this.handleBalance = this.handleBalance.bind(this);
     this.handleExchangePlatform = this.handleExchangePlatform.bind(this);
@@ -163,6 +168,15 @@ class AccountsWallets extends Component {
       return returnObject;
     }
 
+
+    handleQuadrigaPress(item){
+      this.setState({isDisabled:true})
+      this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})
+      setTimeout(()=>{
+        this.setState({isDisabled:false})
+      },1000)
+    }
+
     handleExchangePlatform(){
       const {changellyAddressesUsed} = this.props;
       if(changellyAddressesUsed.length === 0){
@@ -241,7 +255,7 @@ class AccountsWallets extends Component {
           return userWallets.map((item,index)=>{
             return( 
               <View key={index} style={{alignItems:'center'}}>
-                <TouchableNativeFeedback onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+                <TouchableNativeFeedback disabled={this.state.isDisabled} onPress={()=>this.handleQuadrigaPress(item)} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
                   <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                     <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                     <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
@@ -259,7 +273,7 @@ class AccountsWallets extends Component {
           return userWallets.map((item,index)=>{
             return (
               <View key={index} style={{alignItems:'center'}}>
-                <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}}>
+                <TouchableHighlight disabled={this.state.isDisabled} onPress={()=>this.handleQuadrigaPress(item)}>
                   <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                     <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                     <Text style={[iOSUIKit.caption,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
@@ -279,7 +293,7 @@ class AccountsWallets extends Component {
        return userWallets.map((item,index)=>{
           return (
             <View key={index} style={{alignItems:'center'}}>
-              <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Wallet',{type:item.type,acronym:item.acronym,name:item.name,address:item.receiveAddress,book:item.book,bookTwo:item.bookTwo})}}>
+              <TouchableHighlight disabled={this.state.isDisabled} onPress={()=>this.handleQuadrigaPress(item)}>
                 <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                   <Text style={[iOSUIKit.caption,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
