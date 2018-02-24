@@ -13,7 +13,9 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Clipboard,
-    Share
+    Share,
+    Linking,
+    Alert
 } from 'react-native';
 import {connect} from 'react-redux'
 import { NavigationActions } from 'react-navigation'
@@ -201,9 +203,17 @@ class Settings extends Component {
     }
    
 
-    handleWithdrawAlert(){
-        
-    }
+    handleSignoutOAlert(){
+        Alert.alert(
+           'Sign out',
+           'Are you sure you want to sign out?',
+          [
+            {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+            {text: 'Sign Out', onPress: () => this.handleSignOut()},
+          ]
+        )
+      }
+    
 
     handleShare(){
         Share.share({
@@ -218,8 +228,9 @@ class Settings extends Component {
                     <Text style={{color:'black',margin:15,marginTop:25}}>APP</Text>
                     <Divider style={{height:1,backgroundColor:'orange',width:width/1.1,alignSelf:'center'}}/>
                     {this.handlePlatform('Support',()=>{this.props.navigation.navigate('Support')})}
+                    {this.handlePlatform('Remove ads',()=>Linking.openURL("market://details?id=com.qcx.adFree"),{})}
                     {this.handlePlatform('Share Qcx',()=>this.handleShare(),{})}
-                    {this.handlePlatform('Sign Out',()=>this.refs.modalSignout.open(),{color:'red'})}
+                    {this.handlePlatform('Sign Out',()=>this.handleSignoutOAlert(),{color:'red'})}
                     <View style={{position:'absolute',bottom:0,width:width}}>
                         <AdMobBanner
                     adSize="smartBannerLandscape"
@@ -228,13 +239,6 @@ class Settings extends Component {
                     onAdFailedToLoad={error => console.error(error)} 
                     />
                     </View>
-                    <Modal style={[styles.modalConfirm,{alignItems:'center',justifyContent:'center'}]} backdrop={false} entry="top"  position={"top"} ref={"modalSignout"}>
-                        <Text style={[iOSUIKit.subhead,styles.text, {color: "white"}]}>Are you sure you want to sign out?</Text>
-                        <View style={{flexDirection:'row'}}>
-                            <Button onPress={()=>this.refs.modalSignout.close()} title="Cancel" buttonStyle={{backgroundColor:'#4ca64c',height:height/18,width:width/3,opacity:1}}/>
-                            <Button onPress={()=>this.handleSignOut()} title="SignOut" buttonStyle={{backgroundColor:'#ffb732',height:height/18,width:width/3,opacity:1}}/>
-                        </View>
-                    </Modal>
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
             </View>
             )

@@ -415,25 +415,28 @@ class Wallet extends Component {
             </View>
       )};
 
+
     handleTransactions(name){
         const {quadrigaUserTransactions} = this.props;
         if(quadrigaUserTransactions.length === 0){
         return (
-            <View style={{width:width,...Platform.select({ios:{height:(height/2-50)},android:{height:height/2-40}}),alignItems:'center',justifyContent:'center'}}>
+            <View style={{width:width,...Platform.select({ios:{height:(height/2-50)},android:{height:height/2.35-40}}),alignItems:'center',justifyContent:'center'}}>
                 <Text style={[iOSUIKit.title3,{fontWeight:'bold'}]}>You have no transactions</Text>
                 <Text style={{textAlign:'center',fontSize:16}}>{`\nBuy ${name} now and your\ntransactions will show here`}</Text>
             </View>
            )
         }else{
             return(
-                <FlatList
-                data={quadrigaUserTransactions}
-                extraData={this.props}
-                keyExtractor={this._keyExtractor}
-                renderItem={this._renderItem}
-                refreshing={this.state.refreshing}
-                onRefresh={()=>this.handleRefresh()}
-              />
+                <View style={{width:width,...Platform.select({ios:{height:(height/2-50)},android:{height:height/2.35-40}})}}>
+                    <FlatList
+                    data={quadrigaUserTransactions}
+                    extraData={this.props}
+                    keyExtractor={this._keyExtractor}
+                    renderItem={this._renderItem}
+                    refreshing={this.state.refreshing}
+                    onRefresh={()=>this.handleRefresh()}
+                />
+              </View>
             )
         }
     }
@@ -502,7 +505,7 @@ class Wallet extends Component {
         const {type,acronym,name,address} = this.props.navigation.state.params;
         return(
             <View style={styles.container}>
-            <View style={{ flexDirection: 'column', alignItems: 'center'}}>
+                <View contentContainerStyle={{ flexDirection: 'column', alignItems: 'center'}}>
                     <View style={{...Platform.select({ios:{height:height/2-60},android:{height:height/2-40}}),alignItems: 'center'}}>
                         <View style={{alignItems: 'center',width:width,height:(height/2-30)*0.45}}>
                             <Text style={[iOSUIKit.title3,{marginBottom:10,marginTop:20}]}>Your {name} wallet</Text>
@@ -518,13 +521,6 @@ class Wallet extends Component {
                         <Text style={[iOSUIKit.title3,{fontSize:22,marginTop:20}]}>Transactions</Text>
                     </View>
                     {this.handleTransactions(name)}
-                    <AdMobBanner
-                    adSize="smartBannerLandscape"
-                    adUnitID="ca-app-pub-8321262189259728/7083427459"
-                    testDevices={[AdMobBanner.simulatorId]}
-                    onAdFailedToLoad={error => console.error(error)} 
-                    />
-
                 </View>
                 <Modal 
                 style={styles.modalLookUp}
@@ -606,6 +602,12 @@ class Wallet extends Component {
                         <Button onPress={()=>this.confirmWithdraw()} title="Withdraw!" containerViewStyle={{position:'relative',top:25,width:150,height:50,}} buttonStyle={{backgroundColor:'orange'}}/>
                     </View>
                 </Modal>
+                <AdMobBanner
+                    adSize="smartBannerLandscape"
+                    adUnitID="ca-app-pub-8321262189259728/7083427459"
+                    testDevices={[AdMobBanner.simulatorId]}
+                    onAdFailedToLoad={error => console.error(error)} 
+                    />
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
               </View>
             )
