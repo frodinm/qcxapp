@@ -25,6 +25,7 @@ import {
   getQuadrigaTransactions
 } from 'account'
 import {setPin} from 'users'
+import I18n from 'react-native-i18n'
 
 const {height,width} = Dimensions.get('window')
 
@@ -207,7 +208,7 @@ class Pincode extends Component {
   render() {
     return (
       <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"}>
-      <Text style={{fontSize:30,color:'orange',marginBottom:50}}> Set up pin</Text>
+      <Text style={{fontSize:30,color:'orange',marginBottom:50}}> {I18n.t('setPin')}</Text>
       <View style={{flexDirection:'row'}}>
             <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
             <Animatable.View   useNativeDriver={true}  ref="view2" style={this.handlePin2Style()} />

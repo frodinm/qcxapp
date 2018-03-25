@@ -17,6 +17,7 @@ import {resetNavigation} from 'util'
 import {setPin} from 'users'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SplashScreen from 'react-native-splash-screen';
+import I18n from 'react-native-i18n'
 
 const {height,width} = Dimensions.get('window')
 const pinRef = null;
@@ -180,7 +181,7 @@ class AuthPincode extends Component {
     return (
       <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"} >
         <View style={{position:'relative',bottom:50,alignItems:'center'}}>
-          <Text style={{fontSize:18,color:'orange',marginBottom:50}}> Please enter your PIN</Text>
+          <Text style={{fontSize:18,color:'orange',marginBottom:50}}> {I18n.t('pin')}</Text>
           <View style={{flexDirection:'row'}}>
             <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
             <Animatable.View   useNativeDriver={true}  ref="view2" style={this.handlePin2Style()} />

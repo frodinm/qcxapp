@@ -10,6 +10,8 @@ import {
   Platform
 } from 'react-native'
 import { iOSUIKit } from 'react-native-typography'
+import I18n from 'react-native-i18n'
+
 
 const {height,width} = Dimensions.get('window');
 
@@ -40,9 +42,9 @@ export class ButtonComponent extends Component {
               <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
                 <View style={{flexDirection:'row'}}>
                   <View style={{flexDirection:'column'}}>
-                    <Text>High </Text>
-                    <Text>Low </Text>
-                    <Text>Last </Text>
+                    <Text>{I18n.t('high')} </Text>
+                    <Text>{I18n.t('low')} </Text>
+                    <Text>{I18n.t('last')} </Text>
                     <Text>Vmap </Text>
                   </View>
                   <View style={{flexDirection:'column'}}>

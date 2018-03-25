@@ -39,23 +39,30 @@ import {
 } from 'components'
 import {WebViewHelper} from 'util'
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
+import I18n from 'react-native-i18n'
 
 
 export const AuthenticatedRoute = TabNavigator({
     Quadriga: {
         screen: QuadrigaExchangeScreen,
         navigationOptions: {
-            headerTintColor: 'red', //here I mean that the tintColor will be have that value on the CURRENT(!) screen
-            }
+            tabBarLabel: I18n.t('exchange')
+        }
     },
     Accounts: {
-        screen: AccountsWalletsScreen
+        screen: AccountsWalletsScreen,
+        navigationOptions: {
+            tabBarLabel: I18n.t('accounts')
+        }
     },
     // Exchange: {
     //     screen: ChangellyExchangeScreen,
     // },
     Settings: {
-        screen: SettingsScreen
+        screen: SettingsScreen,
+        navigationOptions: {
+            tabBarLabel: I18n.t('settings')
+        }
     }
 }, {
     tabBarPosition: 'bottom',

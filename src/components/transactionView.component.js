@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import {connect} from 'react-redux'
 import { iOSUIKit } from 'react-native-typography'
+import I18n from 'react-native-i18n'
 
 const {height,width} = Dimensions.get('window');
 
@@ -16,7 +17,7 @@ export class TransactionView extends Component {
 
   handleData(data){
       return <View style={styles.container}>
-      <Text style={iOSUIKit.title3}>{"\n\n"}BTC Transactions (Past 20) {"\n\n"}</Text>
+      <Text style={iOSUIKit.title3}>{"\n\n"}{I18n.t('last20')} {"\n\n"}</Text>
       {data.map((e,index) => {
         return <View style={styles.textWrapper}  key={index}><Text style={iOSUIKit.body}>{e.amount + " " + e.price + " " + e.side}</Text></View>
       })}</View>

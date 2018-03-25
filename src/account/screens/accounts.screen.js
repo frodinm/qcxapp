@@ -20,7 +20,7 @@ import {connect} from 'react-redux'
 import {Logos,encryptAuthenticationQuadriga} from 'util';
 import Modal from 'react-native-modalbox';
 import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons'
-import i18n from 'i18n'
+import I18n from 'react-native-i18n'
 import {
   setUserFirstTime
 } from 'users'
@@ -99,7 +99,7 @@ class AccountsWallets extends Component {
       
     }
     return {
-         headerTitle: `Account`,
+         headerTitle: I18n.t('accounts').toUpperCase(),
         //  headerRight: <AddButtonComponent onPressAction={()=>navigation.state.params.add()}/>,  eventually add
          headerTitleStyle:{
               ...headerStyle
@@ -247,6 +247,14 @@ class AccountsWallets extends Component {
       }     
     }
 
+    handleTranslation(item){
+      if(I18n.locale.substring(0,2) === 'fr' || I18n.locale.substring(0,2) === 'it' ){
+        return `${I18n.t('wallet').toUpperCase()+" "+item.acronym.toUpperCase()}`
+      }else{
+        return `${item.acronym.toUpperCase()+" "+I18n.t('wallet').toUpperCase()}`
+      }
+    }
+
 
     handlePlatform(){
       const {userWallets} = this.props;
@@ -258,10 +266,10 @@ class AccountsWallets extends Component {
                 <TouchableNativeFeedback disabled={this.state.isDisabled} onPress={()=>this.handleQuadrigaPress(item)} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
                   <View style={{backgroundColor:'white',height:60,width:width,alignItems:'center',flexDirection:'row'}}>
                     <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
-                    <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
+                    <Text style={[iOSUIKit.subhead,{marginLeft:10}]}>{this.handleTranslation(item)} </Text>
                     <View style={{position:'absolute',right:10, flexDirection:'column'}}>
-                    <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} available</Text>
-                    <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} balance</Text>
+                    <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} {I18n.t('available')}</Text>
+                    <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} {I18n.t('balance')}</Text>
                     </View>
                   </View>
                 </TouchableNativeFeedback>         
@@ -278,8 +286,8 @@ class AccountsWallets extends Component {
                     <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                     <Text style={[iOSUIKit.caption,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
                     <View style={{position:'absolute',right:20, flexDirection:'column'}}>
-                      <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} available</Text>
-                      <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} balance</Text>
+                      <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('available')}</Text>
+                      <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('balance')}</Text>
                     </View>
                     <SimpleIcon name="arrow-right" style={{position: 'absolute',right:5,color:'#ffa500'}}/>
                   </View>
@@ -298,8 +306,8 @@ class AccountsWallets extends Component {
                   <Image resizeMode="contain" style={{height:40,width:40,marginLeft:20}} source={this.handleLogo(item.acronym)}/>
                   <Text style={[iOSUIKit.caption,{marginLeft:10}]}>{item.acronym.toUpperCase()} WALLET</Text>
                   <View style={{position:'absolute',right:20, flexDirection:'column'}}>
-                    <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} available</Text>
-                    <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} balance</Text>
+                    <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('available')}</Text>
+                    <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('balance')}</Text>
                   </View>
                   <SimpleIcon name="arrow-right" style={{position: 'absolute',right:5,color:'#ffa500'}}/>
                 </View>
@@ -316,7 +324,7 @@ class AccountsWallets extends Component {
     return (
       <View style={styles.container}>
       <ScrollView>
-          <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>Your QuadrigaCX wallets</Text>
+          <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>{I18n.t('accountQuadrigaTitle')}</Text>
           <Divider style={{height: 1, backgroundColor: '#ffe4b2',width:width/1.1,alignSelf:'center'}}/>
           {this.handlePlatform()}
           {/* <Text style={[iOSUIKit.body,{width:width,backgroundColor:'white',textAlign:'center',paddingTop:10,paddingBottom:10 }]}>Your Exchange wallets</Text>

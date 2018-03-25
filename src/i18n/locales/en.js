@@ -2,14 +2,24 @@
 
 
 export default {  
-    account: 'Account',
+    accounts: 'Accounts',
     exchange: 'Exchange',
     wallet: 'wallet',
+    settings: 'Settings',
+    support: 'Support',
+    share: 'Share Qcx',
+    signout: 'Sign Out',
+    cancel:'Cancel',
+    signoutMessage: 'Are you sure you want to sign out?',
+    pin: 'Please enter your PIN',
+    setPin:'Set up pin',
     available: 'available',
     balance: 'balance',
+    accountQuadrigaTitle: 'Your QuadrigaCX wallets',
     buyLower:'buy',// if its different then upper
     buyUpper:'Buy',
     sell:'sell',
+    last20:'BTC Transactions (Past 20)',
     withdraw:'withdraw',
     transactionsUpper: 'Transactions',
     transactionsLower: 'transactions',// if its different then upper
@@ -17,6 +27,9 @@ export default {
     toThisAddress:'to this address',
     goToAccount:'Go to account',
     quickSend:'Quick Send with Quadriga',
+    high: 'high',
+    low: 'low',
+    last: 'last',
     now:'now',
     and:'and',
     your:'your',
@@ -46,7 +59,6 @@ export default {
     you:'You',
     have:'have',
     no:'no',
-    cancel:'cancel',
     create:'create'
 
   };

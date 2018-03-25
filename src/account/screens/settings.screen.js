@@ -59,6 +59,7 @@ import QRCode from 'react-native-qrcode';
 import { iOSUIKit } from 'react-native-typography'
 import {Divider,Button} from 'react-native-elements'
 import {encryptAuthenticationQuadriga} from 'util';
+import I18n from 'react-native-i18n';
 
 const {height, width} = Dimensions.get('window');
 
@@ -205,11 +206,11 @@ class Settings extends Component {
 
     handleSignoutOAlert(){
         Alert.alert(
-           'Sign out',
-           'Are you sure you want to sign out?',
+           I18n.t('signout'),
+           I18n.t('signoutMessage'),
           [
-            {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-            {text: 'Sign Out', onPress: () => this.handleSignOut()},
+            {text: I18n.t('cancel'), onPress: () => {}, style: 'cancel'},
+            {text: I18n.t('signout'), onPress: () => this.handleSignOut()},
           ]
         )
       }
@@ -227,10 +228,9 @@ class Settings extends Component {
             <View style={styles.container}>
                     <Text style={{color:'black',margin:15,marginTop:25}}>APP</Text>
                     <Divider style={{height:1,backgroundColor:'orange',width:width/1.1,alignSelf:'center'}}/>
-                    {this.handlePlatform('Support',()=>{this.props.navigation.navigate('Support')})}
-                    {this.handlePlatform('Remove ads',()=>Linking.openURL("market://details?id=com.qcx.adFree"),{})}
-                    {this.handlePlatform('Share Qcx',()=>this.handleShare(),{})}
-                    {this.handlePlatform('Sign Out',()=>this.handleSignoutOAlert(),{color:'red'})}
+                    {this.handlePlatform(I18n.t('support'),()=>{this.props.navigation.navigate('Support')})}
+                    {this.handlePlatform(I18n.t('share'),()=>this.handleShare(),{})}
+                    {this.handlePlatform(I18n.t('signout'),()=>this.handleSignoutOAlert(),{color:'red'})}
                     <View style={{position:'absolute',bottom:0,width:width}}>
                         <AdMobBanner
                     adSize="smartBannerLandscape"

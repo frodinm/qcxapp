@@ -1,13 +1,15 @@
 export default {  
-    bitcoin:'Bitcoin', //If a transaction exists
-    bitcoinGold:'Bitcoin Gold',
-    bitcoinCash:'Bitcoin Cash',
-    ethereum: 'Ethereum',
-    litecoin:'Litecoin',
-    account: 'Conto',
+    accounts: 'Conti',
     exchange: 'Scambio',
-    wallet: 'portofoglio',
+    wallet: 'portafoglio',
+    settings: 'Impostazioni',
+    support: 'Supporto',
+    share: 'Condividere Qcx',
+    signout: 'Disconnessione',
     available: 'a disposizione',
+    cancel:'cancellare',
+    signoutMessage: 'Sei sicuro di volere uscire?',
+    accountQuadrigaTitle: 'Vostri portafogli QuadrigaCX',
     balance: 'bilancio',
     buyLower:'comprare',// if its different then upper
     buyUpper:'Comprare',
@@ -49,6 +51,5 @@ export default {
     you:'Tu',
     have:'hai',
     no:'no',
-    cancel:'cancellare',
     create:'creare'
   };
