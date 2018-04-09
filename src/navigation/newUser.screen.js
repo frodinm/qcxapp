@@ -10,21 +10,22 @@ import {
   ScrollView,
   StatusBar
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import Swiper from 'react-native-swiper'
-import {Button} from 'react-native-elements'
-import {AuthenticatedRoute} from 'navigation'
-import {connect} from 'react-redux'
-import {encryptAuthenticationQuadriga,resetNavigation} from 'util'
-import {iOSUIKit} from 'react-native-typography'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Swiper from 'react-native-swiper';
+import I18n from 'react-native-i18n';
+import {Button} from 'react-native-elements';
+import {AuthenticatedRoute} from 'navigation';
+import {connect} from 'react-redux';
+import {encryptAuthenticationQuadriga,resetNavigation} from 'util';
+import {iOSUIKit} from 'react-native-typography';
 import { Isao  } from 'react-native-textinput-effects';
-import {userLogin} from 'users'
-import ChangellyLogo from '../assets/img/quadrigacxlogo.png'
+import {userLogin} from 'users';
+import ChangellyLogo from '../assets/img/quadrigacxlogo.png';
 import DropdownAlert from 'react-native-dropdownalert';
 import SplashScreen from 'react-native-splash-screen';
 import {
   postUserQuadrigaBalance,
-} from 'account'
+} from 'account';
 
 const {height,width} = Dimensions.get('window')
 
@@ -72,7 +73,7 @@ class NewUser extends Component {
         if(quadrigaUserBalance.data.hasOwnProperty('error')){
           this.dropdown.alertWithType('error','Error', quadrigaUserBalance.data.error.message);
         }else{
-          this.dropdown.alertWithType('success','Awesome', 'Now you can set up your pin code. Please keep it secret!')
+          this.dropdown.alertWithType('success',I18n.t('successTitle'), I18n.t('successAlert'))
           setTimeout(()=>{
             userLoginDispatch(this.state.clientId,this.state.apiKey,this.state.privateKey)
             resetNavigation('PinCode',this.props.navigation)
@@ -114,23 +115,13 @@ class NewUser extends Component {
   render() {
     const {isLoggedIn,navigation} = this.props;
         return <Swiper style={styles.wrapper} loop={false} dotColor={'#000'} activeDotColor={'#da9733'}>
-        <View style={styles.slide1}>
-          <StatusBar
-          backgroundColor="orange"
-          />
-          <Text style={[iOSUIKit.body,styles.text]}>{`Easily trade, deposit,\n and withdraw on QuadrigaCX`}</Text>
-        </View>
-        {/* <View style={styles.slide1}>
-          <Image resizeMode="contain" source={ChangellyLogo} style={{height:100,width:250}}/>
-          <Text style={[iOSUIKit.body,styles.text]}>{`Easy and fast exchange to any of the supported cryptocurrencies on Changelly `}</Text>
-        </View> */}
         <KeyboardAwareScrollView behavior={'padding'} style={styles.slide2}>
         <View style={{marginTop:20}}>
           <Isao
             style={styles.textInputWrapper}
             labelStyle={styles.labelText}
             inputStyle={styles.textInput}
-            label={'Client Id'}
+            label={I18n.t('clientId')}
             activeColor={'#da9733'}
             passiveColor={'#000'}
             onChangeText={(value)=>this.handleClientId(value)}
@@ -139,7 +130,7 @@ class NewUser extends Component {
             style={styles.textInputWrapper}
             labelStyle={styles.labelText}
             inputStyle={styles.textInput}
-            label={'Api Key'}
+            label={I18n.t('apiKey')}
             activeColor={'#da9733'}
             passiveColor={'#000'}
             onChangeText={(value)=>this.handleApiKey(value)}
@@ -148,7 +139,7 @@ class NewUser extends Component {
             style={styles.textInputWrapper}
             labelStyle={styles.labelText}
             inputStyle={styles.textInput}
-            label={'Private Key'}
+            label={I18n.t('privateKey')}
             activeColor={'#da9733'}
             passiveColor={'#000'}
             onChangeText={(value) => this.handleprivateKey(value)}
@@ -157,17 +148,17 @@ class NewUser extends Component {
             <Button
             buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',}}
             textStyle={{textAlign: 'center'}}
-            title={`Get Started!`}
+            title={I18n.t('getStarted')}
             onPress={()=>this.handleLogin()}
             />
             <Button
-              buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',}}
+              buttonStyle={{backgroundColor: '#da9733',alignSelf:'center',paddingHorizontal:30}}
               textStyle={{textAlign: 'center'}}
-              title={`  Register    `}
+              title={I18n.t('register')}
               onPress={()=>navigation.navigate('Register')}
             />
           </View>
-          <Text style={styles.webViewHelper} onPress={this.handleGettingStarted}>Get your access keys</Text>
+          <Text style={styles.webViewHelper} onPress={this.handleGettingStarted}>{I18n.t('getAccessKeys')}</Text>
           </View>
           <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
         </KeyboardAwareScrollView>

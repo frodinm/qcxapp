@@ -18,6 +18,7 @@ import {setPin} from 'users'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SplashScreen from 'react-native-splash-screen';
 import I18n from 'react-native-i18n'
+import {NumberPad} from 'components'
 
 const {height,width} = Dimensions.get('window')
 const pinRef = null;
@@ -55,7 +56,7 @@ class AuthPincode extends Component {
     this.handleFocus = this.handleFocus.bind(this);
   }
   componentDidMount(){
-   this.refs.pin1.focus();
+  //  this.refs.pin1.focus();
   }
 
   componentWillUnmount(){
@@ -164,23 +165,31 @@ class AuthPincode extends Component {
       }
      }
   }
-  handlePinReference(e){
-    this.setState({
-      pinAuth: e
-    })
-    setTimeout(()=>{
-      if(e.length === 4){
-        this.handleClick()
-      }
-    },100)
+  handlePinReference(input){
+    if(this.state.pinAuth.length < 4){
+      this.setState({
+        pinAuth: this.state.pinAuth+input
+      })
+      setTimeout(()=>{
+        if(this.state.pinAuth.length === 4){
+          this.handleClick()
+        }
+      },100)
+   }
   }
   handleFocus(){
     console.log(this.refs.pin1.focus());
   }
+  handleDeleteLastInput(){
+    this.setState({
+      pinAuth:this.state.pinAuth.slice(0,this.state.pinAuth.length-1)
+    })
+    
+  }
   render() {
     return (
       <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"} >
-        <View style={{position:'relative',bottom:50,alignItems:'center'}}>
+        <View style={{  alignItems:'center',height:height/2,width,justifyContent:'center'}}>
           <Text style={{fontSize:18,color:'orange',marginBottom:50}}> {I18n.t('pin')}</Text>
           <View style={{flexDirection:'row'}}>
             <Animatable.View   useNativeDriver={true}  ref="view1" style={this.handlePin1Style()} />
@@ -189,7 +198,8 @@ class AuthPincode extends Component {
             <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
             </View>
         </View>
-          <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
+          <NumberPad addToPin={(input)=>this.handlePinReference(input)} removePinAuth={()=>this.handleDeleteLastInput()}/>
+          {/* <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/> */}
       </KeyboardAwareScrollView>
     );
   }
@@ -199,7 +209,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems:'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     backgroundColor: 'white',
   },
   welcome: {
@@ -214,6 +224,7 @@ const styles = StyleSheet.create({
   },
   pin:{
     opacity: 0,
+    position: 'absolute'
    
   },
   pin2:{

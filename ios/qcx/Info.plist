@@ -33,7 +33,7 @@
 	<key>CodePushDeploymentKey</key>
 	<string>x-E1r9067dGUqu9SSSWsY4IOOZL-rkfsuIN7f</string>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

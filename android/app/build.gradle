@@ -168,6 +168,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-touch-id')
     implementation project(':react-native-admob')
     implementation project(':react-native-i18n')
     implementation project(':react-native-code-push')

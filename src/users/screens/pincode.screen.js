@@ -108,7 +108,7 @@ class Pincode extends Component {
     const {navigation,setPinDispatch} = this.props;
     if(this.state.pinAuth.length === 4) {
         setPinDispatch(this.state.pinAuth);
-        this.dropdown.alertWithType('info', 'Info', `Your pin has been set to ${this.state.pinAuth}`);
+        this.dropdown.alertWithType('info', 'Info', `${I18n.t('setPinMessage')} ${this.state.pinAuth}`);
         setTimeout(()=>{
           resetNavigation('Auth',navigation)
         },2000)
@@ -215,7 +215,7 @@ class Pincode extends Component {
             <Animatable.View  useNativeDriver={true}  ref="view3" style={this.handlePin3Style()} />
             <Animatable.View  useNativeDriver={true}  ref="view4" style={this.handlePin4Style()} />
       </View>
-      {this.handlePlatform(()=>this.handleClick(),{backgroundColor:'orange',zIndex:5,borderRadius:5,height:60,width:120},'Confirm')}
+      {this.handlePlatform(()=>this.handleClick(),{backgroundColor:'orange',zIndex:5,borderRadius:5,height:60,width:120},I18n.t('setPinButton'))}
       <TextInput secureTextEntry={true} style={styles.pin}  selectionColor={'transparent'} underlineColorAndroid={'transparent'} maxLength={4} ref={'pin1'} keyboardType={'numeric'} onChangeText={(event) => { this.handlePinReference(event) }}/>
       <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref}  />
   </KeyboardAwareScrollView>

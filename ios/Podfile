@@ -23,6 +23,9 @@ target 'qcx' do
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+
+  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
+
   target 'qcxTests' do
     inherit! :search_paths
     # Pods for testing

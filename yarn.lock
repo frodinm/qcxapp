@@ -4995,6 +4995,10 @@ react-native-textinput-effects@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/react-native-textinput-effects/-/react-native-textinput-effects-0.4.2.tgz#05336a8ed9e4992397fc5de714692d774eb91b07"
 
+react-native-touch-id@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-touch-id/-/react-native-touch-id-4.0.1.tgz#f284410d16ae142c1bd539284bebf92f5ff6a8e2"
+
 react-native-typography@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-typography/-/react-native-typography-1.1.0.tgz#daa19998c69a6fecf764510a602dcc42c1601773"
