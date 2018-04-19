@@ -1,33 +1,25 @@
 import {
     StackNavigator,
     TabNavigator,
-    DrawerNavigator,
-} from 'react-navigation'
+} from 'react-navigation';
 import {
     NewUserScreen
-} from './newUser.screen'
+} from './newUser.screen';
 import {
     QuadrigaExchangeScreen,
     BuySellScreen,
     AccountsWalletsScreen,
     WalletScreen,
     ExchangeWalletScreen,
-    BuySellBTCScreen,
-    BuySellETHScreen,
-    BuySellBCHScreen,
-    BuySellBTGScreen,
-    BuySellLTCScreen,
     SettingsScreen,
     SupportScreen
-} from 'account'
+} from 'account';
 import {
-    ChangellyExchangeScreen,
     AddressExchangeScreen,
     ConfirmExchangeScreen,
     PayExchangeScreen
-} from 'exchange'
+} from 'exchange';
 import {
-    UsersScreen,
     NewUserFormScreen,
     RegisterScreen,
     PinCodeScreen,
@@ -36,10 +28,10 @@ import {
 } from 'users';
 import {
     CameraComponent
-} from 'components'
-import {WebViewHelper} from 'util'
+} from 'components';
+import { WebViewHelper } from 'util';
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
-import I18n from 'react-native-i18n'
+import I18n from 'react-native-i18n';
 
 
 export const AuthenticatedRoute = TabNavigator({
@@ -65,22 +57,22 @@ export const AuthenticatedRoute = TabNavigator({
         }
     }
 }, {
-    tabBarPosition: 'bottom',
-    swipeEnabled: false,
-    animationEnabled: false,
-    backBehavior: 'none',
-    tabBarOptions: {
-        labelStyle: {
-            fontSize: 12,
-        },
-        activeTintColor: '#fff',
-        inactiveTintColor:'#000',
-        style: {
-            backgroundColor: '#e9993b',
+        tabBarPosition: 'bottom',
+        swipeEnabled: false,
+        animationEnabled: false,
+        backBehavior: 'none',
+        tabBarOptions: {
+            labelStyle: {
+                fontSize: 12,
+            },
+            activeTintColor: '#fff',
+            inactiveTintColor: '#000',
+            style: {
+                backgroundColor: '#e9993b',
 
-        }
-    },
-})
+            }
+        },
+    });
 
 
 
@@ -99,32 +91,32 @@ const PinCodeRouting = StackNavigator({
         }
     },
 }, {
-    transitionConfig: getSlideFromRightTransition
-});
+        transitionConfig: getSlideFromRightTransition
+    });
 
 const ExchangeRouting = StackNavigator({
     ExchangeAddress: {
         screen: AddressExchangeScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
     ConfirmExchange: {
         screen: ConfirmExchangeScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
-    PayExchange:{
+    PayExchange: {
         screen: PayExchangeScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
 }, {
-    transitionConfig: getSlideFromRightTransition,
-    headerMode: 'none'
-});
+        transitionConfig: getSlideFromRightTransition,
+        headerMode: 'none'
+    });
 
 
 export const InitialRouting = StackNavigator({
@@ -138,7 +130,7 @@ export const InitialRouting = StackNavigator({
         screen: NewUserFormScreen,
         navigationOptions: {
             headerStyle: {
-                headerTintColor: 'black', 
+                headerTintColor: 'black',
                 backgroundColor: '#ff5d16'
             }
         }
@@ -146,7 +138,7 @@ export const InitialRouting = StackNavigator({
     Register: {
         screen: RegisterScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
             headerStyle: {
                 backgroundColor: '#ff5d16'
             }
@@ -155,7 +147,7 @@ export const InitialRouting = StackNavigator({
     PinCode: {
         screen: PinCodeRouting,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
     AuthPin: {
@@ -167,81 +159,57 @@ export const InitialRouting = StackNavigator({
     Auth: {
         screen: AuthenticatedRoute,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
-    btc: {
-        screen: BuySellBTCScreen,
-        navigationOptions: {
-            headerTintColor: 'black', 
-        }
-    },
-    eth: {
-        screen: BuySellETHScreen,
+    buySell: {
+        screen: BuySellScreen,
         navigationOptions: {
             headerTintColor: 'black',
-        },
-    },
-    bch: {
-        screen: BuySellBCHScreen,
-        navigationOptions: {
-            headerTintColor: 'black', 
         }
     },
-    btg:{
-        screen: BuySellBTGScreen,
-        navigationOptions: {
-            headerTintColor: 'black', 
-        }
-    },
-    ltc: {
-        screen: BuySellLTCScreen,
-        navigationOptions: {
-            headerTintColor: 'black', 
-        }
-    },
-    ExchangeAddress:{
+    ExchangeAddress: {
         screen: ExchangeRouting,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
-    CheckAddress:{
-      screen:WebViewHelper,
-      navigationOptions: {
-        headerTintColor: 'black', 
-    }
-      
+    CheckAddress: {
+        screen: WebViewHelper,
+        navigationOptions: {
+            headerTintColor: 'black',
+        }
+
     },
-    Camera:{
+    Camera: {
         screen: CameraComponent,
         navigationOptions: {
             header: null
         }
     },
-    Wallet:{
-        screen:WalletScreen,
+    Wallet: {
+        screen: WalletScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
-    ExchangeWallet:{
-        screen:ExchangeWalletScreen,
+    ExchangeWallet: {
+        screen: ExchangeWalletScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
         }
     },
-    Support:{
-        screen:SupportScreen,
+    Support: {
+        screen: SupportScreen,
         navigationOptions: {
-            headerTintColor: 'black', 
+            headerTintColor: 'black',
             headerStyle: {
                 backgroundColor: 'orange',
             },
         }
     }
 },
-{
-    transitionConfig: getSlideFromRightTransition,
-    
-})
+    {
+        transitionConfig: getSlideFromRightTransition,
+
+    });
