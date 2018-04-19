@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.facebook.react.ReactApplication;
+import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.sbugert.rnadmob.RNAdMobPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -47,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new BackgroundTaskPackage(),
             new FingerprintAuthPackage(),
             new RNAdMobPackage(),
             new RNI18nPackage(),
@@ -82,5 +84,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    BackgroundTaskPackage.useContext(this);
   }
 }
