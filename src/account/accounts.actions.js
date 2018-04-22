@@ -148,7 +148,7 @@ export const getQuadrigaTickersAll = () => {
       getTicketsQuadrigaAll().then((response) => {
         dispatch({ type: GET_QUADRIGA_TICKERS.SUCCESS, payload: response });
       }).catch((err) => {
-        dispatch({ type: GET_QUADRIGA_TICKERS.ERROR, payload: error });
+        dispatch({ type: GET_QUADRIGA_TICKERS.ERROR, payload: err });
       });
     }, 10000);
   };

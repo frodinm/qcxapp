@@ -1,0 +1,42 @@
+{
+    "project_info": {
+        "project_number": "509877231399",
+        "firebase_url": "https://qcx-quadrigacx-app.firebaseio.com",
+        "project_id": "qcx-quadrigacx-app",
+        "storage_bucket": "qcx-quadrigacx-app.appspot.com"
+    },
+    "client": [
+        {
+            "client_info": {
+                "mobilesdk_app_id": "1:509877231399:android:1f0e672ca30c6498",
+                "android_client_info": {
+                    "package_name": "com.qcx"
+                }
+            },
+            "oauth_client": [
+                {
+                    "client_id": "509877231399-mmrr8ssov9h4nod7buil144k22cbkugi.apps.googleusercontent.com",
+                    "client_type": 3
+                }
+            ],
+            "api_key": [
+                {
+                    "current_key": "AIzaSyDJ3izvA9RHDHWVeZHemwcqah7P1nTs_fo"
+                }
+            ],
+            "services": {
+                "analytics_service": {
+                    "status": 1
+                },
+                "appinvite_service": {
+                    "status": 1,
+                    "other_platform_oauth_client": []
+                },
+                "ads_service": {
+                    "status": 2
+                }
+            }
+        }
+    ],
+    "configuration_version": "1"
+}

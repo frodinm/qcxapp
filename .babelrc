@@ -1,23 +1,28 @@
 {
-  "presets": ["react-native"],
+  "presets": [
+    "react-native"
+  ],
   "retainLines": true,
   "plugins": [
-    ["module-resolver", {
-      "root": "./",
-      "alias": {
-        "api": "./src/api",
-        "components" : "./src/components",
-        "account": "./src/account",
-        "i18n":"./src/i18n",
-        "exchange": "./src/exchange",
-        "assets" : "./src/assets",
-        "orders" : "./src/orders",
-        "AppRedux" : "./src/rootRedux",
-        "users" : "./src/users",
-        "navigation" : "./src/navigation",
-        "util" : "./src/util",
-        "wallet" : "./src/wallet"
+    [
+      "module-resolver",
+      {
+        "root": "./",
+        "alias": {
+          "api": "./src/api",
+          "components": "./src/components",
+          "account": "./src/account",
+          "i18n": "./src/i18n",
+          "exchange": "./src/exchange",
+          "assets": "./src/assets",
+          "orders": "./src/orders",
+          "AppRedux": "./src/rootRedux",
+          "users": "./src/users",
+          "navigation": "./src/navigation",
+          "util": "./src/util",
+          "wallet": "./src/wallet"
+        }
       }
-    }]
+    ]
   ]
 }

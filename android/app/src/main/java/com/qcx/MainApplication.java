@@ -4,20 +4,18 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.facebook.react.ReactApplication;
-import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
+import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
+import org.reactnative.camera.RNCameraPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.sbugert.rnadmob.RNAdMobPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.tradle.react.UdpSocketsModule;
-import com.peel.react.TcpSocketsModule;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.sha256lib.Sha256Package;
 import com.bitgo.randombytes.RandomBytesPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
@@ -48,20 +46,18 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new BackgroundTaskPackage(),
+            new RNBackgroundFetchPackage(),
+            new FIRMessagingPackage(),
+            new RNCameraPackage(),
             new FingerprintAuthPackage(),
             new RNAdMobPackage(),
             new RNI18nPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             new VectorIconsPackage(),
-            new UdpSocketsModule(),
-            new TcpSocketsModule(),
             new SplashScreenReactPackage(),
             new Sha256Package(),
             new RandomBytesPackage(),
-            new ReactNativePushNotificationPackage(),
             new RNDeviceInfo(),
-            new RCTCameraPackage(),
             new LottiePackage(),
             new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appcenterCrashes_whenToSendCrashes)),
             new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appcenterAnalytics_whenToEnableAnalytics)),
@@ -84,6 +80,5 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    BackgroundTaskPackage.useContext(this);
   }
 }

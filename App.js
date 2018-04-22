@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import {
   NetInfo,
   AsyncStorage,
+  AppRegistry
 } from 'react-native';
 import './ReactotronConfig';
 import { InitialRouting } from 'navigation';
@@ -13,36 +14,60 @@ import { persistStore } from 'redux-persist';
 import codePush from 'react-native-code-push';
 import { configuredStore } from 'AppRedux';
 import { Provider } from 'react-redux';
-import { OfflineScreen } from 'util';
+import { OfflineScreen, registerKilledListener, registerAppListener } from 'util';
 import DeviceInfo from 'react-native-device-info';
 import md5 from 'md5';
 import createEncryptor from 'redux-persist-transform-encrypt';
-import PushNotification from 'react-native-push-notification';
-import BackgroundTask from 'react-native-background-task';
+import FCM from "react-native-fcm";
+import BackgroundFetch from "react-native-background-fetch";
 
-BackgroundTask.define(async () => {
-  // Fetch some data over the network which we want the user to have an up-to-
-  // date copy of, even if they have no network when using the app
-  const response = await fetch('http://feeds.bbci.co.uk/news/rss.xml')
-  const text = await response.text()
 
-  // Data persisted to AsyncStorage can later be accessed by the foreground app
-  await AsyncStorage.setItem('testData', text)
+function doAction() {
+  let timeout = 3000;
+  return new Promise(resolve => {
+    setTimeout(() => {
+      console.log(FCM);
+      FCM.createNotificationChannel({
+        id: 'default',
+        name: 'Default',
+        description: 'used for example',
+        priority: 'high'
+      });
+      FCM.scheduleLocalNotification({
+        channel: 'default',
+        id: 'testnotif',
+        fire_date: new Date().getTime() + 5000,
+        vibrate: 500,
+        title: 'Hello',
+        body: 'Test Scheduled Notification',
+        sub_text: 'sub text',
+        priority: "high",
+        large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
+        show_in_foreground: true,
+        picture: 'https://firebase.google.com/_static/af7ae4b3fc/images/firebase/lockup.png',
+        wake_screen: true,
+        extra1: { a: 1 },
+        extra2: 1
+      });
+      resolve();
+    }, timeout);
+  });
+}
 
-  // Remember to call finish()
-  BackgroundTask.finish()
-})
+let MyHeadlessTask = async () => {
+  console.log('- BackgroundFetch HeadlessTask start');
+  // Important:  await asychronous tasks when using HeadlessJS.
+  await doAction();
+  // Required:  Signal to native code that your task is complete.
+  // If you don't do this, your app could be terminated and/or assigned
+  // battery-blame for consuming too much time in background.
+  BackgroundFetch.finish();
+  console.log('- BackgroundFetch HeadlessTask finished');
+};
 
-PushNotification.configure({
-  onNotification: function (notification) {
-    console.log('NOTIFICATION:', notification);
 
-    // process the notification
 
-    // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
-    notification.finish(PushNotificationIOS.FetchResult.NoData);
-  },
-});
+registerKilledListener();
 
 class App extends Component {
   constructor() {
@@ -52,6 +77,8 @@ class App extends Component {
       isRehydrated: false,
     };
     this.handleConnectivityChange = this.handleConnectivityChange.bind(this);
+    this.scheduleLocalNotification = this.scheduleLocalNotification.bind(this);
+
 
     NetInfo.isConnected.fetch().then(isConnected => {
       if (isConnected === true) {
@@ -80,46 +107,139 @@ class App extends Component {
         this.setState({ isRehydrated: true });
       }
     );
+
+
   }
   async componentDidMount() {
-    const result = await AsyncStorage.getItem('testData');
-    console.log(result);
+    BackgroundFetch.configure({
+      minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+      stopOnTerminate: false,   // <-- Android-only,
+      startOnBoot: true,        // <-- Android-only
+      enableHeadless: true,
+    }, () => {
+      console.log("[js] Received background-fetch event");
 
-    this.checkStatus()
-    BackgroundTask.schedule({
-      period: 900, // Aim to run every 15 mins - more conservative on battery
-    })
+      FCM.scheduleLocalNotification({
+        channel: 'default',
+        id: 'testnotif',
+        fire_date: new Date().getTime() + 5000,
+        vibrate: 500,
+        title: 'Hello',
+        body: 'Test Scheduled Notification',
+        sub_text: 'sub text',
+        priority: "high",
+        large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
+        show_in_foreground: true,
+        picture: 'https://firebase.google.com/_static/af7ae4b3fc/images/firebase/lockup.png',
+        wake_screen: true,
+        extra1: { a: 1 },
+        extra2: 1
+      });
+      BackgroundFetch.finish();// Important
+    }, () => {
+      console.log("[js] RNBackgroundFetch failed to start");
+    });
+    BackgroundFetch.status((status) => {
+      switch (status) {
+        case BackgroundFetch.STATUS_RESTRICTED:
+          console.log("BackgroundFetch restricted");
+          break;
+        case BackgroundFetch.STATUS_DENIED:
+          console.log("BackgroundFetch denied");
+          break;
+        case BackgroundFetch.STATUS_AVAILABLE:
+          console.log("BackgroundFetch is enabled");
+          break;
+      }
+    });
 
-    PushNotification.localNotification({
-      /* Android Only Properties */
-      ticker: "My Notification Ticker", // (optional)
-      bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-      subText: "This is a subText", // (optional) default: none
-      tag: 'some_tag', // (optional) add tag to message
-      group: "group", // (optional) add group to message
 
-      /* iOS and Android properties */
-      title: "My Notification Title", // (optional)
-      message: "My Notification Message", // (required)
-      playSound: false, // (optional) default: true
-      actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
+
+    FCM.createNotificationChannel({
+      id: 'default',
+      name: 'Default',
+      description: 'used for example',
+      priority: 'high'
+    });
+    registerAppListener(this.props.navigation);
+    FCM.getInitialNotification().then(notif => {
+      console.log(notif);
+
+    });
+
+    try {
+      let result = await FCM.requestPermissions({ badge: false, sound: true, alert: true });
+      console.log(result);
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.scheduleLocalNotification();
+  }
+
+
+  showLocalNotification() {
+    FCM.presentLocalNotification({
+      channel: 'default',
+      id: new Date().valueOf().toString(),                // (optional for instant notification)
+      title: "Test Notification with action",             // as FCM payload
+      body: "Force touch to reply",                       // as FCM payload (required)
+      priority: "high",                                   // as FCM payload
+      click_action: "com.myapp.MyCategory",               // as FCM payload - this is used as category identifier on iOS.
+      badge: 10,                                          // as FCM payload IOS only, set 0 to clear badges
+      number: 10,                                         // Android only
+      ticker: "My Notification Ticker",                   // Android only
+      auto_cancel: true,                                  // Android only (default true)
+      large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",                           // Android only
+      icon: "ic_launcher",                                // as FCM payload, you can relace this with custom icon you put in mipmap
+      big_text: "Show when notification is expanded",     // Android only
+      sub_text: "This is a subText",                      // Android only
+      color: "red",                                       // Android only
+      vibrate: 300,                                       // Android only default: 300, no vibration if you pass 0
+      wake_screen: true,                                  // Android only, wake up screen when notification arrives
+      group: "group",                                     // Android only
+
+      ongoing: true,                                      // Android only
+
+
+      show_in_foreground: true                           // notification when app is in foreground (local & remote)
     });
   }
 
-  async checkStatus() {
-    const status = await BackgroundTask.statusAsync()
+  scheduleLocalNotification() {
+    FCM.scheduleLocalNotification({
+      channel: 'default',
+      id: 'testnotif',
+      fire_date: new Date().getTime() + 5000,
+      vibrate: 500,
+      title: 'Hello',
+      body: 'Test Scheduled Notification',
+      sub_text: 'sub text',
+      priority: "high",
+      large_icon: "https://image.freepik.com/free-icon/small-boy-cartoon_318-38077.jpg",
+      show_in_foreground: true,
+      picture: 'https://firebase.google.com/_static/af7ae4b3fc/images/firebase/lockup.png',
+      wake_screen: true,
+      extra1: { a: 1 },
+      extra2: 1
+    });
+  }
 
-    if (status.available) {
-      // Everything's fine
-      return
-    }
-
-    const reason = status.unavailableReason
-    if (reason === BackgroundTask.UNAVAILABLE_DENIED) {
-      Alert.alert('Denied', 'Please enable background "Background App Refresh" for this app')
-    } else if (reason === BackgroundTask.UNAVAILABLE_RESTRICTED) {
-      Alert.alert('Restricted', 'Background tasks are restricted on your device')
-    }
+  showLocalNotificationWithAction() {
+    FCM.presentLocalNotification({
+      title: 'Test Notification with action',
+      body: 'Force touch to reply',
+      priority: "high",
+      show_in_foreground: true,
+      click_action: "com.myidentifi.fcm.text", // for ios
+      android_actions: JSON.stringify([{
+        id: "view",
+        title: 'view'
+      }, {
+        id: "dismiss",
+        title: 'dismiss'
+      }]) // for android, take syntax similar to ios's. only buttons are supported
+    });
   }
 
   handleConnectivityChange(isConnected) {
@@ -151,5 +271,7 @@ class App extends Component {
     );
   }
 }
+
+AppRegistry.registerHeadlessTask('BackgroundFetch', () => MyHeadlessTask);
 
 export default MyApp = codePush(App);

@@ -1,6 +1,7 @@
 package com.qcx;
 
 import android.os.Bundle;
+import android.content.Intent;
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen;
 
@@ -16,9 +17,13 @@ public class MainActivity extends ReactActivity {
         SplashScreen.show(this);  // here
         super.onCreate(savedInstanceState);
     }
-
     @Override
     protected String getMainComponentName() {
         return "qcx";
+    }
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }

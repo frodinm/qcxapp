@@ -145,7 +145,7 @@ class BuySell extends Component {
         trading={{
           apiKey,
           clientId,
-          secret,
+          secret: privateKey,
           token,
           quadrigaUserOrdersLookup,
           quadrigaUserOrders,

@@ -34,7 +34,6 @@ import {
   AdMobBanner,
 } from 'react-native-admob'
 import { iOSUIKit } from 'react-native-typography'
-import { isAbsolute } from 'path';
 
 const { height, width } = Dimensions.get('window');
 

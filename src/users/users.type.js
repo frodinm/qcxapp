@@ -1,5 +1,4 @@
-import {createAction} from 'util';
-import { create } from 'domain';
+import { createAction } from 'util';
 
 export const USER_AUTH = createAction('USER_AUTH');
 export const USER_SIGNOUT = createAction('USER_SIGNOUT');

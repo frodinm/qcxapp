@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Platform,
     StyleSheet,
@@ -8,11 +8,11 @@ import {
     Dimensions,
     StatusBar
 } from 'react-native';
-import {TransactionView, Modules, Orders} from 'components'
+import { TransactionView, Modules, Orders } from 'components'
 import Icon from 'react-native-vector-icons/dist/Foundation'
-import {Button, Header} from 'react-native-elements'
-import {connect} from 'react-redux'
-import {encryptAuthenticationQuadriga} from 'util'
+import { Button, Header } from 'react-native-elements'
+import { connect } from 'react-redux'
+import { encryptAuthenticationQuadriga } from 'util'
 
 import {
     getQuadrigaTickersAll,
@@ -20,7 +20,7 @@ import {
     postUserOpenOrdersQuadriga
 } from 'account'
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 let colorChangeBTC = 'white';
 let colorChangeETH = 'white';
 let colorChangeBCH = 'white';
@@ -30,27 +30,27 @@ let colorChangeLTC = 'white';
 
 const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
-    clientId:state.user.clientId,
-    privateKey:state.user.privateKey,
+    clientId: state.user.clientId,
+    privateKey: state.user.privateKey,
     quadrigaTickers: state.account.quadrigaTickers,
     quadrigaTransactions: state.account.quadrigaTransactions,
     quadrigaUserBalance: state.account.quadrigaUserBalance
 })
 const mapDispatchToProps = (dispatch) => ({
-    getQuadrigaTickersDispatch: ()=>{dispatch(getQuadrigaTickers())},
+    getQuadrigaTickersDispatch: () => { dispatch(getQuadrigaTickers()) },
     postUserQuadrigaBalanceDispatch: (key, sign, nonce) => {
         dispatch(postUserQuadrigaBalance(key, sign, nonce))
     },
     postUserOpenOrdersQuadrigaDispatch: (key, sign, nonce) => {
         dispatch(postUserOpenOrdersQuadriga(key, sign, nonce))
     },
-    getQuadrigaTickersAllDispatch: ()=>{dispatch(getQuadrigaTickersAll())}
+    getQuadrigaTickersAllDispatch: () => { dispatch(getQuadrigaTickersAll()) }
 })
 
 
 class QuadrigaExchange extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             nonce: null,
             interval: null,
@@ -58,16 +58,12 @@ class QuadrigaExchange extends Component {
         this.handleGetTicker = this.handleGetTicker.bind(this);
         this.handleGetBalance = this.handleGetBalance.bind(this);
         this.handleBalance = this.handleBalance.bind(this);
+        props.getQuadrigaTickersAllDispatch();
+    }
 
-    }
-    componentWillMount() {
-        const {getQuadrigaTickersAllDispatch} = this.props;
-        getQuadrigaTickersAllDispatch();
-        console.log(this.props.quadrigaTickers)
-    }
     componentWillReceiveProps(nextProps) {
         if (nextProps.quadrigaTickers.data.btc_cad.last != this.props.quadrigaTickers.data.btc_cad.last) {
-            this.props.navigation.setParams({btcTicker: `${Math.round(nextProps.quadrigaTickers.data.btc_cad.last)} `});
+            this.props.navigation.setParams({ btcTicker: `${Math.round(nextProps.quadrigaTickers.data.btc_cad.last)} ` });
         }
     }
 
@@ -100,15 +96,15 @@ class QuadrigaExchange extends Component {
 
     }
 
-    
+
     handleGetBalance() {
-        const {postUserQuadrigaBalanceDispatch,apiKey,clientId,privateKey} = this.props;
+        const { postUserQuadrigaBalanceDispatch, apiKey, clientId, privateKey } = this.props;
         const nonce = Date.now();
         postUserQuadrigaBalanceDispatch(apiKey, encryptAuthenticationQuadriga(nonce, clientId, apiKey, privateKey), nonce);
     }
 
     handleGetTicker() {
-        const {quadrigaTickerBTC} = this.props;
+        const { quadrigaTickerBTC } = this.props;
         if (quadrigaTickerBTC === " ") {
             return "..."
         } else {
@@ -117,15 +113,15 @@ class QuadrigaExchange extends Component {
     }
 
     handleBalance() {
-        const {quadrigaUserBalance} = this.props;
+        const { quadrigaUserBalance } = this.props;
         if (quadrigaUserBalance === null) {
             return "..."
         } else {
             return `${quadrigaUserBalance.btc_balance}`
         }
-    }  
+    }
 
-    static navigationOptions = ({navigation}) => {
+    static navigationOptions = ({ navigation }) => {
         const headerStyle = {
             alignSelf: 'center',
             color: 'white',
@@ -140,14 +136,14 @@ class QuadrigaExchange extends Component {
                 headerStyle: {
                     backgroundColor: 'orange'
                 },
-                tabBarLabel: 'Quadriga',            
+                tabBarLabel: 'Quadriga',
                 tabBarIcon: ({ tintColor }) => (
-                <Icon
-                    name="bitcoin-circle"
-                    color={tintColor}
-                    size={30}
-                />
-              ),
+                    <Icon
+                        name="bitcoin-circle"
+                        color={tintColor}
+                        size={30}
+                    />
+                ),
             }
         } else {
             return {
@@ -160,32 +156,32 @@ class QuadrigaExchange extends Component {
                 },
                 tabBarLabel: 'Quadriga',
                 tabBarIcon: ({ tintColor }) => (
-                <Icon
-                    name="bitcoin-circle"
-                    color={tintColor}
-                    size={30}
-                />
-              ),
+                    <Icon
+                        name="bitcoin-circle"
+                        color={tintColor}
+                        size={30}
+                    />
+                ),
             }
         }
 
     };
 
     render() {
-        const {quadrigaTransactions,quadrigaTickers} = this.props;
+        const { quadrigaTransactions, quadrigaTickers } = this.props;
         return (
-            <ScrollView style={{height: height, width: width, backgroundColor: '#fff', flex: 1}}>
+            <ScrollView style={{ height: height, width: width, backgroundColor: '#fff', flex: 1 }}>
                 <StatusBar
                     animated
                     backgroundColor={'#ff8433'}
-                    />
+                />
                 <ScrollView contentContainerStyle={styles.container}>
                     <Modules colorBTC={colorChangeBTC} colorETH={colorChangeETH} colorBCH={colorChangeBCH}
-                             colorBTG={colorChangeBTG} colorLTC={colorChangeLTC} navigation={this.props.navigation}
-                             dataBTC={quadrigaTickers.data.btc_cad} dataETH={quadrigaTickers.data.eth_cad} dataBCH={quadrigaTickers.data.bch_cad}
-                             dataBTG={quadrigaTickers.data.btg_cad} dataLTC={quadrigaTickers.data.ltc_cad}
-                             />
-                    <TransactionView data={quadrigaTransactions}/>
+                        colorBTG={colorChangeBTG} colorLTC={colorChangeLTC} navigation={this.props.navigation}
+                        dataBTC={quadrigaTickers.data.btc_cad} dataETH={quadrigaTickers.data.eth_cad} dataBCH={quadrigaTickers.data.bch_cad}
+                        dataBTG={quadrigaTickers.data.btg_cad} dataLTC={quadrigaTickers.data.ltc_cad}
+                    />
+                    <TransactionView data={quadrigaTransactions} />
                 </ScrollView>
             </ScrollView>
         );

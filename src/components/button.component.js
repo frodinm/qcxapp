@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import {
   View,
   StyleSheet,
@@ -13,10 +13,10 @@ import { iOSUIKit } from 'react-native-typography'
 import I18n from 'react-native-i18n'
 
 
-const {height,width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 export class ButtonComponent extends Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {
@@ -24,53 +24,53 @@ export class ButtonComponent extends Component {
     }
   }
 
-  handleDisable(onPressAction){
-    this.setState({isDisabled:true})
+  handleDisable(onPressAction) {
+    this.setState({ isDisabled: true })
     onPressAction();
-    setTimeout(()=>{
-      this.setState({isDisabled:false})
-    },1000)
+    setTimeout(() => {
+      this.setState({ isDisabled: false })
+    }, 1000)
   }
 
 
-  handlePlatform(tokenData,imageSource,color,onPressAction,buttonStyle){
-    if(Platform.OS === 'android'){
-        if(TouchableNativeFeedback.canUseNativeForeground()){
-          return(
-            <TouchableNativeFeedback disabled={this.state.isDisabled} onPress={()=>this.handleDisable(onPressAction)} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
-              <View style={{...buttonStyle,marginTop:10,backgroundColor:color}} pointerEvents='box-only' >
-              <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
-                <View style={{flexDirection:'row'}}>
-                  <View style={{flexDirection:'column'}}>
-                    <Text>{I18n.t('high')} </Text>
-                    <Text>{I18n.t('low')} </Text>
-                    <Text>{I18n.t('last')} </Text>
-                    <Text>Vmap </Text>
-                  </View>
-                  <View style={{flexDirection:'column'}}>
-                    <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
-                    <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
-                    <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
-                    <Text style={iOSUIKit.caption}>{parseFloat(tokenData.vwap).toFixed(2)}</Text>
-                  </View>
+  handlePlatform(tokenData, imageSource, color, onPressAction, buttonStyle) {
+    if (Platform.OS === 'android') {
+      if (TouchableNativeFeedback.canUseNativeForeground()) {
+        return (
+          <TouchableNativeFeedback disabled={this.state.isDisabled} onPress={() => this.handleDisable(onPressAction)} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+            <View style={{ ...buttonStyle, marginTop: 10, backgroundColor: color }} pointerEvents='box-only' >
+              <Image style={{ height: 50, width: 50, marginBottom: 5 }} resizeMode="contain" source={imageSource} />
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column' }}>
+                  <Text>{I18n.t('high')} </Text>
+                  <Text>{I18n.t('low')} </Text>
+                  <Text>{I18n.t('last')} </Text>
+                  <Text>Vmap </Text>
+                </View>
+                <View style={{ flexDirection: 'column' }}>
+                  <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
+                  <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
+                  <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
+                  <Text style={iOSUIKit.caption}>{parseFloat(tokenData.vwap).toFixed(2)}</Text>
                 </View>
               </View>
+            </View>
           </TouchableNativeFeedback>
-          )
-      }else{
-        return(
-            <View style={{margin:5,marginTop:10}}>
-            <TouchableHighlight disabled={this.state.isDisabled} onPress={()=>this.handleDisable(onPressAction)}>
-              <View style={{...buttonStyle,backgroundColor:color}} pointerEvents='box-only' >
-              <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
-                <View style={{flexDirection:'row'}}>
-                  <View style={{flexDirection:'column'}}>
+        )
+      } else {
+        return (
+          <View style={{ margin: 5, marginTop: 10 }}>
+            <TouchableHighlight disabled={this.state.isDisabled} onPress={() => this.handleDisable(onPressAction)}>
+              <View style={{ ...buttonStyle, backgroundColor: color }} pointerEvents='box-only' >
+                <Image style={{ height: 50, width: 50, marginBottom: 5 }} resizeMode="contain" source={imageSource} />
+                <View style={{ flexDirection: 'row' }}>
+                  <View style={{ flexDirection: 'column' }}>
                     <Text>High </Text>
                     <Text>Low </Text>
                     <Text>Last </Text>
                     <Text>Vmap </Text>
                   </View>
-                  <View style={{flexDirection:'column'}}>
+                  <View style={{ flexDirection: 'column' }}>
                     <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
                     <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
                     <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
@@ -78,65 +78,65 @@ export class ButtonComponent extends Component {
                   </View>
                 </View>
               </View>
-          </TouchableHighlight>
+            </TouchableHighlight>
           </View>
         )
       }
-    }else{
-      return(
-        <View style={{margin:5,marginTop:10}}>
-        <TouchableHighlight disabled={this.state.isDisabled} onPress={()=>this.handleDisable(onPressAction)}>
-          <View style={{...buttonStyle,backgroundColor:color}} pointerEvents='box-only' >
-          <Image style={{height:50,width:50,marginBottom:5}} resizeMode="contain"  source={imageSource}/>
-            <View style={{flexDirection:'row'}}>
-              <View style={{flexDirection:'column'}}>
-                <Text>High </Text>
-                <Text>Low </Text>
-                <Text>Last </Text>
-                <Text>Vmap </Text>
-              </View>
-              <View style={{flexDirection:'column'}}>
-                <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
-                <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
-                <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
-                <Text style={iOSUIKit.caption}>{parseFloat(tokenData.vwap).toFixed(2)}</Text>
+    } else {
+      return (
+        <View style={{ margin: 5, marginTop: 10 }}>
+          <TouchableHighlight disabled={this.state.isDisabled} onPress={() => this.handleDisable(onPressAction)}>
+            <View style={{ ...buttonStyle, backgroundColor: color }} pointerEvents='box-only' >
+              <Image style={{ height: 50, width: 50, marginBottom: 5 }} resizeMode="contain" source={imageSource} />
+              <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column' }}>
+                  <Text>High </Text>
+                  <Text>Low </Text>
+                  <Text>Last </Text>
+                  <Text>Vmap </Text>
+                </View>
+                <View style={{ flexDirection: 'column' }}>
+                  <Text style={iOSUIKit.caption}>{tokenData.high}</Text>
+                  <Text style={iOSUIKit.caption}>{tokenData.low}</Text>
+                  <Text style={iOSUIKit.caption}>{tokenData.last}</Text>
+                  <Text style={iOSUIKit.caption}>{parseFloat(tokenData.vwap).toFixed(2)}</Text>
+                </View>
               </View>
             </View>
-          </View>
-      </TouchableHighlight>
-      </View>
+          </TouchableHighlight>
+        </View>
       )
     }
   }
-  
-  render(){
-    const {tokenData,imageSource,color,onPressAction,buttonStyle} = this.props
-    return(
+
+  render() {
+    const { tokenData, imageSource, color, onPressAction, buttonStyle } = this.props
+    return (
       <View>
-          {this.handlePlatform(tokenData,imageSource,color,onPressAction,buttonStyle)}
+        {this.handlePlatform(tokenData, imageSource, color, onPressAction, buttonStyle)}
       </View>
     )
-  } 
+  }
 
 }
 
 
 const styles = new StyleSheet.create({
-  container : {
-      flex:1,
-      flexDirection: 'column',
-      alignItems:'center'
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
   },
-  orderInfo:{
-    fontSize:18
+  orderInfo: {
+    fontSize: 18
   },
-  title:{
-    fontSize:20,
+  title: {
+    fontSize: 20,
     color: 'black'
   },
-  titleSmaller:{
-    fontSize:15,
-    color:'black'
+  titleSmaller: {
+    fontSize: 15,
+    color: 'black'
   }
 })
 

@@ -26,6 +26,13 @@ target 'qcx' do
 
   pod 'TouchID', :path => '../node_modules/react-native-touch-id'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+  pod 'react-native-fcm', :path => '../node_modules/react-native-fcm'
+
+
+  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
+
   target 'qcxTests' do
     inherit! :search_paths
     # Pods for testing

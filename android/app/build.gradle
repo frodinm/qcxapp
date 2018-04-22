@@ -101,18 +101,18 @@ def getPassword(String currentUser, String keyChain) {
       stdout.toString().trim()
 }
 
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 def pass = getPassword("frodinm","android_keystore")
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     dexOptions {
         jumboMode true
@@ -120,9 +120,10 @@ android {
     defaultConfig {
         applicationId "com.qcx"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 7
-        versionName "1.0.6"
+        versionName "1.0.7"
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -167,27 +168,32 @@ android {
     }
 }
 
+configurations.all {
+        resolutionStrategy.force 'com.android.support:support-core-utils:26.1.0'
+        resolutionStrategy.force 'com.android.support:support-core-ui:26.1.0'
+    }
+
 dependencies {
-    implementation project(':react-native-background-task')
+    implementation project(':react-native-background-fetch')
+    implementation project(':react-native-fcm')
+    implementation project(':react-native-camera')
     implementation project(':react-native-touch-id')
     implementation project(':react-native-admob')
     implementation project(':react-native-i18n')
     implementation project(':react-native-code-push')
     implementation project(':react-native-vector-icons')
-    implementation project(':react-native-udp')
-    implementation project(':react-native-tcp')
     implementation project(':react-native-splash-screen')
     implementation project(':react-native-sha256')
     implementation project(':react-native-randombytes')
-    implementation project(':react-native-push-notification')
     implementation project(':react-native-device-info')
-    implementation project(':react-native-camera')
     implementation project(':lottie-react-native')
     implementation project(':appcenter-crashes')
     implementation project(':appcenter-analytics')
     implementation project(':appcenter')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:26.1.0"
+    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
 
@@ -197,3 +203,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply plugin: 'com.google.gms.google-services'

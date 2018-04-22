@@ -70,6 +70,8 @@
 		E2A4F00794A8422EA8C1630E /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3196D2484C264C07AC9C2A00 /* FontAwesome.ttf */; };
 		EF1AEEB30CEF48FBBF7F2C31 /* libRNAdMobManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A89696A429A746C5AE794C41 /* libRNAdMobManager.a */; };
 		F845C40419FD41AE90A3F2AA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05648A67CC424B409DAABE03 /* MaterialCommunityIcons.ttf */; };
+		A0E64A8F20184CFE8FBE4F74 /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BB70FA388544D48D60D2A6 /* TSBackgroundFetch.framework */; };
+		FBBF9F1DC1BF4DAFB8524E08 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FFA1482720934CC2A20188C6 /* RNBackgroundFetch+AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -597,6 +599,8 @@
 		EB48C135BBB54681A81B8582 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		F0BBFEFEBA6249A2833AD851 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		F6109092444BFB6DE11EDD1C /* Pods-qcx-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-qcx-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-qcx-tvOS/Pods-qcx-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		C5BB70FA388544D48D60D2A6 /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; name = "TSBackgroundFetch.framework"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/TSBackgroundFetch.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		FFA1482720934CC2A20188C6 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -641,6 +645,7 @@
 				5E855323C63B45FD996A2E0E /* libRNVectorIcons.a in Frameworks */,
 				EF1AEEB30CEF48FBBF7F2C31 /* libRNAdMobManager.a in Frameworks */,
 				83BA6C8682E964E8238E6265 /* libPods-qcx.a in Frameworks */,
+				A0E64A8F20184CFE8FBE4F74 /* TSBackgroundFetch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,6 +935,7 @@
 				07894F35202F84D300D401F4 /* Asset 13xxxhdpi.png */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				FFA1482720934CC2A20188C6 /* RNBackgroundFetch+AppDelegate.m */,
 			);
 			name = qcx;
 			sourceTree = "<group>";
@@ -1069,6 +1075,7 @@
 				E4EF726D7E3A8570CFDDABC4 /* libPods-qcx-tvOS.a */,
 				9C0FC649463483004C3F2E31 /* libPods-qcx-tvOSTests.a */,
 				DE5098FDC465623CA65F8DA6 /* libPods-qcxTests.a */,
+				C5BB70FA388544D48D60D2A6 /* TSBackgroundFetch.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1196,6 +1203,11 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = DXVK95TC7H;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = true;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -2032,6 +2044,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				FBBF9F1DC1BF4DAFB8524E08 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2124,6 +2137,9 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/qcx.app/qcx";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+				);
 			};
 			name = Debug;
 		};
@@ -2163,6 +2179,9 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/qcx.app/qcx";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+				);
 			};
 			name = Release;
 		};
@@ -2203,6 +2222,9 @@
 				PRODUCT_NAME = qcx;
 				SKIP_INSTALL = NO;
 				VERSIONING_SYSTEM = "apple-generic";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+				);
 			};
 			name = Debug;
 		};
@@ -2243,6 +2265,9 @@
 				PRODUCT_NAME = qcx;
 				SKIP_INSTALL = NO;
 				VERSIONING_SYSTEM = "apple-generic";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+				);
 			};
 			name = Release;
 		};
@@ -2291,6 +2316,9 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+				);
 			};
 			name = Debug;
 		};
@@ -2339,6 +2367,9 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+				);
 			};
 			name = Release;
 		};
