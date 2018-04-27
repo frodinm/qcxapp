@@ -191,33 +191,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     backgroundColor: 'white',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  pin: {
-    opacity: 0,
-    position: 'absolute'
-
-  },
-  pin2: {
-    ...pinStyle,
-
-  },
-  pin3: {
-    ...pinStyle,
-
-  },
-  pin4: {
-    ...pinStyle,
-
   }
 });
 

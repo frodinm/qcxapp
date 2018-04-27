@@ -28,7 +28,6 @@ const pinStyle = {
   width: 13,
   marginRight: 10,
   marginLeft: 10,
-  marginBottom: height / 6,
   borderRadius: 50,
   borderWidth: 1,
   borderColor: 'black',
@@ -200,7 +199,7 @@ class Pincode extends Component {
   render() {
     return (
       <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps={"always"}>
-        <View style={{ alignItems: 'center', height: height / 2 - 75, width, justifyContent: 'center' }}>
+        <View style={{ alignItems: 'center', height: height / 2 - 80, width, justifyContent: 'center' }}>
           <Text style={{ fontSize: 18, color: 'orange', marginBottom: 50 }}> {I18n.t('pin')}</Text>
           <View style={{ flexDirection: 'row' }}>
             <Animatable.View useNativeDriver={true} ref="view1" style={this.handlePin1Style()} />
