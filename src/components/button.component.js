@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,9 +8,9 @@ import {
   TouchableNativeFeedback,
   TouchableHighlight,
   Platform
-} from 'react-native'
-import { iOSUIKit } from 'react-native-typography'
-import I18n from 'react-native-i18n'
+} from 'react-native';
+import { iOSUIKit } from 'react-native-typography';
+import I18n from 'react-native-i18n';
 
 
 const { height, width } = Dimensions.get('window');
@@ -21,23 +21,14 @@ export class ButtonComponent extends Component {
 
     this.state = {
       isDisabled: false
-    }
+    };
   }
-
-  handleDisable(onPressAction) {
-    this.setState({ isDisabled: true })
-    onPressAction();
-    setTimeout(() => {
-      this.setState({ isDisabled: false })
-    }, 1000)
-  }
-
 
   handlePlatform(tokenData, imageSource, color, onPressAction, buttonStyle) {
     if (Platform.OS === 'android') {
       if (TouchableNativeFeedback.canUseNativeForeground()) {
         return (
-          <TouchableNativeFeedback disabled={this.state.isDisabled} onPress={() => this.handleDisable(onPressAction)} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
+          <TouchableNativeFeedback disabled={this.props.isModuleButtonPressed} onPress={() => onPressAction()} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
             <View style={{ ...buttonStyle, marginTop: 10, backgroundColor: color }} pointerEvents='box-only' >
               <Image style={{ height: 50, width: 50, marginBottom: 5 }} resizeMode="contain" source={imageSource} />
               <View style={{ flexDirection: 'row' }}>
@@ -56,18 +47,18 @@ export class ButtonComponent extends Component {
               </View>
             </View>
           </TouchableNativeFeedback>
-        )
+        );
       } else {
         return (
           <View style={{ margin: 5, marginTop: 10 }}>
-            <TouchableHighlight disabled={this.state.isDisabled} onPress={() => this.handleDisable(onPressAction)}>
+            <TouchableHighlight disabled={this.props.isModuleButtonPressed} onPress={() => onPressAction()}>
               <View style={{ ...buttonStyle, backgroundColor: color }} pointerEvents='box-only' >
                 <Image style={{ height: 50, width: 50, marginBottom: 5 }} resizeMode="contain" source={imageSource} />
                 <View style={{ flexDirection: 'row' }}>
                   <View style={{ flexDirection: 'column' }}>
-                    <Text>High </Text>
-                    <Text>Low </Text>
-                    <Text>Last </Text>
+                    <Text>{I18n.t('high')} </Text>
+                    <Text>{I18n.t('low')} </Text>
+                    <Text>{I18n.t('last')} </Text>
                     <Text>Vmap </Text>
                   </View>
                   <View style={{ flexDirection: 'column' }}>
@@ -80,12 +71,12 @@ export class ButtonComponent extends Component {
               </View>
             </TouchableHighlight>
           </View>
-        )
+        );
       }
     } else {
       return (
         <View style={{ margin: 5, marginTop: 10 }}>
-          <TouchableHighlight disabled={this.state.isDisabled} onPress={() => this.handleDisable(onPressAction)}>
+          <TouchableHighlight disabled={this.props.isModuleButtonPressed} onPress={() => onPressAction()}>
             <View style={{ ...buttonStyle, backgroundColor: color }} pointerEvents='box-only' >
               <Image style={{ height: 50, width: 50, marginBottom: 5 }} resizeMode="contain" source={imageSource} />
               <View style={{ flexDirection: 'row' }}>
@@ -104,39 +95,20 @@ export class ButtonComponent extends Component {
               </View>
             </View>
           </TouchableHighlight>
-        </View>
-      )
+        </View >
+      );
     }
   }
 
   render() {
-    const { tokenData, imageSource, color, onPressAction, buttonStyle } = this.props
+    const { tokenData, imageSource, color, onPressAction, buttonStyle } = this.props;
     return (
       <View>
         {this.handlePlatform(tokenData, imageSource, color, onPressAction, buttonStyle)}
       </View>
-    )
+    );
   }
 
 }
 
-
-const styles = new StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  orderInfo: {
-    fontSize: 18
-  },
-  title: {
-    fontSize: 20,
-    color: 'black'
-  },
-  titleSmaller: {
-    fontSize: 15,
-    color: 'black'
-  }
-})
 

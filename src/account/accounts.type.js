@@ -1,4 +1,4 @@
-import {createAction} from 'util'
+import { createAction } from 'util';
 
 export const GET_QUADRIGA_TICKERS = createAction('GET_QUADRIGA_TICKERS');
 export const GET_QUADRIGA_ORDERS = createAction('GET_QUADRIGA_ORDERS');
@@ -25,3 +25,4 @@ export const POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW = createAction('POST_US
 export const POST_USER_QUADRIGA_ACCOUNT_DATA = createAction('POST_USER_QUADRIGA_ACCOUNT_DATA');
 export const SET_TRADING_BOOK = createAction('SET_TRADING_BOOK');
 export const SIGN_OUT_ACCOUNT = createAction('SIGN_OUT_ACCOUNT');
+export const MODULE_BUTTON_STATE_CHANGE = createAction('MODULE_BUTTON_STATE_CHANGE');

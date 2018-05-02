@@ -23,7 +23,7 @@ import {
   POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW,
-
+  MODULE_BUTTON_STATE_CHANGE
 
 } from 'account';
 import {
@@ -53,6 +53,21 @@ import {
 import { encryptAuthenticationQuadriga } from 'util';
 
 let interval;
+
+export const moduleButtonPressedHandler = () => {
+  return dispatch => {
+    dispatch({ type: MODULE_BUTTON_STATE_CHANGE.SUCCESS });
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 4000);
+    }).then(() => {
+      dispatch({ type: MODULE_BUTTON_STATE_CHANGE.SUCCESS });
+    });
+
+
+  };
+};
 
 export const signOutAcccount = () => {
   clearQuadrigaTickers();
@@ -144,13 +159,14 @@ export const getQuadrigaTransactions = (book, time) => {
 export const getQuadrigaTickersAll = () => {
   return dispatch => {
     interval = setInterval(() => {
+      console.log('TESTETETETE');
       dispatch({ type: GET_QUADRIGA_TICKERS.PENDING });
       getTicketsQuadrigaAll().then((response) => {
         dispatch({ type: GET_QUADRIGA_TICKERS.SUCCESS, payload: response });
       }).catch((err) => {
         dispatch({ type: GET_QUADRIGA_TICKERS.ERROR, payload: err });
       });
-    }, 10000);
+    }, 15000);
   };
 };
 
@@ -160,7 +176,7 @@ export const getQuadrigaTickersAllAtPin = () => {
     getTicketsQuadrigaAll().then((response) => {
       dispatch({ type: GET_QUADRIGA_TICKERS.SUCCESS, payload: response });
     }).catch((err) => {
-      dispatch({ type: GET_QUADRIGA_TICKERS.ERROR, payload: error });
+      dispatch({ type: GET_QUADRIGA_TICKERS.ERROR, payload: err });
     });
   };
 };

@@ -17,7 +17,8 @@ import { encryptAuthenticationQuadriga } from 'util'
 import {
     getQuadrigaTickersAll,
     postUserQuadrigaBalance,
-    postUserOpenOrdersQuadriga
+    postUserOpenOrdersQuadriga,
+    moduleButtonPressedHandler
 } from 'account'
 
 const { height, width } = Dimensions.get('window');
@@ -34,7 +35,8 @@ const mapStateToProps = (state) => ({
     privateKey: state.user.privateKey,
     quadrigaTickers: state.account.quadrigaTickers,
     quadrigaTransactions: state.account.quadrigaTransactions,
-    quadrigaUserBalance: state.account.quadrigaUserBalance
+    quadrigaUserBalance: state.account.quadrigaUserBalance,
+    isModuleButtonPressed: state.account.isModuleButtonPressed
 })
 const mapDispatchToProps = (dispatch) => ({
     getQuadrigaTickersDispatch: () => { dispatch(getQuadrigaTickers()) },
@@ -44,7 +46,8 @@ const mapDispatchToProps = (dispatch) => ({
     postUserOpenOrdersQuadrigaDispatch: (key, sign, nonce) => {
         dispatch(postUserOpenOrdersQuadriga(key, sign, nonce))
     },
-    getQuadrigaTickersAllDispatch: () => { dispatch(getQuadrigaTickersAll()) }
+    getQuadrigaTickersAllDispatch: () => { dispatch(getQuadrigaTickersAll()) },
+    moduleButtonPressedHandlerDispatch: () => { dispatch(moduleButtonPressedHandler()) }
 })
 
 
@@ -179,7 +182,8 @@ class QuadrigaExchange extends Component {
                     <Modules colorBTC={colorChangeBTC} colorETH={colorChangeETH} colorBCH={colorChangeBCH}
                         colorBTG={colorChangeBTG} colorLTC={colorChangeLTC} navigation={this.props.navigation}
                         dataBTC={quadrigaTickers.data.btc_cad} dataETH={quadrigaTickers.data.eth_cad} dataBCH={quadrigaTickers.data.bch_cad}
-                        dataBTG={quadrigaTickers.data.btg_cad} dataLTC={quadrigaTickers.data.ltc_cad}
+                        dataBTG={quadrigaTickers.data.btg_cad} dataLTC={quadrigaTickers.data.ltc_cad} isModuleButtonPressed={this.props.isModuleButtonPressed}
+                        moduleButtonPressedHandler={() => this.props.moduleButtonPressedHandlerDispatch()}
                     />
                     <TransactionView data={quadrigaTransactions} />
                 </ScrollView>
