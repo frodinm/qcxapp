@@ -64,8 +64,6 @@ export const moduleButtonPressedHandler = () => {
     }).then(() => {
       dispatch({ type: MODULE_BUTTON_STATE_CHANGE.SUCCESS });
     });
-
-
   };
 };
 
@@ -159,14 +157,21 @@ export const getQuadrigaTransactions = (book, time) => {
 export const getQuadrigaTickersAll = () => {
   return dispatch => {
     interval = setInterval(() => {
-      console.log('TESTETETETE');
       dispatch({ type: GET_QUADRIGA_TICKERS.PENDING });
       getTicketsQuadrigaAll().then((response) => {
+        dispatch({ type: MODULE_BUTTON_STATE_CHANGE.SUCCESS });
         dispatch({ type: GET_QUADRIGA_TICKERS.SUCCESS, payload: response });
+        new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          }, 1000);
+        }).then(() => {
+          dispatch({ type: MODULE_BUTTON_STATE_CHANGE.SUCCESS });
+        });
       }).catch((err) => {
         dispatch({ type: GET_QUADRIGA_TICKERS.ERROR, payload: err });
       });
-    }, 15000);
+    }, 20000);
   };
 };
 

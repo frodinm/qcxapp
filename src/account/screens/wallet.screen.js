@@ -4,9 +4,7 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView,
     FlatList,
-    Image,
     Dimensions,
     TouchableNativeFeedback,
     TextInput,
@@ -15,27 +13,16 @@ import {
     Clipboard,
     Alert,
 } from 'react-native';
-import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
-import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons'
-import IconSimple from 'react-native-vector-icons/dist/SimpleLineIcons'
-import IconAwsome from 'react-native-vector-icons/dist/FontAwesome'
-import IconIOS from 'react-native-vector-icons/dist/Ionicons'
-import Permissions from 'react-native-permissions'
+import { connect } from 'react-redux';
+import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import IconSimple from 'react-native-vector-icons/dist/SimpleLineIcons';
+import IconAwsome from 'react-native-vector-icons/dist/FontAwesome';
+import IconIOS from 'react-native-vector-icons/dist/Ionicons';
+import Permissions from 'react-native-permissions';
 import DropdownAlert from 'react-native-dropdownalert';
 import {
     AdMobBanner,
-} from 'react-native-admob'
-
-import {
-    setFromTokenLogo,
-    setToTokenLogo,
-    postChangellyMinAmount,
-    postChangellyExchangeAmount,
-    getChangellyTransactions,
-    getChangellyStatus,
-    postChangellyAddressPair
-} from 'exchange'
+} from 'react-native-admob';
 import {
     getQuadrigaTickersAll,
     clearQuadrigaTickers,
@@ -49,11 +36,10 @@ import {
     postUserQuadrigaBalanceAndTransactions,
     postUserQuadrigaBalance
 } from 'account';
-import i18n from 'i18n'
-import { resetNavigation } from 'util'
+import i18n from 'i18n';
 import QRCode from 'react-native-qrcode';
-import { iOSUIKit } from 'react-native-typography'
-import { Divider, Button } from 'react-native-elements'
+import { iOSUIKit } from 'react-native-typography';
+import { Divider, Button } from 'react-native-elements';
 import Modal from 'react-native-modalbox';
 import { encryptAuthenticationQuadriga } from 'util';
 
@@ -64,7 +50,7 @@ const textStyle = {
     color: 'black',
     marginBottom: 10,
     textAlign: 'center',
-}
+};
 const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
     clientId: state.user.clientId,
@@ -74,19 +60,19 @@ const mapStateToProps = (state) => ({
     quadrigaUserBalance: state.account.quadrigaUserBalance,
     quadrigaUserTransactions: state.account.quadrigaUserTransactions,
     quadrigaUserOrdersLookup: state.account.quadrigaUserOrdersLookup,
-})
+});
 const mapDispatchToProps = (dispatch) => ({
-    getQuadrigaTickersDispatch: () => { dispatch(getQuadrigaTickersAll()) },
-    postUserQuadrigaBalanceDispatch: (key, sign, nonce) => { dispatch(postUserQuadrigaBalance(key, sign, nonce)) },
-    postUserQuadrigaTransactionsDispatch: (apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo) => { dispatch(postUserQuadrigaTransactions(apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo)) },
-    postUserLookupOrderQuadrigaDispatch: (key, sign, nonce, id) => { dispatch(postUserLookupOrderQuadriga(key, sign, nonce, id)) },
-    postUserBitcoinWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserBitcoinWalletWithdrawQuadriga(key, sign, nonce, amount, address)) },
-    postUserEthereumWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserEthereumWalletWithdrawQuadriga(key, sign, nonce, amount, address)) },
-    postUserBitcoinGoldWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserBitcoinGoldWalletWithdrawQuadriga(key, sign, nonce, amount, address)) },
-    postUserLitecoinWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserLitecoinWalletWithdrawQuadriga(key, sign, nonce, amount, address)) },
-    postUserBitcoinCashWalletWithdrawQuadriga: (key, sign, nonce, amount, address) => { dispatch(postUserBitcoinCashWalletWithdrawQuadriga(key, sign, nonce, amount, address)) },
-    postUserQuadrigaBalanceAndTransactionsDispatch: (apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo) => { dispatch(postUserQuadrigaBalanceAndTransactions(apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo)) }
-})
+    getQuadrigaTickersDispatch: () => { dispatch(getQuadrigaTickersAll()); },
+    postUserQuadrigaBalanceDispatch: (key, sign, nonce) => { dispatch(postUserQuadrigaBalance(key, sign, nonce)); },
+    postUserQuadrigaTransactionsDispatch: (apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo) => { dispatch(postUserQuadrigaTransactions(apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo)); },
+    postUserLookupOrderQuadrigaDispatch: (key, sign, nonce, id) => { dispatch(postUserLookupOrderQuadriga(key, sign, nonce, id)); },
+    postUserBitcoinWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserBitcoinWalletWithdrawQuadriga(key, sign, nonce, amount, address)); },
+    postUserEthereumWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserEthereumWalletWithdrawQuadriga(key, sign, nonce, amount, address)); },
+    postUserBitcoinGoldWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserBitcoinGoldWalletWithdrawQuadriga(key, sign, nonce, amount, address)); },
+    postUserLitecoinWalletWithdrawQuadrigaDispatch: (key, sign, nonce, amount, address) => { dispatch(postUserLitecoinWalletWithdrawQuadriga(key, sign, nonce, amount, address)); },
+    postUserBitcoinCashWalletWithdrawQuadriga: (key, sign, nonce, amount, address) => { dispatch(postUserBitcoinCashWalletWithdrawQuadriga(key, sign, nonce, amount, address)); },
+    postUserQuadrigaBalanceAndTransactionsDispatch: (apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo) => { dispatch(postUserQuadrigaBalanceAndTransactions(apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo)); }
+});
 
 
 class Wallet extends Component {
@@ -106,7 +92,7 @@ class Wallet extends Component {
             fee: '0.00008341',
             datetime: '2018-01-06 18:46:44',
             acronym: ''
-        }
+        };
         this.handleData = this.handleData.bind(this);
         this.handleQrCode = this.handleQrCode.bind(this);
         this.handlePlatform = this.handlePlatform.bind(this);
@@ -125,9 +111,9 @@ class Wallet extends Component {
         postUserQuadrigaBalanceAndTransactionsDispatch(apiKey, clientId, privateKey, 0, 50, "desc", book, bookTwo);
     }
     componentDidMount() {
-        this.props.navigation.setParams({ handleQrCode: this.handleQrCode })
+        this.props.navigation.setParams({ handleQrCode: this.handleQrCode });
         const { acronym } = this.props.navigation.state.params;
-        this.setState({ acronym })
+        this.setState({ acronym });
     }
     componentWillUnmount() {
         const { getQuadrigaTickersDispatch } = this.props;
@@ -140,7 +126,7 @@ class Wallet extends Component {
             color: 'white',
             position: 'relative',
 
-        }
+        };
         return {
 
             headerTitle: 'Wallet',
@@ -154,7 +140,7 @@ class Wallet extends Component {
                 ...headerStyle
             },
 
-        }
+        };
     };
 
 
@@ -171,7 +157,7 @@ class Wallet extends Component {
                             <Text style={{ textAlign: 'center', fontSize: 20, color: 'black', fontWeight: 'bold' }}>{text}</Text>
                         </View>
                     </TouchableNativeFeedback>
-                )
+                );
             } else {
                 return (
                     <TouchableHighlight style={{ height: 40, width: width / 2.3, margin: 5, marginBottom: 10, borderRadius: 5, }} onPress={onPressAction} >
@@ -179,7 +165,7 @@ class Wallet extends Component {
                             <Text style={{ textAlign: 'center', fontSize: 18, color: 'black', fontWeight: 'bold' }}>{text}</Text>
                         </View>
                     </TouchableHighlight>
-                )
+                );
             }
         } else {
             return (
@@ -188,7 +174,7 @@ class Wallet extends Component {
                         <Text style={{ textAlign: 'center', fontSize: 18, color: 'black', fontWeight: 'bold' }}>{text}</Text>
                     </View>
                 </TouchableHighlight>
-            )
+            );
         }
     }
 
@@ -197,19 +183,16 @@ class Wallet extends Component {
             <View style={styles}>
                 <Text onPress={onPressAction} style={textStyle}>{text}</Text>
             </View>
-        )
+        );
 
     }
     handleData(acronym) {
         const { quadrigaTickers, quadrigaUserBalance, postUserQuadrigaBalanceDispatch, apiKey, clientId, privateKey } = this.props;
-        console.log(this.props);
-        console.log(acronym)
-
         if (quadrigaUserBalance.data.hasOwnProperty('error')) {
             setTimeout(() => {
                 let nonce = Date.now();
                 postUserQuadrigaBalanceDispatch(apiKey, encryptAuthenticationQuadriga(nonce, clientId, apiKey, privateKey), nonce);
-            }, 500)
+            }, 500);
 
         } else {
             if (acronym === 'btc') {
@@ -218,67 +201,65 @@ class Wallet extends Component {
                         <Text style={[textStyle, { fontSize: 19 }]}>{quadrigaUserBalance.data.btc_balance === "0.00000000" ? "0" : quadrigaUserBalance.data.btc_balance} BTC</Text>
                         <Text style={[textStyle, { marginBottom: 20 }]}>${(quadrigaTickers.data.btc_cad.last * quadrigaUserBalance.data.btc_balance).toFixed(2)} CAD</Text>
                     </View>
-                )
+                );
             } else if (acronym === 'eth') {
                 return (
                     <View>
                         <Text style={[textStyle, { fontSize: 19 }]}>{quadrigaUserBalance.data.eth_balance === "0.00000000" ? "0" : quadrigaUserBalance.data.eth_balance} ETH</Text>
                         <Text style={[textStyle, { marginBottom: 20 }]}>${(quadrigaTickers.data.eth_cad.last * quadrigaUserBalance.data.eth_balance).toFixed(2)} CAD</Text>
                     </View>
-                )
+                );
             } else if (acronym === 'bch') {
                 return (
                     <View>
                         <Text style={[textStyle, { fontSize: 19 }]}>{quadrigaUserBalance.data.bch_balance === "0.00000000" ? "0" : quadrigaUserBalance.data.bch_balance} BCH</Text>
                         <Text style={[textStyle, { marginBottom: 20 }]}>${(quadrigaTickers.data.bch_cad.last * quadrigaUserBalance.data.bch_balance).toFixed(2)} CAD</Text>
                     </View>
-                )
+                );
             } else if (acronym === 'btg') {
                 return (
                     <View>
                         <Text style={[textStyle, { fontSize: 19 }]}>{quadrigaUserBalance.data.btg_balance === "0.00000000" ? "0" : quadrigaUserBalance.data.btg_balance} BTG</Text>
                         <Text style={[textStyle, { marginBottom: 30 }]}>${(quadrigaTickers.data.btg_cad.last * quadrigaUserBalance.data.btg_balance).toFixed(2)} CAD</Text>
                     </View>
-                )
+                );
             } else if (acronym === 'ltc') {
                 return (
                     <View>
                         <Text style={[textStyle, { fontSize: 19 }]}>{quadrigaUserBalance.data.ltc_balance === "0.00000000" ? "0" : quadrigaUserBalance.data.ltc_balance} LTC</Text>
                         <Text style={[textStyle, { marginBottom: 20 }]}>${(quadrigaTickers.data.ltc_cad.last * quadrigaUserBalance.data.ltc_balance).toFixed(2)} CAD</Text>
                     </View>
-                )
+                );
             }
         }
 
     }
     handleIcon(object) {
         if (object.type === 2) {
-            return <IconAwsome name="exchange" size={22} />
+            return <IconAwsome name="exchange" size={22} />;
         } else if (object.type === 1) {
-            return <IconIOS name="ios-send-outline" size={35} />
+            return <IconIOS name="ios-send-outline" size={35} />;
         } else if (object.type === 0) {
-            return <IconSimple name="wallet" size={22} />
+            return <IconSimple name="wallet" size={22} />;
         }
 
     }
     handleText(object) {
-        let BuyOrSell;
-        let noun;
         if (object.type === 0) {
             return {
                 BuyOrSell: "Deposit",
                 textObject: <Text style={[iOSUIKit.caption]}>Amount {object[Object.keys(object)[0]]} {Object.keys(object)[0].toUpperCase()}</Text>
-            }
+            };
         } else if (object.type === 1) {
             return {
                 BuyOrSell: "Sent",
                 textObject: <Text style={[iOSUIKit.body]}>To {object.minor}</Text>
-            }
+            };
         } else if (object.type === 2) {
             return {
                 BuyOrSell: "Traded",
                 textObject: null
-            }
+            };
         }
     }
 
@@ -300,7 +281,7 @@ class Wallet extends Component {
                     order_id: item.order_id,
                     fee: item.fee,
                     datetime: item.datetime
-                })
+                });
             } else {
                 this.setState({
                     minor: item[Object.keys(item)[1]],
@@ -311,9 +292,9 @@ class Wallet extends Component {
                     order_id: item.order_id,
                     fee: item.fee,
                     datetime: item.datetime
-                })
+                });
             }
-            this.refs.modalLookUp.open()
+            this.refs.modalLookUp.open();
         } else {
             this.dropdown.alertWithType('info', 'Info', 'No additional info is provided');
         }
@@ -330,8 +311,8 @@ class Wallet extends Component {
         } else {
             this.dropdown.alertWithType('success', 'Success', 'Your withdraw has been sent !');
             setTimeout(() => {
-                postUserQuadrigaBalanceAndTransactionsDispatch(apiKey, clientId, privateKey, 0, 50, "desc", book, bookTwo)
-            }, 500)
+                postUserQuadrigaBalanceAndTransactionsDispatch(apiKey, clientId, privateKey, 0, 50, "desc", book, bookTwo);
+            }, 500);
         }
     }
 
@@ -374,19 +355,27 @@ class Wallet extends Component {
         this.refs.modalWithdraw.close();
         setTimeout(() => {
             this.handleWithdrawAlert();
-        }, 1000)
+        }, 1000);
     }
 
     handleCopyAddress() {
         const { address } = this.props.navigation.state.params;
-        Clipboard.setString(address);
-        this.refs.modal.close();
-        setTimeout(() => {
-            this.dropdown.alertWithType('info', 'Info', "Address was copied to clipboard!")
-        }, 550)
+        if (address) {
+            Clipboard.setString(address);
+            this.refs.modal.close();
+            setTimeout(() => {
+                this.dropdown.alertWithType('info', 'Info', "Address was copied to clipboard!");
+            }, 550);
+        } else {
+            this.refs.modal.close();
+            setTimeout(() => {
+                this.dropdown.alertWithType('info', 'Info', "Your address was not available");
+            }, 550);
+        }
+
     }
 
-    _keyExtractor = (item, index) => index;
+    _keyExtractor = (item, index) => index.toString();
 
     _renderItem = ({ item, index }) => {
 
@@ -415,7 +404,7 @@ class Wallet extends Component {
                 </TouchableHighlight>
                 <Divider style={{ height: 1, backgroundColor: 'orange', width: width / 1.1, marginTop: 5 }} />
             </View>
-        )
+        );
     };
 
 
@@ -427,7 +416,7 @@ class Wallet extends Component {
                     <Text style={[iOSUIKit.title3, { fontWeight: 'bold' }]}>You have no transactions</Text>
                     <Text style={{ textAlign: 'center', fontSize: 16 }}>{`\nBuy ${name} now and your\ntransactions will show here`}</Text>
                 </View>
-            )
+            );
         } else {
             return (
                 <View style={{ width: width, ...Platform.select({ ios: { height: (height / 2 - 50) }, android: { height: height / 2.35 - 40 } }) }}>
@@ -440,12 +429,12 @@ class Wallet extends Component {
                         onRefresh={() => this.handleRefresh()}
                     />
                 </View>
-            )
+            );
         }
     }
 
     handleBuyAction(name) {
-        this.dropdown.alertWithType('info', 'Info', `Please go to the Quadriga tab to buy some ${name.toUpperCase()} !`)
+        this.dropdown.alertWithType('info', 'Info', `Please go to the Quadriga tab to buy some ${name.toUpperCase()} !`);
     }
 
     handleCamera() {
@@ -467,26 +456,26 @@ class Wallet extends Component {
                                 onPress: () => Permissions.openSettings(),
                             },
                         ]
-                    )
+                    );
                 } else {
-                    this.props.navigation.navigate('Camera', { setAddress: (address) => { this.setState({ withdrawAddress: address }) } })
+                    this.props.navigation.navigate('Camera', { setAddress: (address) => { this.setState({ withdrawAddress: address }); } });
                 }
-            })
+            });
         } else {
             Permissions.check('camera').then(response => {
                 // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
                 if (response.toString() !== 'authorized') {
                     Permissions.request('camera').then(response => {
                         if (response.toString() === 'denied') {
-                            alert('Camera access needed for Scanning Qr codes')
+                            alert('Camera access needed for Scanning Qr codes');
                         } else {
-                            this.props.navigation.navigate('Camera', { setAddress: (address) => { this.setState({ withdrawAddress: address }) } })
+                            this.props.navigation.navigate('Camera', { setAddress: (address) => { this.setState({ withdrawAddress: address }); } });
                         }
-                    })
+                    });
                 } else {
-                    this.props.navigation.navigate('Camera', { setAddress: (address) => { this.setState({ withdrawAddress: address }) } })
+                    this.props.navigation.navigate('Camera', { setAddress: (address) => { this.setState({ withdrawAddress: address }); } });
                 }
-            })
+            });
         }
 
     }
@@ -500,12 +489,11 @@ class Wallet extends Component {
                 { text: 'Cancel', onPress: () => { }, style: 'cancel' },
                 { text: 'Confirm', onPress: () => this.handleWithdraw() },
             ]
-        )
+        );
     }
 
     render() {
-        const { quadrigaTickerBTC, quadrigaTickerETH } = this.props;
-        const { type, acronym, name, address } = this.props.navigation.state.params;
+        const { acronym, name, address } = this.props.navigation.state.params;
         return (
             <View style={styles.container}>
                 <View contentContainerStyle={{ flexDirection: 'column', alignItems: 'center' }}>
@@ -559,7 +547,7 @@ class Wallet extends Component {
                         <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ height: height / 8, width: width / 1.2, alignItems: 'center', justifyContent: 'center' }}>
-                                <TouchableOpacity onPress={() => { this.refs.modalLookUp.close() }} style={{ margin: 20, marginBottom: 15 }}>
+                                <TouchableOpacity onPress={() => { this.refs.modalLookUp.close(); }} style={{ margin: 20, marginBottom: 15 }}>
                                     <Text style={{ fontSize: 15, color: '#007aff' }}>Close</Text>
                                 </TouchableOpacity>
                             </View>
@@ -613,7 +601,7 @@ class Wallet extends Component {
                 />
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref} />
             </View>
-        )
+        );
     }
 }
 
@@ -623,12 +611,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'white',
         alignItems: 'center',
-        backgroundColor: 'white',
-    },
-    text: {
-        color: '#000',
-        fontSize: 30,
-        fontWeight: 'bold',
     },
     modal: {
         justifyContent: 'center',
@@ -678,13 +660,7 @@ const styles = StyleSheet.create({
         }),
         width: width / 1.2,
         marginTop: 15,
-    },
-    modalConfirm: {
-        height: height / 7,
-        backgroundColor: '#007aff',
-        opacity: 0.95
-    },
-
+    }
 });
 
 export const WalletScreen = connect(mapStateToProps, mapDispatchToProps)(Wallet);

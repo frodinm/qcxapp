@@ -70,6 +70,7 @@
     "vm-browserify": "0.0.4"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
     "babel-jest": "21.2.0",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-rewrite-require": "^1.14.5",

@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     StyleSheet,
-    Text,
-    View,
     ScrollView,
     Dimensions,
     StatusBar
 } from 'react-native';
-import { TransactionView, Modules, Orders } from 'components'
-import Icon from 'react-native-vector-icons/dist/Foundation'
-import { Button, Header } from 'react-native-elements'
-import { connect } from 'react-redux'
-import { encryptAuthenticationQuadriga } from 'util'
+import { TransactionView, Modules } from 'components';
+import Icon from 'react-native-vector-icons/dist/Foundation';
+import { connect } from 'react-redux';
+import { encryptAuthenticationQuadriga } from 'util';
 
 import {
     getQuadrigaTickersAll,
     postUserQuadrigaBalance,
     postUserOpenOrdersQuadriga,
-    moduleButtonPressedHandler
-} from 'account'
+    moduleButtonPressedHandler,
+    clearQuadrigaTickers
+} from 'account';
 
 const { height, width } = Dimensions.get('window');
 let colorChangeBTC = 'white';
@@ -37,18 +34,18 @@ const mapStateToProps = (state) => ({
     quadrigaTransactions: state.account.quadrigaTransactions,
     quadrigaUserBalance: state.account.quadrigaUserBalance,
     isModuleButtonPressed: state.account.isModuleButtonPressed
-})
+});
 const mapDispatchToProps = (dispatch) => ({
-    getQuadrigaTickersDispatch: () => { dispatch(getQuadrigaTickers()) },
+    getQuadrigaTickersDispatch: () => { dispatch(getQuadrigaTickers()); },
     postUserQuadrigaBalanceDispatch: (key, sign, nonce) => {
-        dispatch(postUserQuadrigaBalance(key, sign, nonce))
+        dispatch(postUserQuadrigaBalance(key, sign, nonce));
     },
     postUserOpenOrdersQuadrigaDispatch: (key, sign, nonce) => {
-        dispatch(postUserOpenOrdersQuadriga(key, sign, nonce))
+        dispatch(postUserOpenOrdersQuadriga(key, sign, nonce));
     },
-    getQuadrigaTickersAllDispatch: () => { dispatch(getQuadrigaTickersAll()) },
-    moduleButtonPressedHandlerDispatch: () => { dispatch(moduleButtonPressedHandler()) }
-})
+    getQuadrigaTickersAllDispatch: () => { dispatch(getQuadrigaTickersAll()); },
+    moduleButtonPressedHandlerDispatch: () => { dispatch(moduleButtonPressedHandler()); },
+});
 
 
 class QuadrigaExchange extends Component {
@@ -57,10 +54,11 @@ class QuadrigaExchange extends Component {
         this.state = {
             nonce: null,
             interval: null,
-        }
+        };
         this.handleGetTicker = this.handleGetTicker.bind(this);
         this.handleGetBalance = this.handleGetBalance.bind(this);
         this.handleBalance = this.handleBalance.bind(this);
+        clearQuadrigaTickers();
         props.getQuadrigaTickersAllDispatch();
     }
 
@@ -72,29 +70,29 @@ class QuadrigaExchange extends Component {
 
     componentWillUpdate(nextProps, nextState) {
         if (nextProps.quadrigaTickers.data.btc_cad.last > this.props.quadrigaTickers.data.btc_cad.last) {
-            colorChangeBTC = '#b2d8b2'
+            colorChangeBTC = '#b2d8b2';
         } else if (nextProps.quadrigaTickers.data.btc_cad.last < this.props.quadrigaTickers.data.btc_cad.last) {
-            colorChangeBTC = '#ff9999'
+            colorChangeBTC = '#ff9999';
         }
         if (nextProps.quadrigaTickers.data.eth_cad.last > this.props.quadrigaTickers.data.eth_cad.last) {
-            colorChangeETH = '#b2d8b2'
+            colorChangeETH = '#b2d8b2';
         } else if (nextProps.quadrigaTickers.data.eth_cad.last < this.props.quadrigaTickers.data.eth_cad.last) {
-            colorChangeETH = '#ff9999'
+            colorChangeETH = '#ff9999';
         }
         if (nextProps.quadrigaTickers.data.bch_cad.last > this.props.quadrigaTickers.data.bch_cad.last) {
-            colorChangeBCH = '#b2d8b2'
+            colorChangeBCH = '#b2d8b2';
         } else if (nextProps.quadrigaTickers.data.bch_cad.last < this.props.quadrigaTickers.data.bch_cad.last) {
-            colorChangeBCH = '#ff9999'
+            colorChangeBCH = '#ff9999';
         }
         if (nextProps.quadrigaTickers.data.btg_cad.last > this.props.quadrigaTickers.data.btg_cad.last) {
-            colorChangeBTG = '#b2d8b2'
+            colorChangeBTG = '#b2d8b2';
         } else if (nextProps.quadrigaTickers.data.btg_cad.last < this.props.quadrigaTickers.data.btg_cad.last) {
-            colorChangeBTG = '#ff9999'
+            colorChangeBTG = '#ff9999';
         }
         if (nextProps.quadrigaTickers.data.ltc_cad.last > this.props.quadrigaTickers.data.ltc_cad.last) {
-            colorChangeLTC = '#b2d8b2'
+            colorChangeLTC = '#b2d8b2';
         } else if (nextProps.quadrigaTickers.data.ltc_cad.last < this.props.quadrigaTickers.data.ltc_cad.last) {
-            colorChangeLTC = '#ff9999'
+            colorChangeLTC = '#ff9999';
         }
 
     }
@@ -109,18 +107,18 @@ class QuadrigaExchange extends Component {
     handleGetTicker() {
         const { quadrigaTickerBTC } = this.props;
         if (quadrigaTickerBTC === " ") {
-            return "..."
+            return "...";
         } else {
-            return `${quadrigaTickerBTC.data.last}`
+            return `${quadrigaTickerBTC.data.last}`;
         }
     }
 
     handleBalance() {
         const { quadrigaUserBalance } = this.props;
         if (quadrigaUserBalance === null) {
-            return "..."
+            return "...";
         } else {
-            return `${quadrigaUserBalance.btc_balance}`
+            return `${quadrigaUserBalance.btc_balance}`;
         }
     }
 
@@ -128,7 +126,7 @@ class QuadrigaExchange extends Component {
         const headerStyle = {
             alignSelf: 'center',
             color: 'white',
-        }
+        };
 
         if (navigation.state.params != undefined) {
             return {
@@ -147,7 +145,7 @@ class QuadrigaExchange extends Component {
                         size={30}
                     />
                 ),
-            }
+            };
         } else {
             return {
                 headerTitle: `BTC/CAD `,
@@ -165,7 +163,7 @@ class QuadrigaExchange extends Component {
                         size={30}
                     />
                 ),
-            }
+            };
         }
 
     };
@@ -197,17 +195,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: width,
         backgroundColor: '#f8f8f8',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#fff',
-        marginBottom: 5,
-    },
+    }
 });
 
 export const QuadrigaExchangeScreen = connect(mapStateToProps, mapDispatchToProps)(QuadrigaExchange);

@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+
   env: {
     es6: true,
     jest: true,
@@ -20,10 +21,12 @@ module.exports = {
     ecmaFeatures: {
       experimentalObjectRestSpread: true,
       jsx: true,
+      modules: true
     },
     sourceType: "module"
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
+  parser: "babel-eslint",
   extends: ["eslint:recommended", "plugin:react/recommended"],
   // required to lint *.vue files
   plugins: [
