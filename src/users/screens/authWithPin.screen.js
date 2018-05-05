@@ -8,6 +8,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
 import { resetNavigation } from 'util';
+import { moduleButtonPressedReset } from 'account';
 import { setPin } from 'users';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import I18n from 'react-native-i18n';
@@ -31,7 +32,8 @@ const mapStateToProps = (state) => ({
   pin: state.user.pin
 });
 const mapDispatchToProps = (dispatch) => ({
-  setPinDispatch: (pin) => dispatch(setPin(pin))
+  setPinDispatch: (pin) => dispatch(setPin(pin)),
+  moduleButtonPressedResetDispatch: () => { dispatch(moduleButtonPressedReset()); }
 });
 
 
@@ -46,6 +48,11 @@ class AuthPincode extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handlePinReference = this.handlePinReference.bind(this);
+  }
+
+  componentDidMount() {
+    const { moduleButtonPressedResetDispatch } = this.props;
+    moduleButtonPressedResetDispatch();
   }
   handleClick() {
     const { navigation, pin } = this.props;

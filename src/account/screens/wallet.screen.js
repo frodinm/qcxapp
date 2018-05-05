@@ -36,7 +36,7 @@ import {
     postUserQuadrigaBalanceAndTransactions,
     postUserQuadrigaBalance
 } from 'account';
-import i18n from 'i18n';
+import i18n from 'react-native-i18n';
 import QRCode from 'react-native-qrcode';
 import { iOSUIKit } from 'react-native-typography';
 import { Divider, Button } from 'react-native-elements';
@@ -359,18 +359,22 @@ class Wallet extends Component {
     }
 
     handleCopyAddress() {
-        const { address } = this.props.navigation.state.params;
+        const { address, name } = this.props.navigation.state.params;
         if (address) {
             Clipboard.setString(address);
-            this.refs.modal.close();
-            setTimeout(() => {
-                this.dropdown.alertWithType('info', 'Info', "Address was copied to clipboard!");
-            }, 550);
+            Alert.alert(
+                'Copy Address',
+                `Your ${name} address : ${address} was copied to your clipboard!`,
+                [{ text: 'OK', onPress: () => this.refs.modal.close() }],
+                { onDismiss: () => this.refs.modal.close() }
+            );
         } else {
-            this.refs.modal.close();
-            setTimeout(() => {
-                this.dropdown.alertWithType('info', 'Info', "Your address was not available");
-            }, 550);
+            Alert.alert(
+                'Copy Address',
+                `Your address wasn't availble to be copied to your clipboard`,
+                [{ text: 'OK', onPress: () => this.refs.modal.close() }],
+                { onDismiss: () => this.refs.modal.close() }
+            );
         }
 
     }
@@ -434,7 +438,7 @@ class Wallet extends Component {
     }
 
     handleBuyAction(name) {
-        this.dropdown.alertWithType('info', 'Info', `Please go to the Quadriga tab to buy some ${name.toUpperCase()} !`);
+        this.dropdown.alertWithType('info', 'Info', `${i18n.t('buyAlertMessage')} ${name.toUpperCase()} !`);
     }
 
     handleCamera() {
@@ -499,13 +503,13 @@ class Wallet extends Component {
                 <View contentContainerStyle={{ flexDirection: 'column', alignItems: 'center' }}>
                     <View style={{ ...Platform.select({ ios: { height: height / 2 - 60 }, android: { height: height / 2 - 40 } }), alignItems: 'center' }}>
                         <View style={{ alignItems: 'center', width: width, height: (height / 2 - 30) * 0.45 }}>
-                            <Text style={[iOSUIKit.title3, { marginBottom: 10, marginTop: 20 }]}>Your {name} wallet</Text>
+                            <Text style={[iOSUIKit.title3, { marginBottom: 10, marginTop: 20 }]}>{i18n.t('yourSingular')} {name} {i18n.t('wallet')}</Text>
                             {this.handleData(acronym)}
                         </View>
                         <View style={{ flexDirection: 'column', ...Platform.select({ ios: { height: (height / 2 - 30) * 0.25 }, android: { height: (height / 2 - 40) * 0.30 } }) }}>
                             <View style={{ flexDirection: 'row' }}>
-                                {this.handlePlatform(() => this.handleBuyAction(acronym), { height: 40, width: width / 2.3, backgroundColor: 'orange', margin: 5, marginBottom: 10, borderRadius: 5 }, "Buy")}
-                                {this.handlePlatform(() => this.refs.modalWithdraw.open(), { height: 40, width: width / 2.3, backgroundColor: 'orange', margin: 5, marginBottom: 10, borderRadius: 5 }, "Withdraw")}
+                                {this.handlePlatform(() => this.handleBuyAction(acronym), { height: 40, width: width / 2.3, backgroundColor: 'orange', margin: 5, marginBottom: 10, borderRadius: 5 }, i18n.t('buy'))}
+                                {this.handlePlatform(() => this.refs.modalWithdraw.open(), { height: 40, width: width / 2.3, backgroundColor: 'orange', margin: 5, marginBottom: 10, borderRadius: 5 }, i18n.t('withdraw'))}
                             </View>
                             <Divider style={{ height: 1, backgroundColor: 'orange', width: width / 1.1 }} />
                         </View>
@@ -518,37 +522,37 @@ class Wallet extends Component {
                     position={"center"}
                     ref={"modalLookUp"}
                 >
-                    <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 30, height: 350, width: 300 }}>
-                        <Text style={[iOSUIKit.title3, { marginBottom: 10 }]}>Transaction Info</Text>
+                    <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 30 }}>
+                        <Text style={[iOSUIKit.title3, { marginBottom: 10 }]}>{i18n.t('transactionInfo')}</Text>
                         <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-                            <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>From</Text>
-                            <Text style={{ width: width / 1.2 / 1.9, textAlign: 'center' }}>{this.state.minor} {this.state.minorToken.toUpperCase()}</Text>
+                            <Text style={styles.lookUpTextTitle}>{i18n.t('from')}</Text>
+                            <Text style={styles.looUpTextData}>{this.state.minor} {this.state.minorToken.toUpperCase()}</Text>
                         </View>
                         <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
                         <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-                            <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>To</Text>
-                            <Text style={{ width: width / 1.21 / 1.9, textAlign: 'center' }}>{this.state.major} {this.state.majorToken.toUpperCase()}</Text>
+                            <Text style={styles.lookUpTextTitle}>{i18n.t('to')}</Text>
+                            <Text style={styles.looUpTextData}>{this.state.major} {this.state.majorToken.toUpperCase()}</Text>
                         </View>
                         <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
                         <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-                            <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>Rate</Text>
-                            <Text style={{ width: width / 1.2 / 1.9, textAlign: 'center' }}>{this.state.rate}</Text>
+                            <Text style={styles.lookUpTextTitle}>{i18n.t('rate')}</Text>
+                            <Text style={styles.looUpTextData}>{this.state.rate}</Text>
                         </View>
                         <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
                         <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-                            <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>Fee</Text>
-                            <Text style={{ width: width / 1.2 / 1.9, textAlign: 'center' }}>{this.state.fee}</Text>
+                            <Text style={styles.lookUpTextTitle}>{i18n.t('fee')}</Text>
+                            <Text style={styles.looUpTextData}>{this.state.fee}</Text>
                         </View>
                         <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
                         <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-                            <Text style={{ width: width / 1.21 / 2.3, paddingLeft: 10 }}>Date</Text>
-                            <Text style={{ width: width / 1.2 / 1.7, textAlign: 'center', paddingRight: 10 }}>{this.state.datetime}</Text>
+                            <Text style={styles.lookUpTextTitle}>{i18n.t('date')}</Text>
+                            <Text style={styles.looUpTextData}>{this.state.datetime}</Text>
                         </View>
                         <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ height: height / 8, width: width / 1.2, alignItems: 'center', justifyContent: 'center' }}>
                                 <TouchableOpacity onPress={() => { this.refs.modalLookUp.close(); }} style={{ margin: 20, marginBottom: 15 }}>
-                                    <Text style={{ fontSize: 15, color: '#007aff' }}>Close</Text>
+                                    <Text style={{ fontSize: 15, color: 'black' }}>{i18n.t('close').toUpperCase()}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -585,12 +589,12 @@ class Wallet extends Component {
                         <TouchableOpacity onPress={() => this.refs.modalWithdraw.close()} style={{ position: 'absolute', top: 15, right: 30 }}>
                             <IconIOS name="ios-close" size={35} />
                         </TouchableOpacity>
-                        <Text style={[iOSUIKit.title3, { marginTop: 22 }]}>Withdraw</Text>
-                        <Text style={[iOSUIKit.body, { marginTop: 22 }]}>Address to send your {name}</Text>
-                        <TextInput onChangeText={(text) => this.setState({ withdrawAddress: text })} value={this.state.withdrawAddress} placeholder={'Address here'} style={styles.textInput} />
-                        <Text style={[iOSUIKit.body, { marginTop: 22 }]}>Amount to send</Text>
-                        <TextInput onChangeText={(text) => this.setState({ amount: text })} keyboardType="numeric" placeholder={'Amount here'} style={styles.textInput} />
-                        <Button onPress={() => this.confirmWithdraw()} title="Withdraw!" containerViewStyle={{ position: 'relative', top: 25, width: 150, height: 50, }} buttonStyle={{ backgroundColor: 'orange' }} />
+                        <Text style={[iOSUIKit.title3, { marginTop: 22 }]}>{i18n.t('withdraw')}</Text>
+                        <Text style={[iOSUIKit.body, { marginTop: 22 }]}>{i18n.t('withdrawTitle')} {name}</Text>
+                        <TextInput onChangeText={(text) => this.setState({ withdrawAddress: text })} value={this.state.withdrawAddress} placeholder={i18n.t('addressHere')} style={styles.textInput} />
+                        <Text style={[iOSUIKit.body, { marginTop: 22 }]}>{i18n.t('withdrawSend')}</Text>
+                        <TextInput onChangeText={(text) => this.setState({ amount: text })} keyboardType="numeric" placeholder={i18n.t('amountHere')} style={styles.textInput} />
+                        <Button onPress={() => this.confirmWithdraw()} title={`${i18n.t('withdraw')}!`} containerViewStyle={{ position: 'relative', top: 25, width: 150, height: 50, }} buttonStyle={{ backgroundColor: 'orange' }} />
                     </View>
                 </Modal>
                 <AdMobBanner
@@ -635,6 +639,16 @@ const styles = StyleSheet.create({
         }),
         height: height / 1.8,
         width: width / 1.1
+    },
+    lookUpTextTitle: {
+        width: width / 1.21 / 2.1,
+        paddingLeft: 10,
+        color: 'black'
+    },
+    looUpTextData: {
+        width: width / 1.2 / 1.9,
+        textAlign: 'center',
+        color: 'black'
     },
     modalWithdraw: {
 

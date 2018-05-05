@@ -23,7 +23,8 @@ import {
   POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW,
-  MODULE_BUTTON_STATE_CHANGE
+  MODULE_BUTTON_STATE_CHANGE,
+  MODULE_BUTTON_STATE_CHANGE_RESET
 } from 'account';
 
 const initialState = {
@@ -482,6 +483,11 @@ export const AccountReducer = (state = initialState, action) => {
       return {
         ...state,
         isModuleButtonPressed: !state.isModuleButtonPressed,
+      };
+    case MODULE_BUTTON_STATE_CHANGE_RESET.SUCCESS:
+      return {
+        ...state,
+        isModuleButtonPressed: false,
       };
     default:
       return state;

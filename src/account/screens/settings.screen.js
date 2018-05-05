@@ -4,81 +4,47 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView,
-    FlatList,
-    Image,
     Dimensions,
     TouchableNativeFeedback,
-    TextInput,
-    TouchableOpacity,
     TouchableHighlight,
-    Clipboard,
     Share,
-    Linking,
     Alert
 } from 'react-native';
-import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation'
-import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons'
-import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons'
-import IconAwsome from 'react-native-vector-icons/dist/FontAwesome'
-import IconIOS from 'react-native-vector-icons/dist/Ionicons'
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons';
+import IconAwsome from 'react-native-vector-icons/dist/FontAwesome';
+import IconIOS from 'react-native-vector-icons/dist/Ionicons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Modal from 'react-native-modalbox';
 import {
     AdMobBanner,
-} from 'react-native-admob'
+} from 'react-native-admob';
 
 import {
-    setFromTokenLogo,
-    setToTokenLogo,
-    postChangellyMinAmount,
-    postChangellyExchangeAmount,
-    getChangellyTransactions,
-    getChangellyStatus,
-    postChangellyAddressPair
-} from 'exchange'
-import {
-    signOutAcccount,
-    getQuadrigaTickers,
-    postUserQuadrigaTransactions,
-    postUserLookupOrderQuadriga,
-    postUserBitcoinWalletWithdrawQuadriga,
-    postUserEthereumWalletWithdrawQuadriga,
-    postUserBitcoinGoldWalletWithdrawQuadriga,
-    postUserLitecoinWalletWithdrawQuadriga,
-    postUserBitcoinCashWalletWithdrawQuadriga,
-    postUserQuadrigaBalanceAndTransactions
+    signOutAcccount
 } from 'account';
 import {
     userLogOut
-} from 'users'
-import i18n from 'i18n'
-import { resetNavigation } from 'util'
-import QRCode from 'react-native-qrcode';
-import { iOSUIKit } from 'react-native-typography'
-import { Divider, Button } from 'react-native-elements'
-import { encryptAuthenticationQuadriga } from 'util';
+} from 'users';
+import i18n from 'i18n';
+import { iOSUIKit } from 'react-native-typography';
+import { Divider } from 'react-native-elements';
 import I18n from 'react-native-i18n';
 
 const { height, width } = Dimensions.get('window');
 
-const textStyle = {
-    fontSize: 17,
-    color: 'black',
-    marginBottom: 10,
-    textAlign: 'center',
-}
 const mapStateToProps = (state) => ({
     apiKey: state.user.apiKey,
     clientId: state.user.clientId,
     privateKey: state.user.privateKey,
 
-})
+});
 const mapDispatchToProps = (dispatch) => ({
     userLogOutDispatch: () => dispatch(userLogOut()),
     signOutAcccountDispatch: () => dispatch(signOutAcccount()),
-})
+});
 
 const resetAction = NavigationActions.reset({
     index: 0,
@@ -93,7 +59,7 @@ class Settings extends Component {
             alignSelf: 'center',
             color: 'white',
 
-        }
+        };
         return {
             headerTitle: `Settings`,
             headerTitleStyle: {
@@ -110,7 +76,7 @@ class Settings extends Component {
                     size={25}
                 />
             )
-        }
+        };
     };
 
 
@@ -127,7 +93,7 @@ class Settings extends Component {
                         </TouchableNativeFeedback>
                         <Divider style={{ height: 1, backgroundColor: '#ffe4b2', width: width / 1.1 }} />
                     </View>
-                )
+                );
             } else {
                 return (
                     <View style={{ alignItems: 'center' }}>
@@ -139,7 +105,7 @@ class Settings extends Component {
                         </TouchableHighlight>
                         <Divider style={{ height: 1, backgroundColor: '#ffe4b2', width: width / 1.1 }} />
                     </View>
-                )
+                );
             }
         } else {
             return (
@@ -152,7 +118,7 @@ class Settings extends Component {
                     </TouchableHighlight>
                     <Divider style={{ height: 1, backgroundColor: '#ffe4b2', width: width / 1.1 }} />
                 </View>
-            )
+            );
         }
 
     }
@@ -162,7 +128,7 @@ class Settings extends Component {
             <View style={styles}>
                 <Text onPress={onPressAction} style={textStyle}>{text}</Text>
             </View>
-        )
+        );
 
     }
 
@@ -170,12 +136,12 @@ class Settings extends Component {
         resetNav: () => {
             return new Promise((resolve, reject) => {
                 resolve(this.props.navigation.dispatch(resetAction));
-            })
+            });
         },
         userLogOut: () => {
             return new Promise((resolve, reject) => {
                 resolve(this.props.userLogOutDispatch());
-            })
+            });
         }
     }
 
@@ -198,7 +164,7 @@ class Settings extends Component {
                 { text: I18n.t('cancel'), onPress: () => { }, style: 'cancel' },
                 { text: I18n.t('signout'), onPress: () => this.handleSignOut() },
             ]
-        )
+        );
     }
 
 
@@ -206,7 +172,7 @@ class Settings extends Component {
         Share.share({
             message: "Check out this free app called Qcx : https://play.google.com/store/apps/details?id=com.qcx&hl=en, it lets you conveniently trade on your QuadrigaCX account.",
             title: "Qcx - Trade, deposit and withdraw securely on QuadrigaCX",
-        })
+        });
     }
 
     render() {
@@ -214,7 +180,7 @@ class Settings extends Component {
             <View style={styles.container}>
                 <Text style={{ color: 'black', margin: 15, marginTop: 25 }}>APP</Text>
                 <Divider style={{ height: 1, backgroundColor: 'orange', width: width / 1.1, alignSelf: 'center' }} />
-                {this.handlePlatform(I18n.t('support'), () => { this.props.navigation.navigate('Support') })}
+                {this.handlePlatform(I18n.t('support'), () => { this.props.navigation.navigate('Support'); })}
                 {this.handlePlatform(I18n.t('share'), () => this.handleShare(), {})}
                 {this.handlePlatform(I18n.t('signout'), () => this.handleSignoutOAlert(), { color: 'red' })}
                 <View style={{ position: 'absolute', bottom: 0, width: width }}>
@@ -227,7 +193,7 @@ class Settings extends Component {
                 </View>
                 <DropdownAlert updateStatusBar={false} translucent={true} ref={ref => this.dropdown = ref} />
             </View>
-        )
+        );
     }
 }
 

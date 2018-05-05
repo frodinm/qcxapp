@@ -40,7 +40,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setPinDispatch: (pin) => dispatch(setPin(pin)),
   getQuadrigaTickersDispatch: () => dispatch(getQuadrigaTickersAllAtPin()),
-  getQuadrigaTransactionsDispatch: (book, time) => { dispatch(getQuadrigaTransactions(book, time)); },
+  getQuadrigaTransactionsDispatch: (book, time) => { dispatch(getQuadrigaTransactions(book, time)); }
 });
 
 class Pincode extends Component {

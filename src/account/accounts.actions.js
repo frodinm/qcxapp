@@ -23,7 +23,8 @@ import {
   POST_USER_QUADRIGA_BITCOIN_CASH_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_BITCOIN_GOLD_WALLET_WITHDRAW,
   POST_USER_QUADRIGA_LITECOIN_WALLET_WITHDRAW,
-  MODULE_BUTTON_STATE_CHANGE
+  MODULE_BUTTON_STATE_CHANGE,
+  MODULE_BUTTON_STATE_CHANGE_RESET
 
 } from 'account';
 import {
@@ -53,6 +54,12 @@ import {
 import { encryptAuthenticationQuadriga } from 'util';
 
 let interval;
+
+export const moduleButtonPressedReset = () => {
+  return dispatch => {
+    dispatch({ type: MODULE_BUTTON_STATE_CHANGE_RESET.SUCCESS });
+  };
+};
 
 export const moduleButtonPressedHandler = () => {
   return dispatch => {
