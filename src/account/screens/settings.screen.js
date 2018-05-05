@@ -14,10 +14,7 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import SimpleIcon from 'react-native-vector-icons/dist/SimpleLineIcons';
-import IconAwsome from 'react-native-vector-icons/dist/FontAwesome';
-import IconIOS from 'react-native-vector-icons/dist/Ionicons';
 import DropdownAlert from 'react-native-dropdownalert';
-import Modal from 'react-native-modalbox';
 import {
     AdMobBanner,
 } from 'react-native-admob';
@@ -28,7 +25,7 @@ import {
 import {
     userLogOut
 } from 'users';
-import i18n from 'i18n';
+import i18n from 'react-native-i18n';
 import { iOSUIKit } from 'react-native-typography';
 import { Divider } from 'react-native-elements';
 import I18n from 'react-native-i18n';
@@ -61,7 +58,7 @@ class Settings extends Component {
 
         };
         return {
-            headerTitle: `Settings`,
+            headerTitle: i18n.t('settings'),
             headerTitleStyle: {
                 ...headerStyle
             },
@@ -178,7 +175,7 @@ class Settings extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={{ color: 'black', margin: 15, marginTop: 25 }}>APP</Text>
+                <Text style={{ color: 'black', margin: 15, marginTop: 25 }}>{i18n.t('app')}</Text>
                 <Divider style={{ height: 1, backgroundColor: 'orange', width: width / 1.1, alignSelf: 'center' }} />
                 {this.handlePlatform(I18n.t('support'), () => { this.props.navigation.navigate('Support'); })}
                 {this.handlePlatform(I18n.t('share'), () => this.handleShare(), {})}
@@ -202,67 +199,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
-        backgroundColor: 'white',
-    },
-    text: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 10
-    },
-    modal: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        ...Platform.select({
-            ios: {
-                marginTop: 0
-            }
-        }),
-        height: height / 1.8,
-        width: width / 1.2
-    },
-    modalLookUp: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        ...Platform.select({
-            ios: {
-                marginTop: 0
-            }
-        }),
-        height: height / 1.8,
-        width: width / 1.1
-    },
-    modalWithdraw: {
-
-        alignItems: 'center',
-        borderRadius: 5,
-        ...Platform.select({
-            ios: {
-                marginTop: 0
-            }
-        }),
-        height: height / 1.6,
-        width: width / 1.1
-    },
-    textInput: {
-        ...Platform.select({
-            ios: {
-                borderWidth: 1,
-                borderColor: '#8E8E93',
-                borderRadius: 5,
-                paddingLeft: 5,
-                height: 30,
-            }
-        }),
-        width: width / 1.2,
-        marginTop: 15,
-    },
-    modalConfirm: {
-        height: height / 8,
-        backgroundColor: '#007aff',
-        opacity: 0.95
     },
 
 });

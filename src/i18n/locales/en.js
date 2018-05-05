@@ -22,6 +22,7 @@ export default {
   withdraw: 'Withdraw',
   clientId: 'Client Id',
   apiKey: 'Api Key',
+  app: 'App',
   privateKey: 'Private Key',
   getStarted: 'Get Started!',
   register: 'Register',
@@ -31,6 +32,7 @@ export default {
   setPinTitle: 'Info',
   setPinMessage: 'Your pin has been set to',
   setPinButton: 'Confirm',
+  confirm: 'Confirm',
   transactionsUpper: 'Transactions',
   transactionsLower: 'transactions',// if its different then upper
   transactionId: 'Transaction ID',
@@ -56,7 +58,14 @@ export default {
   addressHere: 'Address here',
   amountHere: 'Amount here',
   buyAlertMessage: 'Please go to the Exchange tab to buy some',
+  withdrawAlert: 'Please confirm your withdraw',
+  copyAlertError: 'Your address wasn\'t availble to be copied to your clipboard',
+  copyAlertMessage: 'was copied to your clipboard!',
+  cameraAccessErrorTitle: 'Camera Access',
+  cameraAccessErrorMessage: 'Camera access needed for Scanning Qr codes',
+  depositAmountError: 'No additional info is provided',
   copy: 'COPY',
+  copyAddress: 'Copy Address',
   addressUpper: 'ADDRESS',
   from: 'From',
   to: 'To',
@@ -78,6 +87,10 @@ export default {
   you: 'You',
   have: 'have',
   no: 'no',
-  create: 'create'
+  create: 'create',
+  traded: 'Traded',
+  sent: 'Sent',
+  deposit: 'Deposit'
+
 
 };

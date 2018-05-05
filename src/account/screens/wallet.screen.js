@@ -129,7 +129,7 @@ class Wallet extends Component {
         };
         return {
 
-            headerTitle: 'Wallet',
+            headerTitle: i18n.t('wallet'),
             headerStyle: {
                 backgroundColor: 'orange',
             },
@@ -154,7 +154,7 @@ class Wallet extends Component {
                 return (
                     <TouchableNativeFeedback onPress={onPressAction} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0} style={{ height: 40, width: width / 2.3, margin: 5, marginBottom: 10, borderRadius: 5, }}>
                         <View style={{ ...buttonStyle, justifyContent: 'center' }} pointerEvents='box-only' >
-                            <Text style={{ textAlign: 'center', fontSize: 20, color: 'black', fontWeight: 'bold' }}>{text}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 20, color: 'black' }}>{text}</Text>
                         </View>
                     </TouchableNativeFeedback>
                 );
@@ -162,7 +162,7 @@ class Wallet extends Component {
                 return (
                     <TouchableHighlight style={{ height: 40, width: width / 2.3, margin: 5, marginBottom: 10, borderRadius: 5, }} onPress={onPressAction} >
                         <View style={{ backgroundColor: 'orange', justifyContent: 'center', height: 40, width: width / 2.3, marginBottom: 10, borderRadius: 5, }} pointerEvents='box-only' >
-                            <Text style={{ textAlign: 'center', fontSize: 18, color: 'black', fontWeight: 'bold' }}>{text}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 18, color: 'black' }}>{text}</Text>
                         </View>
                     </TouchableHighlight>
                 );
@@ -171,7 +171,7 @@ class Wallet extends Component {
             return (
                 <TouchableHighlight style={{ height: 40, width: width / 2.3, margin: 5, marginBottom: 10, borderRadius: 5, }} onPress={onPressAction} >
                     <View style={{ backgroundColor: 'orange', justifyContent: 'center', height: 40, width: width / 2.3, marginBottom: 10, borderRadius: 5, }} pointerEvents='box-only' >
-                        <Text style={{ textAlign: 'center', fontSize: 18, color: 'black', fontWeight: 'bold' }}>{text}</Text>
+                        <Text style={{ textAlign: 'center', fontSize: 18, color: 'black' }}>{text}</Text>
                     </View>
                 </TouchableHighlight>
             );
@@ -247,17 +247,17 @@ class Wallet extends Component {
     handleText(object) {
         if (object.type === 0) {
             return {
-                BuyOrSell: "Deposit",
-                textObject: <Text style={[iOSUIKit.caption]}>Amount {object[Object.keys(object)[0]]} {Object.keys(object)[0].toUpperCase()}</Text>
+                BuyOrSell: i18n.t('deposit'),
+                textObject: <Text style={[iOSUIKit.caption]}>{i18n.t('amount')} {object[Object.keys(object)[0]]} {Object.keys(object)[0].toUpperCase()}</Text>
             };
         } else if (object.type === 1) {
             return {
-                BuyOrSell: "Sent",
-                textObject: <Text style={[iOSUIKit.body]}>To {object.minor}</Text>
+                BuyOrSell: i18n.t('sent'),
+                textObject: <Text style={[iOSUIKit.body]}>{i18n.t('to')} {object.minor}</Text>
             };
         } else if (object.type === 2) {
             return {
-                BuyOrSell: "Traded",
+                BuyOrSell: i18n.t('traded'),
                 textObject: null
             };
         }
@@ -296,7 +296,7 @@ class Wallet extends Component {
             }
             this.refs.modalLookUp.open();
         } else {
-            this.dropdown.alertWithType('info', 'Info', 'No additional info is provided');
+            this.dropdown.alertWithType('info', 'Info', i18n.t('depositAmountError'));
         }
 
 
@@ -363,15 +363,15 @@ class Wallet extends Component {
         if (address) {
             Clipboard.setString(address);
             Alert.alert(
-                'Copy Address',
-                `Your ${name} address : ${address} was copied to your clipboard!`,
+                i18n.t('copyAddress'),
+                i18n.locale.substring(0, 2) === 'en' ? `${i18n.t('yourSingular')} ${name} ${i18n.t('address')} : ${address} ${i18n.t('copyAlertMessage')}` : `${i18n.t('yourSingular')} ${i18n.t('address')} ${name} : ${address} ${i18n.t('copyAlertMessage')}`,
                 [{ text: 'OK', onPress: () => this.refs.modal.close() }],
                 { onDismiss: () => this.refs.modal.close() }
             );
         } else {
             Alert.alert(
-                'Copy Address',
-                `Your address wasn't availble to be copied to your clipboard`,
+                i18n.t('copyAddress'),
+                i18n.t('copyAlertError'),
                 [{ text: 'OK', onPress: () => this.refs.modal.close() }],
                 { onDismiss: () => this.refs.modal.close() }
             );
@@ -447,7 +447,7 @@ class Wallet extends Component {
                 // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
                 if (response.toString() !== 'authorized') {
                     Alert.alert(
-                        'Camera Access',
+                        i18n.t('cameraAccessErrorTitle'),
                         'Access needed to Scan Qr codes',
                         [
                             {
@@ -471,7 +471,7 @@ class Wallet extends Component {
                 if (response.toString() !== 'authorized') {
                     Permissions.request('camera').then(response => {
                         if (response.toString() === 'denied') {
-                            alert('Camera access needed for Scanning Qr codes');
+                            alert(i18n.t('cameraAccessErrorMessage'));
                         } else {
                             this.props.navigation.navigate('Camera', { setAddress: (address) => { this.setState({ withdrawAddress: address }); } });
                         }
@@ -487,11 +487,11 @@ class Wallet extends Component {
     confirmWithdraw() {
         const { acronym, withdrawAddress, amount } = this.state;
         Alert.alert(
-            'Withdraw',
-            `Please confirm your withdraw\n Address:${withdrawAddress} \n Amount : ${amount === "" ? "0" : amount} ${acronym.toUpperCase()}`,
+            i18n.t('withdraw'),
+            `${i18n.t('withdrawAlert')}\n${i18n.t('address')}:${withdrawAddress} \n${i18n.t('amount')} : ${amount === "" ? "0" : amount} ${acronym.toUpperCase()}`,
             [
-                { text: 'Cancel', onPress: () => { }, style: 'cancel' },
-                { text: 'Confirm', onPress: () => this.handleWithdraw() },
+                { text: i18n.t('cancel'), onPress: () => { }, style: 'cancel' },
+                { text: i18n.t('confirm'), onPress: () => this.handleWithdraw() },
             ]
         );
     }
@@ -565,15 +565,15 @@ class Wallet extends Component {
                     ref={"modal"}
                 >
                     <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 350, width: 300 }}>
-                        <Text style={[iOSUIKit.title3, { marginBottom: 30, position: 'absolute', top: 30 }]}>My {name} Address</Text>
+                        <Text style={[iOSUIKit.title3, { marginBottom: 30, position: 'absolute', top: 30 }]}>{i18n.locale.substring(0, 2) === 'en' ? `${i18n.t('my')} ${name} ${i18n.t('address')}` : `${i18n.t('my')} ${i18n.t('address')} ${name}`}</Text>
                         <QRCode
                             value={address}
                             size={180}
                             bgColor='black'
                             fgColor='white'
                         />
-                        {this.handleModalButton("close".toUpperCase(), { position: 'absolute', bottom: 30, right: 150, margin: 5 }, { fontSize: 14, color: 'black', textAlign: 'center' }, () => this.refs.modal.close())}
-                        {this.handleModalButton("copy address".toUpperCase(), { position: 'absolute', bottom: 30, right: 20, margin: 5 }, { fontSize: 14, color: 'orange', textAlign: 'center' }, () => this.handleCopyAddress())}
+                        {this.handleModalButton(i18n.t('close').toUpperCase(), { position: 'absolute', bottom: 30, right: 150, margin: 5 }, { fontSize: 14, color: 'black', textAlign: 'center' }, () => this.refs.modal.close())}
+                        {this.handleModalButton(i18n.t('copyAddress').toUpperCase(), { position: 'absolute', bottom: 30, right: 20, margin: 5 }, { fontSize: 14, color: 'orange', textAlign: 'center' }, () => this.handleCopyAddress())}
                     </View>
                 </Modal>
                 <Modal

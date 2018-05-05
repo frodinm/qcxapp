@@ -84,7 +84,7 @@ class AccountsWallets extends Component {
 
     };
     return {
-      headerTitle: I18n.t('accounts').toUpperCase(),
+      headerTitle: I18n.t('accounts'),
       headerTitleStyle: {
         ...headerStyle
       },

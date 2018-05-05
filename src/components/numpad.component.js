@@ -11,6 +11,7 @@ import {
   BackHandler
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/Feather';
+import i18n from 'react-native-i18n';
 
 
 const { height, width } = Dimensions.get('window');
@@ -22,7 +23,7 @@ export class NumberPad extends Component {
     this.state = {
       numArray3: [{ number: 3, subText: 'DEF', func: () => this.props.addToPin(3), icon: null }, { number: 6, subText: 'MNO', func: () => this.props.addToPin(6), icon: null }, { number: 9, subText: 'WXYZ', func: () => this.props.addToPin(9), icon: null }, { func: () => this.props.removePinAuth(), icon: <Icon name="arrow-left" size={25} /> }],
       numArray2: [{ number: 2, subText: 'ABC', func: () => this.props.addToPin(2), icon: null }, { number: 5, subText: 'JKL', func: () => this.props.addToPin(5), icon: null }, { number: 8, subText: 'TUV', func: () => this.props.addToPin(8), icon: null }, { number: 0, func: () => this.props.addToPin(0), icon: null }],
-      numArray1: [{ number: 1, func: () => this.props.addToPin(1), icon: null }, { number: 4, subText: 'GHI', func: () => this.props.addToPin(4), icon: null }, { number: 7, subText: 'PQRS', func: () => this.props.addToPin(7), icon: null }, { number: 'cancel', func: () => BackHandler.exitApp(), icon: null }]
+      numArray1: [{ number: 1, func: () => this.props.addToPin(1), icon: null }, { number: 4, subText: 'GHI', func: () => this.props.addToPin(4), icon: null }, { number: 7, subText: 'PQRS', func: () => this.props.addToPin(7), icon: null }, { number: i18n.t('cancel'), func: () => BackHandler.exitApp(), icon: null }]
     };
   }
 
