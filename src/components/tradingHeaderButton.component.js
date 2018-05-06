@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import {
     View,
-    StyleSheet,
     Text,
     Dimensions,
-    Image,
     TouchableOpacity,
-    Platform,
 } from 'react-native';
 import IconFoundation from 'react-native-vector-icons/dist/Foundation';
-import IconMaterial from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import { encryptAuthenticationQuadriga } from 'util';
 import {
@@ -17,6 +13,7 @@ import {
     getQuadrigaOrders,
     postUserOpenOrdersQuadriga
 } from 'account';
+import i18n from 'react-native-i18n';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import fontelloConfig from '../assets/config.json';
 const IconCustom = createIconSetFromFontello(fontelloConfig);
@@ -201,52 +198,39 @@ class TradingButton extends Component {
         switch (tradingBook) {
             case "btc_cad":
                 return <Text>USD </Text>;
-                break;
             case "btc_usd":
                 return <Text>CAD </Text>;
-                break;
             case "eth_cad":
                 return <IconFoundation name="bitcoin-circle" size={30} style={{ marginRight: 10 }} />;
-                break;
             case "eth_btc":
                 return <Text>CAD </Text>;
-                break;
             case "bch_cad":
                 return <IconFoundation name="bitcoin-circle" size={30} style={{ marginRight: 10 }} />;
-                break;
             case "bch_btc":
                 return <Text>CAD </Text>;
-                break;
             case "btg_cad":
                 return <IconFoundation name="bitcoin-circle" size={30} style={{ marginRight: 10 }} />;
-                break;
             case "btg_btc":
                 return <Text>CAD</Text>;
-                break;
             case "ltc_cad":
                 return <IconFoundation name="bitcoin-circle" size={30} style={{ marginRight: 10 }} />;
-                break;
             case "ltc_btc":
                 return <Text>CAD </Text>;
-                break;
             default:
                 return <Text>CAD </Text>;
-                break;
         }
     }
 
     handleTradeFrom() {
-        const { navigation } = this.props;
         return <TouchableOpacity onPress={() => this.handleOnPress()} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Trade with </Text>
+            <Text>{i18n.t('tradeWith')} </Text>
             {this.handleRightIcon()}
         </TouchableOpacity>;
     }
 
     render() {
-        const { imageSource, onPressAction, buttonStyle, text } = this.props;
         return (
-            <View>
+            <View style={{ marginRight: 5 }}>
                 {this.handleTradeFrom()}
             </View>
         );

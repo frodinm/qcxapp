@@ -84,15 +84,15 @@ export class BuySellComponent extends Component {
     const { tradingBook } = this.props.trading;
     if (this.state.price === "") {
       if (tradingBook.slice(4, 7) !== 'btc') {
-        return <Text style={[iOSUIKit.caption, styles.text]}>Total: ~{(parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(quadrigaOrders.asks.slice(7, 8)[0])).toFixed(2)} {tradingBook.slice(4, 7).toUpperCase()}</Text>;
+        return <Text style={[iOSUIKit.caption, styles.text]}>{i18n.t('total')}: ~{(parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(quadrigaOrders.asks.slice(7, 8)[0])).toFixed(2)} {tradingBook.slice(4, 7).toUpperCase()}</Text>;
       } else {
-        return <Text style={[iOSUIKit.caption, styles.text]}>Total: ~{(parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(quadrigaOrders.asks.slice(0, 1)[0])).toFixed(6)} BTC</Text>;
+        return <Text style={[iOSUIKit.caption, styles.text]}>{i18n.t('total')}: ~{(parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(quadrigaOrders.asks.slice(0, 1)[0])).toFixed(6)} BTC</Text>;
       }
     } else {
       if (tradingBook.slice(4, 7) !== 'btc') {
-        return <Text style={[iOSUIKit.caption, styles.text]}>Total: {parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(this.state.price)} {tradingBook.slice(4, 7).toUpperCase()}</Text>;
+        return <Text style={[iOSUIKit.caption, styles.text]}>{i18n.t('total')}: {(parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(this.state.price)).toFixed(4)} {tradingBook.slice(4, 7).toUpperCase()}</Text>;
       } else {
-        return <Text style={[iOSUIKit.caption, styles.text]}>Total: {parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(this.state.price)} BTC</Text>;
+        return <Text style={[iOSUIKit.caption, styles.text]}>{i18n.t('total')}: {parseFloat(this.state.amount === "" ? 0 : this.state.amount) * parseFloat(this.state.price)} BTC</Text>;
       }
     }
   }
@@ -138,8 +138,8 @@ export class BuySellComponent extends Component {
     return btcBids.map((item, index) => {
       return <View key={index} style={{ flexDirection: 'column', alignSelf: 'flex-start', marginTop: 2 }}>
         <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => this.setState({ price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{ width: width / 4 + 15, alignSelf: 'center', textAlign: 'center' }}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
-          <Text style={{ width: width / 4 - 30, alignSelf: 'center', textAlign: 'left' }}>{parseFloat(item[1]).toFixed(3)}</Text>
+          <TouchableOpacity onPress={() => this.setState({ price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{ width: width / 4 - 8, alignSelf: 'center', textAlign: 'center' }}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
+          <Text style={{ width: width / 4 - 8, alignSelf: 'center', textAlign: 'center' }}>{parseFloat(item[1]).toFixed(3)}</Text>
         </View>
       </View>;
     });
@@ -151,8 +151,8 @@ export class BuySellComponent extends Component {
     return btcAsks.map((item, index) => {
       return <View key={index} style={{ flexDirection: 'column', alignSelf: 'flex-start', marginTop: 2 }}>
         <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => this.setState({ price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{ width: width / 4 + 5, alignSelf: 'center', textAlign: 'center' }}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
-          <Text style={{ width: width / 4 - 35, alignSelf: 'center', textAlign: 'center' }}>{parseFloat(item[1]).toFixed(3)}</Text>
+          <TouchableOpacity onPress={() => this.setState({ price: this.handleToFixed(parseFloat(item[0])) })}><Text style={{ width: width / 4 - 4, alignSelf: 'center', textAlign: 'center' }}>{this.handleToFixed(parseFloat(item[0]))}</Text></TouchableOpacity>
+          <Text style={{ width: width / 4 - 4, alignSelf: 'center', textAlign: 'center' }}>{parseFloat(item[1]).toFixed(3)}</Text>
         </View>
       </View>;
     });
@@ -170,7 +170,7 @@ export class BuySellComponent extends Component {
     const { quadrigaUserOrders, tradingBook, userOpenOrders, apiKey, clientId, secret } = this.props.trading;
     const { name } = this.props;
     if (quadrigaUserOrders.data.length === 0) {
-      return <Text style={{ textAlign: 'center', margin: 30 }}>{`Buy ${name} now \n and your orders will show here`}</Text>;
+      return <Text style={{ textAlign: 'center', margin: 30 }}>{`${i18n.t('buyNow')} ${name} ${i18n.t('noOrderMessage')}`}</Text>;
     } else if (quadrigaUserOrders.data.hasOwnProperty('error')) {
       let nonce = Date.now();
       userOpenOrders(apiKey, encryptAuthenticationQuadriga(nonce, clientId, apiKey, secret), nonce, tradingBook);
@@ -262,7 +262,7 @@ export class BuySellComponent extends Component {
     if (quadrigaUserBuyMarket.data.hasOwnProperty('error')) {
       this.dropdown.alertWithType('error', 'Error', quadrigaUserBuyMarket.data.error.message);
     } else {
-      this.dropdown.alertWithType('info', 'Info', 'Buy at market price has been placed!');
+      this.dropdown.alertWithType('info', 'Info', i18n.t('buyMarketPriceAlertMessage'));
     }
   }
 
@@ -271,7 +271,7 @@ export class BuySellComponent extends Component {
     if (quadrigaUserBuyAt.data.hasOwnProperty('error')) {
       this.dropdown.alertWithType('error', 'Error', quadrigaUserBuyAt.data.error.message);
     } else {
-      this.dropdown.alertWithType('info', 'Info', `${this.handleText(quadrigaUserBuyAt.data.type)} ${quadrigaUserBuyAt.data.amount} ${quadrigaUserBuyAt.data.book.slice(0, 3).toUpperCase()} at ${quadrigaUserBuyAt.data.price} each has been placed!`);
+      this.dropdown.alertWithType('info', 'Info', `${this.handleText(quadrigaUserBuyAt.data.type)} ${quadrigaUserBuyAt.data.amount} ${quadrigaUserBuyAt.data.book.slice(0, 3).toUpperCase()} ${i18n.t('at')} ${quadrigaUserBuyAt.data.price} ${i18n.t('buyOrderConfirmLimitMessageAlert')}`);
     }
   }
 
@@ -280,7 +280,7 @@ export class BuySellComponent extends Component {
     if (quadrigaUserSellLimit.data.hasOwnProperty('error')) {
       this.dropdown.alertWithType('error', 'Error', quadrigaUserSellLimit.data.error.message);
     } else {
-      this.dropdown.alertWithType('info', 'Info', `${this.handleText(quadrigaUserSellLimit.data.type)} ${quadrigaUserSellLimit.data.amount} ${quadrigaUserSellLimit.data.book.slice(0, 3).toUpperCase()} at ${quadrigaUserSellLimit.data.price} each has been placed!`);
+      this.dropdown.alertWithType('info', 'Info', `${this.handleText(quadrigaUserSellLimit.data.type)} ${quadrigaUserSellLimit.data.amount} ${quadrigaUserSellLimit.data.book.slice(0, 3).toUpperCase()} ${i18n.t('at')} ${quadrigaUserSellLimit.data.price} ${i18n.t('buyOrderConfirmLimitMessageAlert')}`);
     }
   }
 
@@ -289,7 +289,7 @@ export class BuySellComponent extends Component {
     if (quadrigaUserSellMarket.data.hasOwnProperty('error')) {
       this.dropdown.alertWithType('error', 'Error', quadrigaUserSellMarket.data.error.message);
     } else {
-      this.dropdown.alertWithType('info', 'Info', 'Sell at market price has been placed!');
+      this.dropdown.alertWithType('info', 'Info', i18n.t('sellMarketPriceAlertMessage'));
     }
   }
 
@@ -311,7 +311,7 @@ export class BuySellComponent extends Component {
   }
 
   handleSellToken() {
-    const { tradingBook, apiKey, clientId, secret, userSellAtPrice, userSellMarketPrice, quadrigaUserSellLimit, quadrigaUserSellMarket } = this.props.trading;
+    const { tradingBook, apiKey, clientId, secret, userSellAtPrice, userSellMarketPrice } = this.props.trading;
     if (this.state.price === "") {
       userSellMarketPrice(apiKey, clientId, secret, this.state.amount, tradingBook);
       setTimeout(() => {
@@ -328,13 +328,13 @@ export class BuySellComponent extends Component {
   handleStatusColor(value) {
     switch (value) {
       case "-1":
-        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#cc3232' }} />;
+        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#cc3232', alignSelf: 'center' }} />;
       case "0":
-        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#2B73B6' }} />;
+        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#2B73B6', alignSelf: 'center' }} />;
       case "1":
-        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#ecec4c' }} />;
+        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#ecec4c', alignSelf: 'center' }} />;
       case "2":
-        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#32A54A' }} />;
+        return <View style={{ height: 10, width: 10, borderRadius: 100, backgroundColor: '#32A54A', alignSelf: 'center' }} />;
     }
   }
 
@@ -355,13 +355,13 @@ export class BuySellComponent extends Component {
     switch (type) {
       case "0":
         return {
-          title: "Buy",
-          return: "Paid",
+          title: i18n.t('buyNow'),
+          return: i18n.t('paid'),
         };
       case "1":
         return {
-          title: "Sell",
-          return: "Return",
+          title: i18n.t('sellPresent'),
+          return: i18n.t('return'),
         };
       default:
         return {
@@ -375,7 +375,7 @@ export class BuySellComponent extends Component {
     const { quadrigaUserOrdersLookup, userCancelOrder, apiKey, clientId, secret, tradingBook } = this.props.trading;
     userCancelOrder(apiKey, clientId, secret, quadrigaUserOrdersLookup.data[0].id, tradingBook);
     this.refs.modalOrderInfo.close();
-    this.dropdown.alertWithType('info', 'Info', 'Your order has been canceled!');
+    this.dropdown.alertWithType('info', 'Info', i18n.t('cancelOrderSuccessMessage'));
   }
 
   confirmBuyOrder() {
@@ -394,11 +394,11 @@ export class BuySellComponent extends Component {
     const { price } = this.state;
     const { quadrigaOrders } = this.props;
     Alert.alert(
-      price === "" ? "Buy at Market price" : "Buy at Limit price",
-      price !== "" ? `Please confirm your buy order \n of ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your buy order \n of ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7, 8)[0]).toFixed(2)} each`,
+      price === "" ? i18n.t('buyMarketPriceMessage') : i18n.t('buyLimitPriceMessage'),
+      price !== "" ? `${i18n.t('buyOrderConfirmMessage')} ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} ${i18n.t('at')} $${this.state.price} ${i18n.t('each')}` : `${i18n.t('buyOrderConfirmMessage')} ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} ${i18n.t('at')} ~$${parseFloat(quadrigaOrders.asks.slice(7, 8)[0]).toFixed(2)} ${i18n.t('each')}`,
       [
-        { text: 'Cancel', onPress: () => { }, style: 'cancel' },
-        { text: 'Confirm', onPress: () => this.confirmBuyOrder() },
+        { text: i18n.t('cancel'), onPress: () => { }, style: 'cancel' },
+        { text: i18n.t('confirm'), onPress: () => this.confirmBuyOrder() },
       ]
     );
   }
@@ -408,22 +408,22 @@ export class BuySellComponent extends Component {
     const { price } = this.state;
     const { quadrigaOrders } = this.props;
     Alert.alert(
-      price === "" ? "Sell at Market price" : "Sell at Limit price",
-      price !== "" ? `Please confirm your sell order \n of ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} at $${this.state.price} each` : `Please confirm your sell order \n of ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} at ~$${parseFloat(quadrigaOrders.asks.slice(7, 8)[0]).toFixed(2)} each`,
+      price === "" ? i18n.t('sellMarketPriceMessage') : i18n.t('sellLimitPriceMessage'),
+      price !== "" ? `${i18n.t('sellOrderConfirmMessage')} ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} ${i18n.t('at')} $${this.state.price} ${i18n.t('each')}` : `${i18n.t('sellOrderConfirmMessage')} ${this.state.amount === "" ? "0" : this.state.amount} ${this.props.acronym} ${i18n.t('at')} ~$${parseFloat(quadrigaOrders.asks.slice(7, 8)[0]).toFixed(2)} ${i18n.t('each')}`,
       [
-        { text: 'Cancel', onPress: () => { }, style: 'cancel' },
-        { text: 'Confirm', onPress: () => this.confirmSellOrder() },
+        { text: i18n.t('cancel'), onPress: () => { }, style: 'cancel' },
+        { text: i18n.t('confirm'), onPress: () => this.confirmSellOrder() },
       ]
     );
   }
 
   handleCancelOrder() {
     Alert.alert(
-      'Cancel order',
-      'Please confrim your order cancel',
+      i18n.t('cancelOrder'),
+      i18n.t('cancelOrderMessage'),
       [
-        { text: 'Cancel', onPress: () => { }, style: 'cancel' },
-        { text: 'Confirm', onPress: () => this.confirmCancelOrder() },
+        { text: i18n.t('cancel'), onPress: () => { }, style: 'cancel' },
+        { text: i18n.t('confirm'), onPress: () => this.confirmCancelOrder() },
       ]
     );
   }
@@ -437,14 +437,14 @@ export class BuySellComponent extends Component {
         <ScrollView>
           <View style={{ flexDirection: 'row', alignSelf: 'center', alignItems: 'center', justifyContent: 'center', backgroundColor: 'white', width: width / 1.045, elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2, marginTop: 5 }}>
             <View style={{ flexDirection: 'column', marginTop: 15, marginBottom: 15, width: width / 2.2 }}>
-              <Text style={[iOSUIKit.body, {}]}>Amount</Text>
-              <TextInput onChangeText={(text) => this.handleAmount(text)} value={this.state.amount} keyboardType="numeric" placeholder={`Amount ${acronym}`} style={styles.textInput} />
-              <Text style={[iOSUIKit.body, {}]}>Price</Text>
-              <TextInput onChangeText={(text) => this.handlePrice(text)} value={this.state.price} keyboardType="numeric" placeholder={`${trading.tradingBook.slice(4, 7).toUpperCase()} per ${acronym} at MP`} style={styles.textInput} />
+              <Text style={[iOSUIKit.body, {}]}>{i18n.t('amount')}</Text>
+              <TextInput onChangeText={(text) => this.handleAmount(text)} value={this.state.amount} keyboardType="numeric" placeholder={`${i18n.t('amount')} ${acronym}`} style={styles.textInput} />
+              <Text style={[iOSUIKit.body, {}]}>{i18n.t('price')}</Text>
+              <TextInput onChangeText={(text) => this.handlePrice(text)} value={this.state.price} keyboardType="numeric" placeholder={`${trading.tradingBook.slice(4, 7).toUpperCase()} ${i18n.t('per')} ${acronym} ${i18n.t('at')} MP`} style={styles.textInput} />
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', width: width / 2.2, alignItems: 'center' }}>
               <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={[iOSUIKit.title3, styles.text]}>Available</Text>
+                <Text style={[iOSUIKit.title3, styles.text]}>{i18n.t('available')}</Text>
                 <Text style={[iOSUIKit.caption, styles.text]}>${this.handleFromAvailableAmount()}</Text>
                 <TouchableOpacity onPress={() => this.handleSetAmountValue()}><Text style={[iOSUIKit.caption, styles.text]}>{this.handleTokenAvailable()} {acronym}</Text></TouchableOpacity>
                 {this.handleTotalPrice()}
@@ -463,35 +463,35 @@ export class BuySellComponent extends Component {
               </View>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', width: width / 1.03 - 5, height: height / 8, alignItems: 'center', backgroundColor: 'white', marginBottom: 5, marginLeft: 5, marginTop: 5, justifyContent: 'center', elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2 }}>
-            <Button onPress={() => this.handleBuyOrder()} title="BUY" buttonStyle={{ backgroundColor: '#4ca64c', height: height / 15, width: width / 2.5 }} />
-            <Button onPress={() => this.handleSellOrder()} title="SELL" buttonStyle={{ backgroundColor: '#ffb732', height: height / 15, width: width / 2.5 }} />
+          <View style={{ flexDirection: 'row', width: width / 1.045, height: height / 8, alignItems: 'center', backgroundColor: 'white', marginBottom: 5, marginLeft: 2, marginTop: 5, justifyContent: 'center', elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2 }}>
+            <Button onPress={() => this.handleBuyOrder()} title={i18n.t('buy').toUpperCase()} buttonStyle={{ backgroundColor: '#4ca64c', height: height / 15, width: width / 2.5 }} />
+            <Button onPress={() => this.handleSellOrder()} title={i18n.t('sellPresent').toUpperCase()} buttonStyle={{ backgroundColor: '#ffb732', height: height / 15, width: width / 2.5 }} />
           </View>
           <View style={{ flexDirection: 'row' }}>
-            <View style={{ backgroundColor: 'white', marginLeft: 5, elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ width: width / 2.2, alignSelf: 'flex-start', textAlign: 'center', backgroundColor: 'transparent' }}>Top 10 Bids</Text>
+            <View style={{ backgroundColor: 'white', width: width / 2.2, marginLeft: 2, elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ width: width / 2.2, alignSelf: 'flex-start', textAlign: 'center', backgroundColor: 'transparent' }}>{i18n.t('top10Bids')}</Text>
               <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
-                <Text style={[iOSUIKit.body, { width: width / 4 - 20, textAlign: 'right', alignSelf: 'flex-end' }]}>Price</Text>
-                <Text style={[iOSUIKit.body, { width: width / 4, textAlign: 'center', alignSelf: 'center' }]}>Amount</Text>
+                <Text style={[iOSUIKit.body, { width: width / 4 - 8, textAlign: 'center', alignSelf: 'center' }]}>{i18n.t('price')}</Text>
+                <Text style={[iOSUIKit.body, { width: width / 4 - 8, textAlign: 'center', alignSelf: 'center' }]}>{i18n.t('amount')}</Text>
               </View>
               {this.handleBidOrderView()}
             </View>
-            <View style={{ height: 250, marginLeft: 5, backgroundColor: 'white', elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={{ width: width / 2.2, alignSelf: 'center', textAlign: 'center', backgroundColor: 'transparent' }}>Top 10 Asks</Text>
+            <View style={{ height: 250, marginLeft: 8, backgroundColor: 'white', elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ width: width / 2.2, alignSelf: 'center', textAlign: 'center', backgroundColor: 'transparent' }}>{i18n.t('top10Asks')}</Text>
               <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                <Text style={[iOSUIKit.body, { width: width / 4 + 5, textAlign: 'center', alignSelf: 'center' }]}>Price</Text>
-                <Text style={[iOSUIKit.body, { width: width / 4 - 12, alignSelf: 'center', textAlign: 'left' }]}>Amount</Text>
+                <Text style={[iOSUIKit.body, { width: width / 4 - 8, textAlign: 'center', alignSelf: 'center' }]}>{i18n.t('price')}</Text>
+                <Text style={[iOSUIKit.body, { width: width / 4 - 8, alignSelf: 'center', textAlign: 'center' }]}>{i18n.t('amount')}</Text>
               </View>
               {this.handleAskOrderView()}
             </View>
           </View>
-          <View style={{ width: width / 1.03 - 5, alignItems: 'center', backgroundColor: 'white', marginBottom: 5, marginLeft: 5, marginTop: 5, justifyContent: 'center', elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2 }}>
-            <Text style={[iOSUIKit.title3, { width: width, textAlign: 'center', marginTop: 10, marginBottom: 10 }]}>Your Orders</Text>
-            <View style={{ flexDirection: 'row', width: width / 1.03 - 5, alignItems: 'center' }}>
-              <Text style={[iOSUIKit.body, { width: '18%', textAlign: 'center' }]}>Type</Text>
-              <Text style={{ color: 'black', width: '30%', textAlign: 'center' }}>Amount({trading.tradingBook.slice(0, 3).toUpperCase()})</Text>
-              <Text style={{ width: '26%', textAlign: 'center' }}>Price({trading.tradingBook.slice(4, 7).toUpperCase()})</Text>
-              <Text style={{ width: '15%', textAlign: 'center' }}>Status</Text>
+          <View style={{ width: width / 1.045, alignItems: 'center', backgroundColor: 'white', marginBottom: 5, marginLeft: 2, marginTop: 5, justifyContent: 'center', elevation: 2, shadowColor: 'black', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 2 }}>
+            <Text style={[iOSUIKit.title3, { width: width, textAlign: 'center', marginTop: 10, marginBottom: 10 }]}>{i18n.t('yourOrders')}</Text>
+            <View style={{ flexDirection: 'row', width: width / 1.045, alignItems: 'center' }}>
+              <Text style={[iOSUIKit.body, { width: '18%', textAlign: 'center' }]}>{i18n.t('type')}</Text>
+              <Text style={{ color: 'black', width: '30%', textAlign: 'center' }}>{i18n.t('amount')}({trading.tradingBook.slice(0, 3).toUpperCase()})</Text>
+              <Text style={{ width: '26%', textAlign: 'center' }}>{i18n.t('price')}({trading.tradingBook.slice(4, 7).toUpperCase()})</Text>
+              <Text style={{ width: '15%', textAlign: 'center' }}>{i18n.t('status')}</Text>
             </View>
             {this.handleUserOrders()}
           </View>
@@ -508,31 +508,31 @@ export class BuySellComponent extends Component {
           ref={"modalOrderInfo"}
         >
           <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 30, height: 350, width: 300 }}>
-            <Text style={[iOSUIKit.title3, { marginBottom: 10 }]}>Order Info</Text>
+            <Text style={[iOSUIKit.title3, { marginBottom: 10 }]}>{i18n.t('orderInfoTitle')}</Text>
             <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-              <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>Type</Text>
+              <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>{i18n.t('type')}</Text>
               <Text style={{ width: width / 1.2 / 1.9, textAlign: 'center' }}>{this.handleType(quadrigaUserOrdersLookup.data[0].type).title}</Text>
             </View>
             <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
             <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-              <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>Amount</Text>
+              <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>{i18n.t('amount')}</Text>
               <Text style={{ width: width / 1.21 / 1.9, textAlign: 'center' }}>{quadrigaUserOrdersLookup.data[0].amount} {quadrigaUserOrdersLookup.data[0].book.slice(0, 3).toUpperCase()}</Text>
             </View>
             <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
             <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-              <Text style={{ width: width / 1.21 / 2.2, paddingLeft: 10 }}>Price</Text>
+              <Text style={{ width: width / 1.21 / 2.2, paddingLeft: 10 }}>{i18n.t('price')}</Text>
               <Text style={{ width: width / 1.2 / 1.9, textAlign: 'center' }}>{quadrigaUserOrdersLookup.data[0].price} {quadrigaUserOrdersLookup.data[0].book.slice(4, 7).toUpperCase()}</Text>
             </View>
             <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
             <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-              <Text style={{ width: width / 1.21 / 3.0, paddingLeft: 10 }}>Date</Text>
+              <Text style={{ width: width / 1.21 / 3.0, paddingLeft: 10 }}>{i18n.t('date')}</Text>
               <Text style={{ width: width / 1.21 / 1.5 / 2, textAlign: 'right' }}>{quadrigaUserOrdersLookup.data[0].created.split(" ")[1]}</Text>
               <Text style={{ width: width / 1.21 / 1.5 / 2, textAlign: 'center', paddingRight: 10 }}>{quadrigaUserOrdersLookup.data[0].created.split(" ")[0]}</Text>
             </View>
             <Divider style={{ height: 1, width: width / 1.2 - 22, backgroundColor: 'orange' }} />
             <View style={{ flexDirection: 'row', marginBottom: 10, marginTop: 10 }}>
-              <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>Status</Text>
-              <View style={{ width: width / 1.21 / 1.9, justifyContent: 'center', alignItems: 'flex-end', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={{ width: width / 1.21 / 2.1, paddingLeft: 10 }}>{i18n.t('status')}</Text>
+              <View style={{ width: width / 1.21 / 1.9, justifyContent: 'center', alignItems: 'flex-end', display: 'flex', flexDirection: 'row' }}>
                 {this.handleStatusColor(quadrigaUserOrdersLookup.data[0].status)}
                 <Text style={{ width: width / 1.21 / 1.9 / 2, textAlign: 'center' }}> {this.handleStatusText(quadrigaUserOrdersLookup.data[0].status)}</Text>
               </View>
@@ -546,12 +546,12 @@ export class BuySellComponent extends Component {
             <View style={{ flexDirection: 'row' }}>
               <View style={{ height: height / 7.8, width: width / 1.2 / 1.66 }}>
                 <TouchableOpacity onPress={() => this.handleCancelOrder()} style={{ margin: 20, marginBottom: 10, position: 'absolute', bottom: 15, right: 0 }}>
-                  <Text style={{ fontSize: 15, color: '#ff3b30' }}>Cancel Order</Text>
+                  <Text style={{ fontSize: 15, color: '#ff3b30' }}>{i18n.t('cancelOrder')}</Text>
                 </TouchableOpacity>
               </View>
               <View style={{ height: height / 7.8, width: width / 1.2 / 2.5 }}>
                 <TouchableOpacity onPress={() => { this.refs.modalOrderInfo.close(); }} style={{ margin: 20, marginBottom: 15, position: 'absolute', bottom: 10, right: 10 }}>
-                  <Text style={{ fontSize: 15, color: '#007aff' }}>Close</Text>
+                  <Text style={{ fontSize: 15, color: 'black' }}>{i18n.t('close')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -596,7 +596,7 @@ const styles = StyleSheet.create({
         marginTop: 0
       }
     }),
-    height: height / 1.74,
+    height: height / 1.6,
     width: width / 1.2
   }
 

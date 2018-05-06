@@ -114,42 +114,35 @@ class AccountsWallets extends Component {
 
   handleBalance(acronym) {
     const { quadrigaUserBalance } = this.props;
-    let returnObject;
     switch (acronym) {
       case 'btc':
         return {
           available: quadrigaUserBalance.data.btc_available,
           balance: quadrigaUserBalance.data.btc_balance
         };
-        break;
       case 'eth':
-        returnObject = {
+        return {
           available: quadrigaUserBalance.data.eth_available,
           balance: quadrigaUserBalance.data.eth_balance
         };
-        break;
       case 'bch':
         return {
           available: quadrigaUserBalance.data.bch_available,
           balance: quadrigaUserBalance.data.bch_balance
         };
-        break;
       case 'btg':
         return {
           available: quadrigaUserBalance.data.btg_available,
           balance: quadrigaUserBalance.data.btg_balance
         };
-        break;
       case 'ltc':
         return {
           available: quadrigaUserBalance.data.ltc_available,
           balance: quadrigaUserBalance.data.ltc_balance
         };
-        break;
       default: "0";
 
     }
-    return returnObject;
   }
 
 
@@ -177,7 +170,7 @@ class AccountsWallets extends Component {
               <TouchableNativeFeedback disabled={this.props.isModuleButtonPressed} onPress={() => this.handlePress(item)} useForeground={true} background={TouchableNativeFeedback.Ripple()} delayPressIn={0}>
                 <View style={{ backgroundColor: 'white', height: 60, width: width, alignItems: 'center', flexDirection: 'row' }}>
                   <Image resizeMode="contain" style={{ height: 40, width: 40, marginLeft: 20 }} source={this.handleLogo(item.acronym)} />
-                  <Text style={[iOSUIKit.subhead, { marginLeft: 10 }]}>{this.handleTranslation(item)} </Text>
+                  <Text style={[iOSUIKit.subhead, { marginLeft: 10, fontSize: 14 }]}>{this.handleTranslation(item)} </Text>
                   <View style={{ position: 'absolute', right: 10, flexDirection: 'column' }}>
                     <Text >{parseFloat(this.handleBalance(item.acronym).available).toFixed(5)} {item.acronym.toUpperCase()} {I18n.t('available')}</Text>
                     <Text >{parseFloat(this.handleBalance(item.acronym).balance).toFixed(5)} {item.acronym.toUpperCase()} {I18n.t('balance')}</Text>
@@ -195,7 +188,7 @@ class AccountsWallets extends Component {
               <TouchableHighlight disabled={this.props.isModuleButtonPressed} onPress={() => this.handlePress(item)}>
                 <View style={{ backgroundColor: 'white', height: 60, width: width, alignItems: 'center', flexDirection: 'row' }}>
                   <Image resizeMode="contain" style={{ height: 40, width: 40, marginLeft: 20 }} source={this.handleLogo(item.acronym)} />
-                  <Text style={[iOSUIKit.caption, { marginLeft: 10 }]}>{item.acronym.toUpperCase()} WALLET</Text>
+                  <Text style={[iOSUIKit.caption, { marginLeft: 10 }]}>{this.handleTranslation(item)}</Text>
                   <View style={{ position: 'absolute', right: 20, flexDirection: 'column' }}>
                     <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('available')}</Text>
                     <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('balance')}</Text>
@@ -215,7 +208,7 @@ class AccountsWallets extends Component {
             <TouchableHighlight disabled={this.props.isModuleButtonPressed} onPress={() => this.handlePress(item)}>
               <View style={{ backgroundColor: 'white', height: 60, width: width, alignItems: 'center', flexDirection: 'row' }}>
                 <Image resizeMode="contain" style={{ height: 40, width: 40, marginLeft: 20 }} source={this.handleLogo(item.acronym)} />
-                <Text style={[iOSUIKit.caption, { marginLeft: 10 }]}>{item.acronym.toUpperCase()} WALLET</Text>
+                <Text style={[iOSUIKit.caption, { marginLeft: 10 }]}>{this.handleTranslation(item)}</Text>
                 <View style={{ position: 'absolute', right: 20, flexDirection: 'column' }}>
                   <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).available).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('available')}</Text>
                   <Text style={iOSUIKit.caption}>{parseFloat(this.handleBalance(item.acronym).balance).toFixed(4)} {item.acronym.toUpperCase()} {I18n.t('balance')}</Text>

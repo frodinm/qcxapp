@@ -32,7 +32,7 @@ export class NumberPad extends Component {
       return (
         <TouchableOpacity key={index} onPressIn={currentItem.func} style={styles.padButton}>
           {currentItem.icon}
-          <Text style={{ fontSize: 22, color: 'black' }}>{currentItem.number}</Text>
+          <Text style={{ fontSize: 20, color: 'black' }}>{currentItem.number}</Text>
           <Text style={{ fontSize: 12 }}>{currentItem.subText}</Text>
 
         </TouchableOpacity>
