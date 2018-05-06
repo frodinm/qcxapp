@@ -309,7 +309,7 @@ class Wallet extends Component {
         if (quadrigaUserWalletWithdraw.data.hasOwnProperty('error')) {
             this.dropdown.alertWithType('error', 'Error', quadrigaUserWalletWithdraw.data.error.message);
         } else {
-            this.dropdown.alertWithType('success', 'Success', 'Your withdraw has been sent !');
+            this.dropdown.alertWithType('success', 'Success', i18n.t('withdrawSentMessage'));
             setTimeout(() => {
                 postUserQuadrigaBalanceAndTransactionsDispatch(apiKey, clientId, privateKey, 0, 50, "desc", book, bookTwo);
             }, 500);
@@ -360,7 +360,7 @@ class Wallet extends Component {
 
     handleCopyAddress() {
         const { address, name } = this.props.navigation.state.params;
-        if (address) {
+        if (typeof address === "string") {
             Clipboard.setString(address);
             Alert.alert(
                 i18n.t('copyAddress'),
@@ -417,8 +417,8 @@ class Wallet extends Component {
         if (quadrigaUserTransactions.length === 0) {
             return (
                 <View style={{ width: width, ...Platform.select({ ios: { height: (height / 2 - 50) }, android: { height: height / 2.35 - 40 } }), alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={[iOSUIKit.title3, { fontWeight: 'bold' }]}>You have no transactions</Text>
-                    <Text style={{ textAlign: 'center', fontSize: 16 }}>{`\nBuy ${name} now and your\ntransactions will show here`}</Text>
+                    <Text style={[iOSUIKit.title3, { fontWeight: 'bold' }]}>{i18n.t('noTransactionsTitle')}</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 16 }}>{`\n${i18n.t('buy')} ${name} ${i18n.t('noTransactionMessage')}`}</Text>
                 </View>
             );
         } else {

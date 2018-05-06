@@ -1,6 +1,3 @@
-
-
-
 export default {
   accounts: 'Accounts',
   exchange: 'Exchange',
@@ -69,9 +66,11 @@ export default {
   amount: 'Amount',
   addressHere: 'Address here',
   amountHere: 'Amount here',
+  noTransactionsTitle: 'You have no transactions',
+  noTransactionMessage: 'now and your\ntransactions will show here',
   buyAlertMessage: 'Please go to the Exchange tab to buy some',
   withdrawAlert: 'Please confirm your withdraw',
-  copyAlertError: 'Your address wasn\'t availble to be copied to your clipboard',
+  copyAlertError: 'Your address wasn\'t availble to be copied to your clipboard. Please try signing out to reset.',
   copyAlertMessage: 'was copied to your clipboard!',
   cameraAccessErrorTitle: 'Camera Access',
   cameraAccessErrorMessage: 'Camera access needed for Scanning Qr codes',
@@ -90,6 +89,7 @@ export default {
   cancelOrder: 'Cancel Order',
   cancelOrderMessage: 'Please confirm your order cancel',
   cancelOrderSuccessMessage: 'Your order has been canceled!',
+  withdrawSentMessage: 'Your withdraw has been sent !',
   top10Bids: 'Top 10 Bids',
   top10Asks: 'Top 10 Asks',
   yourOrders: 'Your Orders',

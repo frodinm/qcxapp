@@ -265,6 +265,18 @@ export const postUserQuadrigaBalance = (key, sign, nonce) => {
   };
 };
 
+export const postNewUserQuadrigaBalance = (key, sign, nonce, callback) => {
+  return dispatch => {
+    dispatch({ type: POST_USER_QUADRIGA_BALANCE.PENDING });
+    postBalanceQuadriga(key, sign, nonce).then((response) => {
+      dispatch({ type: POST_USER_QUADRIGA_BALANCE.SUCCESS, payload: response });
+      callback(response);
+    }).catch((error) => {
+      dispatch({ type: POST_USER_QUADRIGA_BALANCE.ERROR, payload: error });
+    });
+  };
+};
+
 export const postUserQuadrigaTransactions = (apiKey, clientId, privateKey, offset, limit, sort, book, bookTwo) => {
   let nonce;
   let returnArray;

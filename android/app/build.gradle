@@ -101,7 +101,7 @@ def getPassword(String currentUser, String keyChain) {
       stdout.toString().trim()
 }
 
-def enableSeparateBuildPerCPUArchitecture = true
+def enableSeparateBuildPerCPUArchitecture = false
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.

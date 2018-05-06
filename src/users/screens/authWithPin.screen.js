@@ -67,6 +67,9 @@ class AuthPincode extends Component {
         this.setState({
           error: true
         });
+        this.setState({
+          pinAuth: ""
+        });
       }
 
     } else {
@@ -76,6 +79,9 @@ class AuthPincode extends Component {
       this.refs.view4.shake();
       this.setState({
         error: true
+      });
+      this.setState({
+        pinAuth: ""
       });
     }
   }
