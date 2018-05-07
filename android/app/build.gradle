@@ -121,7 +121,7 @@ android {
         applicationId "com.qcx"
         minSdkVersion 19
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 7
+        versionCode 8
         versionName "1.0.7"
         multiDexEnabled true
         ndk {
