@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Platform,
     StyleSheet,
@@ -11,12 +11,12 @@ import {
     Vibration,
     Dimensions
 } from 'react-native';
-import IOSicon from 'react-native-vector-icons/dist/Ionicons'
-import flashon from '../assets/camera/ic_flash_on_white.png'
-import flashoff from '../assets/camera/ic_flash_off_white.png'
-import Camera from 'react-native-camera'
+import IOSicon from 'react-native-vector-icons/dist/Ionicons';
+import flashon from '../assets/camera/ic_flash_on_white.png';
+import flashoff from '../assets/camera/ic_flash_off_white.png';
+import Camera from 'react-native-camera';
 
-const {width,height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 
 export class CameraComponent extends Component {
@@ -42,11 +42,11 @@ export class CameraComponent extends Component {
 
     flashIcon() {
         let icon;
-        const {on, off} = Camera.constants.TorchMode;
+        const { on, off } = Camera.constants.TorchMode;
         if (this.state.camera.torchMode === on) {
-            icon = flashon
+            icon = flashon;
         } else if (this.state.camera.torchMode === off) {
-            icon = flashoff
+            icon = flashoff;
         }
 
         return icon;
@@ -54,7 +54,7 @@ export class CameraComponent extends Component {
 
     switchTorch() {
         let newTorchMode;
-        const {on, off} = Camera.constants.TorchMode;
+        const { on, off } = Camera.constants.TorchMode;
 
         if (this.state.camera.torchMode === on) {
             newTorchMode = off;
@@ -66,7 +66,7 @@ export class CameraComponent extends Component {
                 ...this.state.camera,
                 torchMode: newTorchMode
             }
-        })
+        });
     }
 
     render() {
@@ -74,7 +74,7 @@ export class CameraComponent extends Component {
             <View style={styles.container}>
                 <StatusBar
                     animated
-                    hidden/>
+                    hidden />
 
                 <Camera
                     ref={(cam) => {
@@ -87,12 +87,12 @@ export class CameraComponent extends Component {
                     onBarCodeRead={this.onBarCodeRead.bind(this)}>
                     <View >
                         <TouchableOpacity style={styles.flashButton} onPress={() => this.switchTorch()}>
-                            <Image source={this.flashIcon()}/>
+                            <Image source={this.flashIcon()} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.closeButton}>
-                        <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
-                            <IOSicon name="ios-close" color="white" size={35}/>
+                        <TouchableOpacity onPress={() => { this.props.navigation.goBack(); }}>
+                            <IOSicon name="ios-close" color="white" size={35} />
                         </TouchableOpacity>
                     </View>
                 </Camera>
@@ -105,8 +105,8 @@ export class CameraComponent extends Component {
             "Barcode Found!",
             "Type: " + e.type + "\nData: " + e.data
         );
-        Vibration.vibrate(200)
-        this.props.navigation.state.params.setAddress(e.data.toString())
+        Vibration.vibrate(200);
+        this.props.navigation.state.params.setAddress(e.data.toString());
         this.props.navigation.goBack();
     }
 }
@@ -121,21 +121,21 @@ const styles = StyleSheet.create({
     },
     flashButton: {
         margin: 30,
-        height:40,
-        width:40,
-        alignItems:'center',
-        justifyContent:'center'
-        
+        height: 40,
+        width: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+
     },
-    closeButton:{
-        position:'absolute',
-        top:30,
-        right:30,
-        height:40,
-        width:40,
-        backgroundColor:'transparent',
-        alignItems:'center',
-        justifyContent:'center'
+    closeButton: {
+        position: 'absolute',
+        top: 30,
+        right: 30,
+        height: 40,
+        width: 40,
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
 });
